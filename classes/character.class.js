@@ -29,6 +29,9 @@ class Charackter extends MovableObject {
         this.otherDirection = false;
 
       }
+       
+      this.world.camera_x = -this.x;
+
       if (this.world.keyboard.LEFT) {
         this.x -= this.speed;
         this.otherDirection = true;
