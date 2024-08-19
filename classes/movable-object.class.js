@@ -24,7 +24,11 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    return this.y < 160;
+    if (this instanceof ThrowableObject) { // ThrowableObject should fall to the ground
+      return true;
+    } else {
+      return this.y < 160;
+    }
   }
 
   loadImage(path) {
