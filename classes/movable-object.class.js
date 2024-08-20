@@ -33,7 +33,7 @@ class MovableObject extends DrawableObject {
       // ThrowableObject should fall to the ground
       return true;
     } else {
-      return this.y < 160; // orginal 160
+      return this.y < 160; // orginal 160 return this.y < 160; // orginal 160 } }
     }
   }
 
@@ -75,24 +75,74 @@ class MovableObject extends DrawableObject {
       this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // Left edge of the current object with offset applied is to the left of or touching the right edge of mo
       this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo
       this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom; // Top edge of the current object with offset applied is below or touching the bottom edge of mo
-  
+
     if (isColliding) {
-      console.log(`Collision detected!`);
-      console.log(`Current object position: x=${this.x}, y=${this.y}, width=${this.width}, height=${this.height}`);
-      console.log(`Other object position: x=${mo.x}, y=${mo.y}, width=${mo.width}, height=${mo.height}`);
+      if (this.isCollidingTop(mo)) {
+        // Call the chickenDead method
+        // mo.chickenDead();
+      }
+
+      if (
+        this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
+        this.x + this.offset.left < mo.x + mo.offset.left
+      ) {
+        // Character touched the chicken from the left
+      }
+
+      if (
+        this.x + this.offset.left <= mo.x + mo.width - mo.offset.right &&
+        this.x + this.width - this.offset.right >
+          mo.x + mo.width - mo.offset.right
+      ) {
+        // Character touched the chicken from the right
+      }
     }
-  
+
     return isColliding;
   }
 
+  isCollidingTop(mo) {
+    const charBottom = this.y + this.height - this.offset.bottom;
+    const chickenTop = mo.y + mo.offset.top;
+    const charCenterX = this.x + this.width / 2;
+    const chickenLeft = mo.x + mo.offset.left;
+    const chickenRight = mo.x + mo.width - mo.offset.right;
+
+    // Check if the character's bottom is near the chicken's top
+    const isVerticalCollision = 
+        charBottom <= chickenTop + 10 && 
+        charBottom >= chickenTop - 10;
+
+    // Check if the character's horizontal center is within the chicken's width
+    const isHorizontalCenterAboveChicken = 
+        charCenterX >= chickenLeft && 
+        charCenterX <= chickenRight;
+
+    const isTopCollision = isVerticalCollision && isHorizontalCenterAboveChicken;
+
+    if (isTopCollision) {
+        console.log("Character landed on top of the chicken!");
+        console.log(`charBottom: ${charBottom}, chickenTop: ${chickenTop}`);
+        console.log(`charCenterX: ${charCenterX}, chickenLeft: ${chickenLeft}, chickenRight: ${chickenRight}`);
+        console.log(`isVerticalCollision: ${isVerticalCollision}, isHorizontalCenterAboveChicken: ${isHorizontalCenterAboveChicken}`);
+        console.log(`Character position: x=${this.x}, y=${this.y}, width=${this.width}, height=${this.height}`);
+        console.log(`Chicken position: x=${mo.x}, y=${mo.y}, width=${mo.width}, height=${mo.height}`);
+        debugger; // Pause execution to inspect the variables
+    } else {
+        console.log("Character did not land on top of the chicken.");
+        console.log(`isVerticalCollision: ${isVerticalCollision}, isHorizontalCenterAboveChicken: ${isHorizontalCenterAboveChicken}`);
+    }
+
+    return isTopCollision;
+}
 
   hit() {
-    this.energy -= 5;
-    if (this.energy < 0) {
-      this.energy = 0;
-    } else {
-      this.lastHit = new Date().getTime();
-    }
+    // this.energy -= 5;
+    // if (this.energy < 0) {
+    //   this.energy = 0;
+    // } else {
+    //   this.lastHit = new Date().getTime();
+    // }
   }
 
   isHurt() {
@@ -103,7 +153,7 @@ class MovableObject extends DrawableObject {
   }
 
   isDead() {
-    return this.energy == 0;
+    // return this.energy == 0;
   }
 
   loadImages(arr) {
@@ -131,5 +181,9 @@ class MovableObject extends DrawableObject {
 
   jump() {
     this.speedY = 30; // Geschwindigkeit nach oben
+  }
+
+  chickenDead() {
+    this.img.src = this.DEAD_CHICKEN;
   }
 }

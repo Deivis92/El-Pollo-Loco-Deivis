@@ -3,13 +3,13 @@ class Charackter extends MovableObject {
   x = 120; // 120
   width = 100;
   speed = 10;
-  y = 50; //original 50
+  y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {
     top: 0,
-    bottom: 5,
-    left: 16,
-    right: 17,
-  }
+    bottom: 13, // passend grafik auf chicken zu springen
+    left: 10,
+    right: 10,
+  };
 
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
