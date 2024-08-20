@@ -6,11 +6,16 @@ class MovableObject extends DrawableObject {
   width = 100;
   imageCache = {};
   currentImage = 0;
-  speed = 0.15;
+  speed = 0; // orginal 0.15
   otherDirection = false;
   speedY = 0;
   acceleration = 2.5;
-  offsetY = 0;
+  offset = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  };
   energy = 100;
   lastHit = 0;
 
@@ -20,14 +25,15 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-    }, 1000 / 25);
+    }, 1000 / 25); // orginal 1000 / 25
   }
 
   isAboveGround() {
-    if (this instanceof ThrowableObject) { // ThrowableObject should fall to the ground
+    if (this instanceof ThrowableObject) {
+      // ThrowableObject should fall to the ground
       return true;
     } else {
-      return this.y < 160;
+      return this.y < 160; // orginal 160
     }
   }
 
@@ -54,14 +60,31 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  // isColliding(mo) {
+  //   return (
+  //     this.x + this.width >= mo.x && //Checks if the right edge of the current object is to the right of or touching the left edge of mo.
+  //     this.x <= mo.x + mo.width && // Checks if the left edge of the current object is to the left of or touching the right edge of mo.
+  //     this.y + this.offsetY + this.height >= mo.y && //Checks if the top edge of the current object (considering an offset) is above or touching the bottom edge of mo.
+  //     this.y + this.offsetY <= mo.y + mo.height // Checks if the top edge of the current object (considering an offset) is above or touching the bottom edge of mo.
+  //   );
+  // }
+
   isColliding(mo) {
-    return (
-      this.x + this.width >= mo.x &&
-      this.x <= mo.x + mo.width &&
-      this.y + this.offsetY + this.height >= mo.y &&
-      this.y + this.offsetY <= mo.y + mo.height
-    );
+    const isColliding =
+      this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // Right edge of the current object with offset applied is to the right of or touching the left edge of mo
+      this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // Left edge of the current object with offset applied is to the left of or touching the right edge of mo
+      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo
+      this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom; // Top edge of the current object with offset applied is below or touching the bottom edge of mo
+  
+    if (isColliding) {
+      console.log(`Collision detected!`);
+      console.log(`Current object position: x=${this.x}, y=${this.y}, width=${this.width}, height=${this.height}`);
+      console.log(`Other object position: x=${mo.x}, y=${mo.y}, width=${mo.width}, height=${mo.height}`);
+    }
+  
+    return isColliding;
   }
+
 
   hit() {
     this.energy -= 5;
@@ -107,6 +130,6 @@ class MovableObject extends DrawableObject {
   }
 
   jump() {
-    this.speedY = 30;
+    this.speedY = 30; // Geschwindigkeit nach oben
   }
 }

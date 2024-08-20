@@ -7,6 +7,7 @@ class World {
   camera_x = 0;
   statusBar = new StatusBar();
   throwableObjects = [];
+  
 
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
