@@ -6,9 +6,9 @@ class Charackter extends MovableObject {
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {
     top: 0,
-    bottom: 13, // passend grafik auf chicken zu springen
-    left: 10,
-    right: 10,
+    bottom: 18, // passend grafik auf chicken zu springen
+    left:  0,
+    right: 0,
   };
 
   IMAGES_WALKING = [
@@ -30,6 +30,7 @@ class Charackter extends MovableObject {
     "img/2_character_pepe/3_jump/J-37.png",
     "img/2_character_pepe/3_jump/J-38.png",
     "img/2_character_pepe/3_jump/J-39.png",
+    
   ];
 
   IMAGES_DEAD = [

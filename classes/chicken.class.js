@@ -5,9 +5,8 @@ class Chicken extends MovableObject {
   offset = {
     top: 0,
     bottom: 0,
-    left: 15, // kad atititku susijungima su vista is sono
-
-    right: 15, // kad atititku susijungima su vista is sono
+    left: 0,
+    right: 0,
   };
 
   IMAGES_WALKING = [
@@ -21,8 +20,8 @@ class Chicken extends MovableObject {
   constructor() {
     super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING);
-    this.x = 150; // orginal this.x = 350 + Math.random() * 500;
-    this.speed = 0 + Math.random() * 0; // orginal this.speed = 0.15 + Math.random() * 0.5;
+    this.x = this.x = 350 + Math.random() * 500; // orginal this.x = 350 + Math.random() * 500;
+    this.speed = this.speed = 0.15 + Math.random() * 0.5; // orginal this.speed = 0.15 + Math.random() * 0.5;
     this.animate();
   }
 

@@ -60,41 +60,31 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  // isColliding(mo) {
-  //   return (
-  //     this.x + this.width >= mo.x && //Checks if the right edge of the current object is to the right of or touching the left edge of mo.
-  //     this.x <= mo.x + mo.width && // Checks if the left edge of the current object is to the left of or touching the right edge of mo.
-  //     this.y + this.offsetY + this.height >= mo.y && //Checks if the top edge of the current object (considering an offset) is above or touching the bottom edge of mo.
-  //     this.y + this.offsetY <= mo.y + mo.height // Checks if the top edge of the current object (considering an offset) is above or touching the bottom edge of mo.
-  //   );
-  // }
-
   isColliding(mo) {
     const isColliding =
       this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // Right edge of the current object with offset applied is to the right of or touching the left edge of mo
       this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // Left edge of the current object with offset applied is to the left of or touching the right edge of mo
-      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo
+      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo !!
       this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom; // Top edge of the current object with offset applied is below or touching the bottom edge of mo
 
     if (isColliding) {
       if (this.isCollidingTop(mo)) {
-        // Call the chickenDead method
-        // mo.chickenDead();
       }
 
       if (
-        this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
+        this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // pepes right side is touching the left side of the chicken
         this.x + this.offset.left < mo.x + mo.offset.left
       ) {
+        // console.log("Collision detected on the left!");
         // Character touched the chicken from the left
       }
 
       if (
-        this.x + this.offset.left <= mo.x + mo.width - mo.offset.right &&
+        this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // pepes left side is touching the right side of the chicken
         this.x + this.width - this.offset.right >
           mo.x + mo.width - mo.offset.right
       ) {
-        // Character touched the chicken from the right
+        // console.log("Collision detected on the right!");
       }
     }
 
@@ -102,39 +92,33 @@ class MovableObject extends DrawableObject {
   }
 
   isCollidingTop(mo) {
-    const charBottom = this.y + this.height - this.offset.bottom;
-    const chickenTop = mo.y + mo.offset.top;
-    const charCenterX = this.x + this.width / 2;
-    const chickenLeft = mo.x + mo.offset.left;
-    const chickenRight = mo.x + mo.width - mo.offset.right;
+    const localOffsetLeft = (this.offset.left = -10);
+    const localOffsetRight = (this.offset.right = -10);
 
-    // Check if the character's bottom is near the chicken's top
-    const isVerticalCollision = 
-        charBottom <= chickenTop + 10 && 
-        charBottom >= chickenTop - 10;
-
-    // Check if the character's horizontal center is within the chicken's width
-    const isHorizontalCenterAboveChicken = 
-        charCenterX >= chickenLeft && 
-        charCenterX <= chickenRight;
-
-    const isTopCollision = isVerticalCollision && isHorizontalCenterAboveChicken;
-
-    if (isTopCollision) {
-        console.log("Character landed on top of the chicken!");
-        console.log(`charBottom: ${charBottom}, chickenTop: ${chickenTop}`);
-        console.log(`charCenterX: ${charCenterX}, chickenLeft: ${chickenLeft}, chickenRight: ${chickenRight}`);
-        console.log(`isVerticalCollision: ${isVerticalCollision}, isHorizontalCenterAboveChicken: ${isHorizontalCenterAboveChicken}`);
-        console.log(`Character position: x=${this.x}, y=${this.y}, width=${this.width}, height=${this.height}`);
-        console.log(`Chicken position: x=${mo.x}, y=${mo.y}, width=${mo.width}, height=${mo.height}`);
-        debugger; // Pause execution to inspect the variables
+    if (this.isAboveGround()) {
+      // Check if the bottom of `this` is colliding with the top of `mo`
+      if (
+        this.y + this.height - this.offset.bottom <= mo.y + mo.height - mo.offset.bottom &&
+        this.x + localOffsetLeft <= mo.x + mo.width - mo.offset.right && // Right offset check
+        this.x + this.width - localOffsetRight  >= mo.x + mo.offset.left // Left offset check
+      ) {
+        console.log(
+          `Collision detected on the top! this.bottom: ${
+            this.y + this.height - this.offset.bottom
+          }, mo.top: ${mo.y + mo.offset.top}, pepe.offset.left: ${
+            this.offset.left
+          }, pepe.offset.right: ${this.offset.right}`
+        );
+        debugger;
+      } else {
+        console.log("No collision on the top side.");
+      }
     } else {
-        console.log("Character did not land on top of the chicken.");
-        console.log(`isVerticalCollision: ${isVerticalCollision}, isHorizontalCenterAboveChicken: ${isHorizontalCenterAboveChicken}`);
+      console.log(
+        "Object is not above the ground or not falling, no top collision check."
+      );
     }
-
-    return isTopCollision;
-}
+  }
 
   hit() {
     // this.energy -= 5;
