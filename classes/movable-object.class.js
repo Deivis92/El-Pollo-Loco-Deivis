@@ -75,8 +75,8 @@ class MovableObject extends DrawableObject {
         this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // pepes right side is touching the left side of the chicken
         this.x + this.offset.left < mo.x + mo.offset.left
       ) {
-        // console.log("Collision detected on the left!");
-        // Character touched the chicken from the left
+        console.log("Collision detected on the left!");
+         //Character touched the chicken from the left
       }
 
       if (
@@ -84,7 +84,7 @@ class MovableObject extends DrawableObject {
         this.x + this.width - this.offset.right >
           mo.x + mo.width - mo.offset.right
       ) {
-        // console.log("Collision detected on the right!");
+        console.log("Collision detected on the right!");
       }
     }
 
@@ -92,31 +92,27 @@ class MovableObject extends DrawableObject {
   }
 
   isCollidingTop(mo) {
-    const localOffsetLeft = (this.offset.left = -10);
-    const localOffsetRight = (this.offset.right = -10);
+    const localOffsetLeft = (this.offset.left = 5);
+    const localOffsetRight = (this.offset.right = 5);
+    const localOffsetBottom = (this.offset.bottom = -20);
 
-    if (this.isAboveGround()) {
-      // Check if the bottom of `this` is colliding with the top of `mo`
-      if (
-        this.y + this.height - this.offset.bottom <= mo.y + mo.height - mo.offset.bottom &&
-        this.x + localOffsetLeft <= mo.x + mo.width - mo.offset.right && // Right offset check
-        this.x + this.width - localOffsetRight  >= mo.x + mo.offset.left // Left offset check
-      ) {
-        console.log(
-          `Collision detected on the top! this.bottom: ${
-            this.y + this.height - this.offset.bottom
-          }, mo.top: ${mo.y + mo.offset.top}, pepe.offset.left: ${
-            this.offset.left
-          }, pepe.offset.right: ${this.offset.right}`
-        );
-        debugger;
-      } else {
-        console.log("No collision on the top side.");
-      }
-    } else {
+    // Check if the bottom of `this` is colliding with the top of `mo`
+    if (
+      this.y + this.height - localOffsetBottom <=
+        mo.y + mo.height - mo.offset.bottom &&
+      this.x + localOffsetLeft <= mo.x + mo.width - mo.offset.right && // Right offset check
+      this.x + this.width - localOffsetRight >= mo.x + mo.offset.left // Left offset check
+    ) {
       console.log(
-        "Object is not above the ground or not falling, no top collision check."
+        `Collision detected on the top! this.bottom: ${
+          this.y + this.height - this.offset.bottom
+        }, mo.top: ${mo.y + mo.offset.top}, pepe.offset.left: ${
+          this.offset.left
+        }, pepe.offset.right: ${this.offset.right}, pepe offset - bottom ${localOffsetBottom}`
       );
+      debugger;
+    } else {
+      console.log("No collision on the top side.");
     }
   }
 
