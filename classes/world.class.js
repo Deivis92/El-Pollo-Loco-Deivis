@@ -9,7 +9,6 @@ class World {
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   throwableObjects = [];
-  
 
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
@@ -33,10 +32,12 @@ class World {
     }, 200);
   }
 
-
   checkThrowObjects() {
     if (this.keyboard.D) {
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+      let bottle = new ThrowableObject(
+        this.character.x + 100,
+        this.character.y + 100
+      );
       this.throwableObjects.push(bottle);
     }
   }

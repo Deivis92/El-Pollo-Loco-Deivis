@@ -46,29 +46,29 @@ class MovableObject extends DrawableObject {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
-drawFrame(ctx) {
+  drawFrame(ctx) {
     if (this instanceof Charackter) {
-        // Draw red frame for Charackter
-        ctx.beginPath();
-        ctx.lineWidth = "5";
-        ctx.strokeStyle = "red";
-        ctx.rect(this.x + 10, this.y +90, this.width -27, this.height - 100);
-        ctx.stroke();
+      // Draw red frame for Charackter
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "red";
+      ctx.rect(this.x + 10, this.y + 90, this.width - 27, this.height - 100);
+      ctx.stroke();
     }
 
     if (
-        this instanceof Charackter ||
-        this instanceof Chicken ||
-        this instanceof Endboss
+      this instanceof Charackter ||
+      this instanceof Chicken ||
+      this instanceof Endboss
     ) {
-        // Draw blue frame for Charackter, Chicken, and Endboss
-        ctx.beginPath();
-        ctx.lineWidth = "5";
-        ctx.strokeStyle = "blue";
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
+      // Draw blue frame for Charackter, Chicken, and Endboss
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
     }
-}
+  }
 
   isColliding(mo) {
     const isColliding =
@@ -86,7 +86,7 @@ drawFrame(ctx) {
         this.x + this.offset.left < mo.x + mo.offset.left
       ) {
         console.log("Collision detected on the left!");
-         //Character touched the chicken from the left
+        //Character touched the chicken from the left
       }
 
       if (
@@ -104,7 +104,7 @@ drawFrame(ctx) {
   isCollidingTop(mo) {
     const localOffsetLeft = (this.offset.left = 5);
     const localOffsetRight = (this.offset.right = 5);
-    const localOffsetBottom = (this.offset.bottom = -20);
+    const localOffsetBottom = (this.offset.bottom = -10);
 
     // Check if the bottom of `this` is colliding with the top of `mo`
     if (
@@ -118,7 +118,9 @@ drawFrame(ctx) {
           this.y + this.height - this.offset.bottom
         }, mo.top: ${mo.y + mo.offset.top}, pepe.offset.left: ${
           this.offset.left
-        }, pepe.offset.right: ${this.offset.right}, pepe offset - bottom ${localOffsetBottom}`
+        }, pepe.offset.right: ${
+          this.offset.right
+        }, pepe offset - bottom ${localOffsetBottom}`
       );
       debugger;
     } else {
