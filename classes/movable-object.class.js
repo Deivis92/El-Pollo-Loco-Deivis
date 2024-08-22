@@ -25,7 +25,7 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-    }, 1000 / 25); // orginal 1000 / 25
+    }, 1000 / 50); // orginal 1000 / 25
   }
 
   isAboveGround() {
@@ -78,9 +78,6 @@ class MovableObject extends DrawableObject {
       this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom; // Top edge of the current object with offset applied is below or touching the bottom edge of mo
 
     if (isColliding) {
-      if (this.isCollidingTop(mo)) {
-      }
-
       if (
         this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // pepes right side is touching the left side of the chicken
         this.x + this.offset.left < mo.x + mo.offset.left
@@ -96,45 +93,24 @@ class MovableObject extends DrawableObject {
       ) {
         console.log("Collision detected on the right!");
       }
+      if (
+        this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && 
+        this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom
+      ) {
+        console.warn(`Collision detected on the top!, chicken offset bottom ${mo.offset.bottom}`);
+      }
     }
 
     return isColliding;
   }
 
-  isCollidingTop(mo) {
-    const localOffsetLeft = (this.offset.left = 5);
-    const localOffsetRight = (this.offset.right = 5);
-    const localOffsetBottom = (this.offset.bottom = -10);
-
-    // Check if the bottom of `this` is colliding with the top of `mo`
-    if (
-      this.y + this.height - localOffsetBottom <=
-        mo.y + mo.height - mo.offset.bottom &&
-      this.x + localOffsetLeft <= mo.x + mo.width - mo.offset.right && // Right offset check
-      this.x + this.width - localOffsetRight >= mo.x + mo.offset.left // Left offset check
-    ) {
-      console.log(
-        `Collision detected on the top! this.bottom: ${
-          this.y + this.height - this.offset.bottom
-        }, mo.top: ${mo.y + mo.offset.top}, pepe.offset.left: ${
-          this.offset.left
-        }, pepe.offset.right: ${
-          this.offset.right
-        }, pepe offset - bottom ${localOffsetBottom}`
-      );
-      debugger;
-    } else {
-      console.log("No collision on the top side.");
-    }
-  }
-
   hit() {
-    // this.energy -= 5;
-    // if (this.energy < 0) {
-    //   this.energy = 0;
-    // } else {
-    //   this.lastHit = new Date().getTime();
-    // }
+    this.energy -= 5;
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
   }
 
   isHurt() {

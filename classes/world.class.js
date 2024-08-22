@@ -29,7 +29,7 @@ class World {
       // check colisions
       this.checkCollisions();
       this.checkThrowObjects();
-    }, 200);
+    }, 50);
   }
 
   checkThrowObjects() {
@@ -43,10 +43,19 @@ class World {
   }
 
   checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
+    this.level.enemies.forEach((enemy, enemyIndex) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
+        if (this.character.isAboveGround() && this.character.speedY < 0) {
+          // this.character.speedY = 20; // bounce
+          setTimeout(() => {
+            console.log('index enemy:', enemyIndex);
+            this.level.enemies.splice(enemyIndex, 1);
+
+          }, 1000);
+        } else {
+          this.character.hit();
+          this.statusBar.setPercentage(this.character.energy);
+        }
       }
     });
   }

@@ -3,10 +3,11 @@ class Charackter extends MovableObject {
   x = 120; // 120
   width = 100;
   speed = 10;
+  speedY = 0;
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {
     top: 0,
-    bottom: 18, // passend grafik auf chicken zu springen
+    bottom: 40, // passend grafik auf chicken zu springen
     left:  0,
     right: 0,
   };
