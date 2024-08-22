@@ -23,6 +23,12 @@ class DrawableObject {
       ctx.strokeStyle = "blue";
       ctx.rect(this.x, this.y, this.width, this.height);
       ctx.stroke();
+
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "red";
+      ctx.rect(this.x - 5, this.y - 5, this.width + 10, this.height + 10);
+      ctx.stroke();
     }
   }
 

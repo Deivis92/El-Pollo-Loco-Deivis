@@ -46,19 +46,29 @@ class MovableObject extends DrawableObject {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
-  drawFrame(ctx) {
-    if (
-      this instanceof Charackter ||
-      this instanceof Chicken ||
-      this instanceof Endboss
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = "5";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
+drawFrame(ctx) {
+    if (this instanceof Charackter) {
+        // Draw red frame for Charackter
+        ctx.beginPath();
+        ctx.lineWidth = "5";
+        ctx.strokeStyle = "red";
+        ctx.rect(this.x + 10, this.y +90, this.width -27, this.height - 100);
+        ctx.stroke();
     }
-  }
+
+    if (
+        this instanceof Charackter ||
+        this instanceof Chicken ||
+        this instanceof Endboss
+    ) {
+        // Draw blue frame for Charackter, Chicken, and Endboss
+        ctx.beginPath();
+        ctx.lineWidth = "5";
+        ctx.strokeStyle = "blue";
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+}
 
   isColliding(mo) {
     const isColliding =
