@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
   currentImage = 0;
   speed = 0; // orginal 0.15
   otherDirection = false;
+
   speedY = 0;
   acceleration = 2.5;
   offset = {
@@ -24,8 +25,9 @@ class MovableObject extends DrawableObject {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
+        console.log(this.y);
       }
-    }, 1000 / 50); // orginal 1000 / 25
+    }, 1000 / 30); // orginal 1000 / 25
   }
 
   isAboveGround() {
@@ -94,10 +96,12 @@ class MovableObject extends DrawableObject {
         console.log("Collision detected on the right!");
       }
       if (
-        this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && 
+        this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
         this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom
       ) {
-        console.warn(`Collision detected on the top!, chicken offset bottom ${mo.offset.bottom}`);
+        console.warn(
+          `Collision detected on the top!, chicken offset bottom ${mo.offset.bottom}`
+        );
       }
     }
 
@@ -105,6 +109,10 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
+    // If the character is on the ground, apply the hit logic
+    if (this.isAboveGround()) {
+      return;
+    }
     this.energy -= 5;
     if (this.energy < 0) {
       this.energy = 0;
@@ -116,7 +124,6 @@ class MovableObject extends DrawableObject {
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit; // 1000ms = 1s
     timePassed = timePassed / 1000; // Sekunden
-
     return timePassed < 1;
   }
 

@@ -8,7 +8,7 @@ class Charackter extends MovableObject {
   offset = {
     top: 0,
     bottom: 40, // passend grafik auf chicken zu springen
-    left:  0,
+    left: 0,
     right: 0,
   };
 
@@ -31,7 +31,6 @@ class Charackter extends MovableObject {
     "./img/2_character_pepe/3_jump/J-37.png",
     "./img/2_character_pepe/3_jump/J-38.png",
     "./img/2_character_pepe/3_jump/J-39.png",
-    
   ];
 
   IMAGES_DEAD = [
@@ -52,6 +51,7 @@ class Charackter extends MovableObject {
 
   world;
   walking_sound = new Audio("./audio/walk.mp3");
+  pepe_jumps = new Audio("./audio/pepe_jumps.mp3");
 
   constructor() {
     super().loadImage("./img/2_character_pepe/2_walk/W-21.png");
@@ -66,14 +66,17 @@ class Charackter extends MovableObject {
   animate() {
     setInterval(() => {
       this.walking_sound.pause();
+
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.walking_sound.play();
         this.otherDirection = false;
       }
-
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
+        if (this.pepe_jumps.paused) {
+          this.pepe_jumps.play();
+        }
       }
 
       this.world.camera_x = -this.x + 100;

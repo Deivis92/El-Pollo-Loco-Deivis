@@ -5,7 +5,7 @@ class Chicken extends MovableObject {
   chickenDead = false;
   offset = {
     top: 0,
-    bottom: 20,
+    bottom: 0,
     left: 0,
     right: 0,
   };
@@ -18,11 +18,13 @@ class Chicken extends MovableObject {
 
   DEAD_CHICKEN = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
 
+  dead_chicken = new Audio("./audio/dead_chicken.mp3");
+
   constructor() {
     super().loadImage("./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.DEAD_CHICKEN);
-    this.x = this.x = 350 + Math.random() * 500; // orginal this.x = 350 + Math.random() * 500;
+    this.x = 300 + Math.random() * 1500; // orginal this.x = 350 + Math.random() * 500;
     this.speed = this.speed = 0.15 + Math.random() * 0.5; // orginal this.speed = 0.15 + Math.random() * 0.5;
     this.animate();
   }
@@ -33,7 +35,27 @@ class Chicken extends MovableObject {
     }, 1000 / 60); // orginal 1000 / 60
 
     setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
+      if (this.chickenDead === false) {
+      this.handleChickenAlive();
+      } else if (this.chickenDead === true) {
+        this.handleChickenDead();
+      }
     }, 200);
+  }
+
+  handleChickenAlive() {
+    this.playAnimation(this.IMAGES_WALKING);
+    this.dead_chicken.pause();
+    this.soundPlayed = false;
+  }
+
+  handleChickenDead() {
+    this.playAnimation(this.DEAD_CHICKEN);
+
+    if (!this.soundPlayed) {
+      this.dead_chicken.volume = 0.2;
+      this.dead_chicken.play();
+      this.soundPlayed = true;
+    }
   }
 }
