@@ -9,7 +9,6 @@ class World {
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   throwableObjects = [];
-  hurt_sound = new Audio("./audio/hurt.mp3");
 
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
@@ -47,10 +46,8 @@ class World {
     this.level.enemies.forEach((enemy, enemyIndex) => {
       if (this.character.isColliding(enemy)) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
-          this.hurt_sound.pause();
           enemy.chickenDead = true;
           this.character.speedY = 20;
-          
 
           setTimeout(() => {
             console.log("index enemy:", enemyIndex);
@@ -59,7 +56,7 @@ class World {
           }, 200);
         } else {
           this.character.hit();
-         
+
           this.statusBar.setPercentage(this.character.energy);
         }
       }

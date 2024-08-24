@@ -19,6 +19,7 @@ class MovableObject extends DrawableObject {
   };
   energy = 100;
   lastHit = 0;
+  hurt_sound = new Audio("./audio/hurt.mp3");
 
   applyGravity() {
     setInterval(() => {
@@ -109,8 +110,10 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    // If the character is on the ground, apply the hit logic
+   
+    this.hurt_sound.play();
     if (this.isAboveGround()) {
+      this.hurt_sound.pause();
       return;
     }
     this.energy -= 5;
