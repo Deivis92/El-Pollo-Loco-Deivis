@@ -23,6 +23,7 @@ class GroundBottles extends MovableObject {
     this.playAnimation(this.IMAGES_GROUND_BOTTLES);
     this.x = 300 + Math.random() * 1700;
     this.animate();
+    
   }
 
   animate() {

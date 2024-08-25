@@ -9,6 +9,7 @@ class World {
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
+  collectBottleSound = new Audio("./audio/collect_bottle.mp3");
   throwableObjects = [];
 
   constructor(canvas) {
@@ -18,6 +19,7 @@ class World {
     this.draw();
     this.setWorld();
     this.checkCollisions();
+    this.collectBottle();
     this.run();
   }
 
@@ -29,6 +31,7 @@ class World {
     setInterval(() => {
       // check colisions
       this.checkCollisions();
+      this.collectBottle();
       this.checkThrowObjects();
     }, 1000 / 60);
   }
@@ -60,6 +63,19 @@ class World {
 
           this.statusBar.setPercentage(this.character.energy);
         }
+      }
+    });
+  }
+
+  collectBottle() {
+    this.collectBottleSound.pause();
+    this.collectBottleSound.currentTime = 0; // Reset the sound to the beginning
+    this.level.groundBottles.forEach((bottle, bottleIndex) => {
+      if (this.character.isColliding(bottle)) {
+        this.level.groundBottles.splice(bottleIndex, 1);
+        this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
+        this.collectBottleSound.play();
+        console.log("Bottle collected!");
       }
     });
   }

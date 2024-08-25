@@ -26,7 +26,7 @@ class MovableObject extends DrawableObject {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
-        console.log(this.y);
+        
       }
     }, 1000 / 30); // orginal 1000 / 25
   }
@@ -77,35 +77,9 @@ class MovableObject extends DrawableObject {
     const isColliding =
       this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // Right edge of the current object with offset applied is to the right of or touching the left edge of mo
       this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // Left edge of the current object with offset applied is to the left of or touching the right edge of mo
-      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo !!
+      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo
       this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom; // Top edge of the current object with offset applied is below or touching the bottom edge of mo
-
-    if (isColliding) {
-      if (
-        this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // pepes right side is touching the left side of the chicken
-        this.x + this.offset.left < mo.x + mo.offset.left
-      ) {
-        console.log("Collision detected on the left!");
-        //Character touched the chicken from the left
-      }
-
-      if (
-        this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // pepes left side is touching the right side of the chicken
-        this.x + this.width - this.offset.right >
-          mo.x + mo.width - mo.offset.right
-      ) {
-        console.log("Collision detected on the right!");
-      }
-      if (
-        this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
-        this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom
-      ) {
-        console.warn(
-          `Collision detected on the top!, chicken offset bottom ${mo.offset.bottom}`
-        );
-      }
-    }
-
+    
     return isColliding;
   }
 
@@ -164,4 +138,5 @@ class MovableObject extends DrawableObject {
   chickenDead() {
     this.img.src = this.DEAD_CHICKEN;
   }
+
 }
