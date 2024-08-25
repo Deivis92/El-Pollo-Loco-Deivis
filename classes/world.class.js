@@ -54,8 +54,6 @@ class World {
           this.character.speedY = 20;
 
           setTimeout(() => {
-            console.log("index enemy:", enemyIndex);
-
             this.level.enemies.splice(enemyIndex, 1);
           }, 200);
         } else {
@@ -68,14 +66,16 @@ class World {
   }
 
   collectBottle() {
-    this.collectBottleSound.pause();
+    if (!this.collectBottleSound.paused) {
+      this.collectBottleSound.pause();
+    }
     this.collectBottleSound.currentTime = 0; // Reset the sound to the beginning
+    
     this.level.groundBottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
         this.level.groundBottles.splice(bottleIndex, 1);
         this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
         this.collectBottleSound.play();
-        console.log("Bottle collected!");
       }
     });
   }
