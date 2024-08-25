@@ -8,6 +8,7 @@ class World {
   statusBarBottle = new StatusBarBottle();
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
+  groundBottles = new GroundBottles();
   throwableObjects = [];
 
   constructor(canvas) {
@@ -69,6 +70,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectToMap(this.level.backgroundObjects);
     this.addObjectToMap(this.level.clouds);
+    this.addObjectToMap(this.level.groundBottles);
 
     this.ctx.translate(-this.camera_x, 0);
     // Space for fixed objects

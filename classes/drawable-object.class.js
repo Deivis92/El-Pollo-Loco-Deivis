@@ -2,6 +2,7 @@ class DrawableObject {
   img;
   imageCache = {};
   currentImage = 0;
+ 
   x = 120;
   y = 50;
   height = 150;
@@ -49,4 +50,5 @@ class DrawableObject {
       this.imageCache[path] = img;
     });
   }
+
 }
