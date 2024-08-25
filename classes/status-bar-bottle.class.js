@@ -1,9 +1,7 @@
 class StatusBarBottle extends DrawableObject {
-    
   bottles;
-  
-  
-    IMAGES_BOTTLEBAR = [
+
+  IMAGES_BOTTLEBAR = [
     "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
     "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
     "./img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
@@ -19,8 +17,6 @@ class StatusBarBottle extends DrawableObject {
     this.y = 0;
     this.width = 200;
     this.height = 50;
-    
- 
     this.setBottles(2);
   }
 
@@ -43,6 +39,17 @@ class StatusBarBottle extends DrawableObject {
       return 1;
     } else {
       return 0;
+    }
+  }
+
+  
+  throwBottle() {
+    if (this.bottles > 0) {
+      this.bottles--;
+      this.setBottles(this.bottles);
+      let throwableBottle = new ThrowableObject(this.x, this.y);
+      throwableBottle.throw();
+      // Add throwableBottle to the game world or handle it as needed
     }
   }
 }

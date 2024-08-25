@@ -11,6 +11,7 @@ class World {
   groundBottles = new GroundBottles();
   collectBottleSound = new Audio("./audio/collect_bottle.mp3");
   throwableObjects = [];
+  canThrowBottle = true;
 
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
@@ -33,18 +34,27 @@ class World {
       this.checkCollisions();
       this.collectBottle();
       this.checkThrowObjects();
+      
     }, 1000 / 60);
   }
 
   checkThrowObjects() {
-    if (this.keyboard.D) {
+    if (this.keyboard.D && this.canThrowBottle && this.statusBarBottle.bottles > 0) {
+      
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100
       );
       this.throwableObjects.push(bottle);
+      this.statusBarBottle.setBottles(this.statusBarBottle.bottles - 1);
+      console.log("Bottle thrown. Remaining bottles:", this.statusBarBottle.bottles);
+      this.canThrowBottle = false;
+    }
+    if (!this.keyboard.D) {
+    this.canThrowBottle = true;
     }
   }
+
 
   checkCollisions() {
     this.level.enemies.forEach((enemy, enemyIndex) => {
@@ -70,15 +80,18 @@ class World {
       this.collectBottleSound.pause();
     }
     this.collectBottleSound.currentTime = 0; // Reset the sound to the beginning
-    
+
     this.level.groundBottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
         this.level.groundBottles.splice(bottleIndex, 1);
         this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
+        console.log("Bottle count after update:", this.statusBarBottle.bottles);
         this.collectBottleSound.play();
       }
     });
   }
+
+
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
