@@ -1,14 +1,14 @@
 const level1 = new Level(
   [
-    new Chicken(),
-    new Chicken(),
-    new Chicken(),
-    new Chicken(),
-    new SmallChicken(),
-    new SmallChicken(),
-    new SmallChicken(),
-    new SmallChicken(),
-    new Endboss(),
+    // new Chicken(),
+    // new Chicken(),
+    // new Chicken(),
+    // new Chicken(),
+    // new SmallChicken(),
+    // new SmallChicken(),
+    // new SmallChicken(),
+    // new SmallChicken(),
+    // new Endboss(),
   ],
   [new GroundBottles(), new GroundBottles(), new GroundBottles()],
   [new Cloud()],
@@ -59,5 +59,7 @@ const level1 = new Level(
       719 * 3
     ),
   ],
-  [new Coins(), new Coins(), new Coins(), new Coins(), new Coins()]
+  [new Coins(), new Coins(), new Coins(), new Coins(), new Coins(), new Coins(),
+    new Coins(), new Coins(), new Coins(), new Coins(), new Coins(), new Coins()
+  ]
 );
