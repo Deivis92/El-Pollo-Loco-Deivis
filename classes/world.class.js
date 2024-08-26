@@ -37,9 +37,20 @@ class World {
       this.checkCollisions();
       this.collectBottle();
       this.collectCoins();
-
+      this.collisionBottle();
       this.checkThrowObjects();
+      this.bottleOnGround();
     }, 1000 / 60);
+  }
+
+  bottleOnGround() {
+    this.throwableObjects.forEach((throwableObject, bottleIndex) => {
+      if (throwableObject.y >= 360) {
+        setTimeout(() => {
+          this.removeBottle(bottleIndex);
+        }, 1000 / 3);
+      }
+    });
   }
 
   checkThrowObjects() {
@@ -82,26 +93,26 @@ class World {
 
   // bottle
 
-  // collisionBottle() {
-  //   this.level.enemies.forEach((enemy, enemyIndex) => {
-  //     if (this.throwableObject.isColliding(enemy)) {
-  //       if (
-  //         this.throwableObject.isAboveGround() &&
-  //         this.throwableObject.speedY < 0
-  //       ) {
-  //         enemy.chickenDead = true;
-  //         this.throwableObject.speedY = 20;
-  //         console.log("Enemy dead");
+  collisionBottle() {
+    this.level.enemies.forEach((enemy, enemyIndex) => {
+      this.throwableObjects.forEach((throwableObject, bottleIndex) => {
+        if (throwableObject.isColliding(enemy)) {
+          if (throwableObject.isAboveGround() && throwableObject.speedY < 0) {
+            enemy.chickenDead = true;
+            throwableObject.speedY = 0;
+            this.removeBottle(bottleIndex);
+            console.log("Enemy dead");
 
-  //         setTimeout(() => {
-  //           this.level.enemies.splice(enemyIndex, 1);
-  //         }, 200);
-  //       }
-  //     }
-  //   }); // Added missing closing parenthesis and curly brace
-  // }
+            setTimeout(() => {
+              this.level.enemies.splice(enemyIndex, 1);
+            }, 200);
+          }
+        }
+      });
+    }); // Added missing closing parenthesis and curly brace
+  }
 
-  removeBottle() {
+  removeBottle(index) {
     this.throwableObjects.splice(index, 1);
   }
 

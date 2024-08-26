@@ -39,36 +39,9 @@ class ThrowableObject extends MovableObject {
     this.width = 50;
     this.animate();
     this.throw();
-    
-
-    
   }
-
-  //
-
-
-checkCollisionWithEnemies(enemies) {
-    for (let enemy of enemies) {
-      if (this.isColliding(enemy)) {
-        this.handleCollision(enemy);
-        break;
-      }
-    }
-  }
-
-  handleCollision(enemy) {
-    // Implement what happens when the bottle collides with an enemy
-    this.splash = true;
-    this.bottleLandet(); // Stop the bottle's movement
-    enemy.takeDamage(); // Assuming the enemy has a method to take damage
-  }
-
-
-
-  //
 
   throw() {
- 
     this.speedY = 20;
     this.applyGravity();
     this.flying_bottle.volume = 0.2;
@@ -78,9 +51,9 @@ checkCollisionWithEnemies(enemies) {
       if (this.splash) {
         this.bottleLandet();
       } else {
-      this.x += 7;
+        this.x += 7;
       }
-    }, 20);
+    }, 1000 / 60);
   }
 
   bottleGroundHit() {
@@ -91,40 +64,18 @@ checkCollisionWithEnemies(enemies) {
 
   bottleLandet() {
     this.bottle_splash.play();
-    this.bottle_splash.volume = 0.2;  
+    this.bottle_splash.volume = 0.2;
     clearInterval(this.flyingInterval);
     clearInterval(this.gravityInterval);
   }
 
-    
-
   animate() {
-    setInterval(() => { 
+    setInterval(() => {
       if (this.splash && this.isAboveGround()) {
         this.playAnimation(this.IMAGES_SPLASH);
       } else {
-      this.playAnimation(this.IMAGES_ROTATION);
+        this.playAnimation(this.IMAGES_ROTATION);
       }
     }, 1000 / 60);
   }
 }
-
-// Hey Developer Academy Team, danke für euren Support! //
-
-/*
-      _____
-    /       \
-   |  O   O  |
-   |    ^    |
-    \  ---  /
-      -----
-*/
-
-/*
-     ( (
-      ) )
-   ........
-   |      |]
-   \      /
-    `----'
-*/

@@ -1,4 +1,4 @@
-class StatusBarBottle extends DrawableObject {
+class StatusBarBottle extends MovableObject {
   bottles;
 
   IMAGES_BOTTLEBAR = [

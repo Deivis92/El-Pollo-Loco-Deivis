@@ -1,4 +1,4 @@
-class StatusBarCoins extends DrawableObject {
+class StatusBarCoins extends MovableObject {
   coins = 0;
   
 
