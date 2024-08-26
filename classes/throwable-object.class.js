@@ -35,19 +35,18 @@ class ThrowableObject extends MovableObject {
     this.width = 50;
     this.animate();
     this.throw();
-    
+    this.splash();
   }
 
   throw() {
     this.flying_bottle.volume = 0.2;
     this.flying_bottle.play();
-    this.speedY = 30;
-    this.applyGravity();
+    this.speedY = 20;
+    this.applyGravityBottle();
     setInterval(() => {
-      this.x += 10;
+      this.x += 7;
     }, 20);
   }
-
 
   animate() {
     setInterval(() => {
@@ -55,4 +54,33 @@ class ThrowableObject extends MovableObject {
     }, 1000 / 60);
   }
 
+  splash() {
+    if (this.isColliding) {
+      this.playAnimation(this.IMAGES_SPLASH);
+    } else {
+      
+    }
+  }
 }
+
+
+
+// Hey Developer Academy Team, danke für euren Support! // 
+
+/*
+      _____
+    /       \
+   |  O   O  |
+   |    ^    |
+    \  ---  /
+      -----
+*/
+
+/*
+     ( (
+      ) )
+   ........
+   |      |]
+   \      /
+    `----'
+*/

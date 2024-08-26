@@ -26,7 +26,6 @@ class MovableObject extends DrawableObject {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
-        
       }
     }, 1000 / 30); // orginal 1000 / 25
   }
@@ -39,6 +38,21 @@ class MovableObject extends DrawableObject {
       return this.y < 160; // orginal 160 return this.y < 160; // orginal 160 } }
     }
   }
+  //// Working on Bottle Gravity
+  applyGravityBottle() {
+    setInterval(() => {
+      if (this.isAboveGroundBottle() || this.speedY > 0) {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+      }
+    }, 1000 / 30); // orginal 1000 / 25
+  }
+
+  isAboveGroundBottle() {
+    return true;
+  }
+
+  //end of bottle gravity
 
   loadImage(path) {
     this.img = new Image();
@@ -79,12 +93,11 @@ class MovableObject extends DrawableObject {
       this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // Left edge of the current object with offset applied is to the left of or touching the right edge of mo
       this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo
       this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom; // Top edge of the current object with offset applied is below or touching the bottom edge of mo
-    
+
     return isColliding;
   }
 
   hit() {
-   
     this.hurt_sound.play();
     if (this.isAboveGround()) {
       this.hurt_sound.pause();
@@ -138,5 +151,4 @@ class MovableObject extends DrawableObject {
   chickenDead() {
     this.img.src = this.DEAD_CHICKEN;
   }
-
 }

@@ -2,7 +2,7 @@ class Charackter extends MovableObject {
   height = 270; // 270
   x = 120; // 120
   width = 100;
-  speed = 6;
+  speed = 4;
   speedY = 0;
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {
@@ -64,6 +64,7 @@ class Charackter extends MovableObject {
   }
 
   animate() {
+    this.walking_sound.volume = 0.2;
     setInterval(() => {
       this.walking_sound.pause();
 

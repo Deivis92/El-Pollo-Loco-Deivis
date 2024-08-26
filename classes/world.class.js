@@ -9,6 +9,7 @@ class World {
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
+  coins = new Coins();
   collectBottleSound = new Audio("./audio/collect_bottle.mp3");
   throwableObjects = [];
   canThrowBottle = true;
@@ -100,6 +101,7 @@ class World {
     this.addObjectToMap(this.level.backgroundObjects);
     this.addObjectToMap(this.level.clouds);
     this.addObjectToMap(this.level.groundBottles);
+    this.addObjectToMap(this.level.coins);
 
     this.ctx.translate(-this.camera_x, 0);
     // Space for fixed objects
