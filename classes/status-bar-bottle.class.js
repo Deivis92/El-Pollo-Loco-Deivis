@@ -17,7 +17,7 @@ class StatusBarBottle extends DrawableObject {
     this.y = 0;
     this.width = 200;
     this.height = 50;
-    this.setBottles(5);
+    this.setBottles(2);
   }
 
   setBottles(bottles) {
@@ -27,6 +27,8 @@ class StatusBarBottle extends DrawableObject {
   }
 
   resolveImageIndexBottles() {
+   
+
     if (this.bottles == 5) {
       return 5;
     } else if (this.bottles >= 4) {

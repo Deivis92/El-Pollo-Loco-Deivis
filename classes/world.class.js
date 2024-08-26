@@ -1,5 +1,6 @@
 class World {
   character = new Charackter();
+
   level = level1;
   canvas;
   ctx;
@@ -10,7 +11,8 @@ class World {
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   coins = new Coins();
-  collectBottleSound = new Audio("./audio/collect_bottle.mp3");
+  collect_bottle_sound = new Audio("./audio/collect_bottle.mp3");
+  collect_coin_sound = new Audio("./audio/collect_coin.mp3");
   throwableObjects = [];
   canThrowBottle = true;
 
@@ -34,28 +36,30 @@ class World {
       // check colisions
       this.checkCollisions();
       this.collectBottle();
+      this.collectCoins();
+
       this.checkThrowObjects();
-      
     }, 1000 / 60);
   }
 
   checkThrowObjects() {
-    if (this.keyboard.D && this.canThrowBottle && this.statusBarBottle.bottles > 0) {
-      
+    if (
+      this.keyboard.D &&
+      this.canThrowBottle &&
+      this.statusBarBottle.bottles > 0
+    ) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100
       );
       this.throwableObjects.push(bottle);
       this.statusBarBottle.setBottles(this.statusBarBottle.bottles - 1);
-      console.log("Bottle thrown. Remaining bottles:", this.statusBarBottle.bottles);
       this.canThrowBottle = false;
     }
     if (!this.keyboard.D) {
-    this.canThrowBottle = true;
+      this.canThrowBottle = true;
     }
   }
-
 
   checkCollisions() {
     this.level.enemies.forEach((enemy, enemyIndex) => {
@@ -76,23 +80,76 @@ class World {
     });
   }
 
-  collectBottle() {
-    if (!this.collectBottleSound.paused) {
-      this.collectBottleSound.pause();
-    }
-    this.collectBottleSound.currentTime = 0; // Reset the sound to the beginning
+  // bottle
 
+  // collisionBottle() {
+  //   this.level.enemies.forEach((enemy, enemyIndex) => {
+  //     if (this.throwableObject.isColliding(enemy)) {
+  //       if (
+  //         this.throwableObject.isAboveGround() &&
+  //         this.throwableObject.speedY < 0
+  //       ) {
+  //         enemy.chickenDead = true;
+  //         this.throwableObject.speedY = 20;
+  //         console.log("Enemy dead");
+
+  //         setTimeout(() => {
+  //           this.level.enemies.splice(enemyIndex, 1);
+  //         }, 200);
+  //       }
+  //     }
+  //   }); // Added missing closing parenthesis and curly brace
+  // }
+
+  removeBottle() {
+    this.throwableObjects.splice(index, 1);
+  }
+
+  // bottle ends
+
+  collectBottle() {
+    if (this.statusBarBottle.bottles >= 5) {
+      return; // Stop further collection if the bottle count exceeds 5
+    }
     this.level.groundBottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
-        this.level.groundBottles.splice(bottleIndex, 1);
-        this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
-        console.log("Bottle count after update:", this.statusBarBottle.bottles);
-        this.collectBottleSound.play();
+        this.level.groundBottles.splice(bottleIndex, 1); // Remove the collected bottle
+        this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1); // Update the bottle count
+
+        // Play sound if it's not currently playing
+        if (!this.collect_bottle_sound.isPlaying) {
+          this.handleCollectBottleSound();
+        }
       }
     });
   }
 
+  handleCollectBottleSound() {
+    this.collect_bottle_sound.isPlaying = true;
+    this.collect_bottle_sound.play();
 
+    // Reset the flag when the sound ends
+    this.collect_bottle_sound.onended = () => {
+      this.collect_bottle_sound.isPlaying = false;
+    };
+  }
+
+  collectCoins() {
+    let shouldPlaySound = false;
+
+    this.level.coins.forEach((coin, coinIndex) => {
+      if (this.character.isColliding(coin)) {
+        this.level.coins.splice(coinIndex, 1);
+        this.statusCoins.setCoins(this.statusCoins.coins + 1);
+        shouldPlaySound = true; // Set the flag to play sound
+      }
+    });
+
+    if (shouldPlaySound && this.collect_coin_sound.paused) {
+      this.collect_coin_sound.play();
+      this.collect_coin_sound.volume = 0.2; // Play sound only once
+    }
+  }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

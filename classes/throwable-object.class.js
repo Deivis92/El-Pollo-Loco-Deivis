@@ -6,7 +6,11 @@ class ThrowableObject extends MovableObject {
     right: 0,
   };
 
+  splash = false;
+  flyingInterval;
+
   flying_bottle = new Audio("./audio/flying_bottle.mp3");
+  bottle_splash = new Audio("./audio/splash.mp3");
 
   IMAGES_ROTATION = [
     "./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
@@ -35,37 +39,77 @@ class ThrowableObject extends MovableObject {
     this.width = 50;
     this.animate();
     this.throw();
-    this.splash();
+    
+
+    
   }
 
+  //
+
+
+checkCollisionWithEnemies(enemies) {
+    for (let enemy of enemies) {
+      if (this.isColliding(enemy)) {
+        this.handleCollision(enemy);
+        break;
+      }
+    }
+  }
+
+  handleCollision(enemy) {
+    // Implement what happens when the bottle collides with an enemy
+    this.splash = true;
+    this.bottleLandet(); // Stop the bottle's movement
+    enemy.takeDamage(); // Assuming the enemy has a method to take damage
+  }
+
+
+
+  //
+
   throw() {
+ 
+    this.speedY = 20;
+    this.applyGravity();
     this.flying_bottle.volume = 0.2;
     this.flying_bottle.play();
-    this.speedY = 20;
-    this.applyGravityBottle();
-    setInterval(() => {
+    this.flyingInterval = setInterval(() => {
+      this.bottleGroundHit();
+      if (this.splash) {
+        this.bottleLandet();
+      } else {
       this.x += 7;
+      }
     }, 20);
   }
 
-  animate() {
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_ROTATION);
-    }, 1000 / 60);
+  bottleGroundHit() {
+    if (this.y >= 360) {
+      this.splash = true;
+    }
   }
 
-  splash() {
-    if (this.isColliding) {
-      this.playAnimation(this.IMAGES_SPLASH);
-    } else {
-      
-    }
+  bottleLandet() {
+    this.bottle_splash.play();
+    this.bottle_splash.volume = 0.2;  
+    clearInterval(this.flyingInterval);
+    clearInterval(this.gravityInterval);
+  }
+
+    
+
+  animate() {
+    setInterval(() => { 
+      if (this.splash && this.isAboveGround()) {
+        this.playAnimation(this.IMAGES_SPLASH);
+      } else {
+      this.playAnimation(this.IMAGES_ROTATION);
+      }
+    }, 1000 / 60);
   }
 }
 
-
-
-// Hey Developer Academy Team, danke für euren Support! // 
+// Hey Developer Academy Team, danke für euren Support! //
 
 /*
       _____

@@ -1,5 +1,6 @@
 class StatusBarCoins extends DrawableObject {
   coins = 0;
+  
 
   IMAGES_COINBAR = [
     "./img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png",
@@ -8,7 +9,6 @@ class StatusBarCoins extends DrawableObject {
     "./img/7_statusbars/1_statusbar/1_statusbar_coin/blue/60.png",
     "./img/7_statusbars/1_statusbar/1_statusbar_coin/blue/80.png",
     "./img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png",
-    
   ];
 
   constructor() {
@@ -29,15 +29,19 @@ class StatusBarCoins extends DrawableObject {
   }
 
   resolveImageIndexCoins() {
-    if (this.coins == 100) {
+    if (this.coins > 5) {
+      this.coins = 5;
+    }
+  
+    if (this.coins == 5) {
       return 5;
-    } else if (this.coins >= 80) {
+    } else if (this.coins >= 4) {
       return 4;
-    } else if (this.coins >= 60) {
+    } else if (this.coins >= 3) {
       return 3;
-    } else if (this.coins >= 40) {
+    } else if (this.coins >= 2) {
       return 2;
-    } else if (this.coins >= 20) {
+    } else if (this.coins >= 1) {
       return 1;
     } else {
       return 0;

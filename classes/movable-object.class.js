@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
   currentImage = 0;
   speed = 0; // orginal 0.15
   otherDirection = false;
+  gravityInterval;
 
   speedY = 0;
   acceleration = 2.5;
@@ -22,7 +23,7 @@ class MovableObject extends DrawableObject {
   hurt_sound = new Audio("./audio/hurt.mp3");
 
   applyGravity() {
-    setInterval(() => {
+    this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
@@ -38,21 +39,9 @@ class MovableObject extends DrawableObject {
       return this.y < 160; // orginal 160 return this.y < 160; // orginal 160 } }
     }
   }
-  //// Working on Bottle Gravity
-  applyGravityBottle() {
-    setInterval(() => {
-      if (this.isAboveGroundBottle() || this.speedY > 0) {
-        this.y -= this.speedY;
-        this.speedY -= this.acceleration;
-      }
-    }, 1000 / 30); // orginal 1000 / 25
-  }
+  //// Working on Bottle 
 
-  isAboveGroundBottle() {
-    return true;
-  }
-
-  //end of bottle gravity
+  //end of bottle 
 
   loadImage(path) {
     this.img = new Image();
