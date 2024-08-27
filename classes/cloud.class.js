@@ -10,18 +10,16 @@ class Cloud extends MovableObject {
     this.handleCloudsPosition();
     this.speed = 0.15; // Set the speed for the cloud to move left
     this.animate();
-
   }
 
   handleCloudsPosition() {
-    
     this.x = Cloud.betweenClouds + 150;
-    Cloud.betweenClouds += this.width +50 + Math.random() * 70;
+    Cloud.betweenClouds += this.width + 50 + Math.random() * 70;
   }
 
   animate() {
     setInterval(() => {
-      this.moveLeft(); 
-    }, 1000 / 60); 
+      this.moveLeft();
+    }, 1000 / 60);
   }
 }
