@@ -46,14 +46,22 @@ class ThrowableObject extends MovableObject {
     this.applyGravity();
     this.flying_bottle.volume = 0.2;
     this.flying_bottle.play();
+
+    // Capture the direction at the moment of the throw
+    const initialDirection = world.character.otherDirection;
+
     this.flyingInterval = setInterval(() => {
       this.bottleGroundHit();
       if (this.splash) {
         this.bottleLandet();
       } else {
-        this.x += 7;
+        if (initialDirection) {
+          this.x -= 7; // Move left based on the initial direction
+        } else {
+          this.x += 7; // Move right based on the initial direction
+        }
       }
-    }, 1000 / 60);
+    }, 1000 / 50);
   }
 
   bottleGroundHit() {

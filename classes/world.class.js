@@ -59,14 +59,27 @@ class World {
       this.canThrowBottle &&
       this.statusBarBottle.bottles > 0
     ) {
-      let bottle = new ThrowableObject(
-        this.character.x + 100,
-        this.character.y + 100
-      );
+      let bottle;
+      
+      // Check the character's direction and set the position accordingly
+      if (this.character.otherDirection) {
+        bottle = new ThrowableObject(
+          this.character.x - 40, // Throw to the left
+          this.character.y + 100
+        );
+      } else {
+        bottle = new ThrowableObject(
+          this.character.x + 100, // Throw to the right
+          this.character.y + 100
+        );
+      }
+
       this.throwableObjects.push(bottle);
       this.statusBarBottle.setBottles(this.statusBarBottle.bottles - 1);
       this.canThrowBottle = false;
     }
+
+    // Reset the throwing ability when the D key is released
     if (!this.keyboard.D) {
       this.canThrowBottle = true;
     }

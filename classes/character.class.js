@@ -4,6 +4,7 @@ class Charackter extends MovableObject {
   width = 100;
   speed = 4;
   speedY = 0;
+  otherDirection = false;
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {
     top: 0,
