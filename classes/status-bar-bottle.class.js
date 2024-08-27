@@ -17,7 +17,7 @@ class StatusBarBottle extends MovableObject {
     this.y = 0;
     this.width = 200;
     this.height = 50;
-    this.setBottles(2);
+    this.setBottles(50);
   }
 
   setBottles(bottles) {
