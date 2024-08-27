@@ -48,14 +48,18 @@ class Chicken extends MovableObject {
     if (this.movingRight) {
       if (this.x >= 2300) {
         this.movingRight = false; // Switch direction to left
+        this.otherDirection = false; // Set to true for flipping
       } else {
         this.moveRight();
+        this.otherDirection = true;
       }
     } else {
       if (this.x <= 100) { // Change this value as needed for the left boundary
         this.movingRight = true; // Switch direction to right
+        this.otherDirection = true; // Reset to false for normal direction
       } else {
         this.moveLeft();
+        this.otherDirection = false;
       }
     }
   }

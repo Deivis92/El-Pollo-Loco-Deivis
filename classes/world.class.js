@@ -10,6 +10,7 @@ class World {
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
+  statusBarEndboss = new StatusBarEndboss();
   coins = new Coins();
   collect_bottle_sound = new Audio("./audio/collect_bottle.mp3");
   collect_coin_sound = new Audio("./audio/collect_coin.mp3");
@@ -188,6 +189,7 @@ class World {
     // Space for fixed objects
     this.addToMap(this.statusBarBottle);
     this.addToMap(this.statusCoins);
+    this.addToMap(this.statusBarEndboss);
     this.addToMap(this.statusBar);
     this.ctx.translate(this.camera_x, 0);
     this.addToMap(this.character);
