@@ -4,6 +4,7 @@ class Charackter extends MovableObject {
   width = 100;
   speed = 4;
   speedY = 0;
+
   otherDirection = false;
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {
@@ -100,8 +101,6 @@ class Charackter extends MovableObject {
         this.playAnimation(this.IMAGES_JUMPING);
       } else {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          //Walk animation
-          // i = 0, 1, 2, 3, 4, 5, 0
           this.playAnimation(this.IMAGES_WALKING);
         }
       }

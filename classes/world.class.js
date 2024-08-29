@@ -11,6 +11,7 @@ class World {
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
+  endBoss = new Endboss();
   coins = new Coins();
   collect_bottle_sound = new Audio("./audio/collect_bottle.mp3");
   collect_coin_sound = new Audio("./audio/collect_coin.mp3");
@@ -21,11 +22,13 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
+ 
     this.draw();
     this.setWorld();
     this.checkCollisions();
     this.collectBottle();
     this.run();
+    
   }
 
   setWorld() {
@@ -41,6 +44,9 @@ class World {
       this.collisionBottle();
       this.checkThrowObjects();
       this.bottleOnGround();
+      this.checkCollisionEndboss();
+      this.collisionBottleEndboss();
+      
     }, 1000 / 60);
   }
 
@@ -61,7 +67,7 @@ class World {
       this.statusBarBottle.bottles > 0
     ) {
       let bottle;
-      
+
       // Check the character's direction and set the position accordingly
       if (this.character.otherDirection) {
         bottle = new ThrowableObject(
@@ -104,6 +110,37 @@ class World {
       }
     });
   }
+
+  // endboss starts here
+  checkCollisionEndboss() {
+    let enemyBoss = this.level.endBoss[0];
+    if (this.character.isColliding(enemyBoss)) {
+      this.character.hit();
+      this.statusBar.setPercentage(this.character.energy);
+      console.log("endbos collision");
+    }
+  }
+
+  collisionBottleEndboss() {
+    let endBoss = this.level.endBoss[0]; // Assuming endBoss is a property of level
+
+    this.throwableObjects.forEach((throwableObject, bottleIndex) => {
+      if (throwableObject.isColliding(endBoss)) {
+        if (throwableObject.isAboveGround() && throwableObject.speedY < 0) {
+          // endBoss.isDead = true;  // Mark the end boss as dead
+          throwableObject.speedY = 0;
+          this.removeBottle(bottleIndex);
+          console.log("End boss dead");
+          this.endBoss.endBossHit();
+          console.log("End boss energy:", this.endBoss.energy);
+          this.statusBarEndboss.setPercentage(this.endBoss.energy);
+          endBoss.lastHit = new Date().getTime();
+        }
+      }
+    });
+  }
+
+  // endboss ends here
 
   // bottle
 
@@ -183,6 +220,7 @@ class World {
     this.addObjectToMap(this.level.backgroundObjects);
     this.addObjectToMap(this.level.clouds);
     this.addObjectToMap(this.level.groundBottles);
+    this.addObjectToMap(this.level.endBoss);
     this.addObjectToMap(this.level.coins);
 
     this.ctx.translate(-this.camera_x, 0);

@@ -9,7 +9,7 @@ class MovableObject extends DrawableObject {
   speed = 0; // orginal 0.15
   otherDirection = false;
   gravityInterval;
-
+  
   speedY = 0;
   acceleration = 2.5;
   offset = {
@@ -39,9 +39,9 @@ class MovableObject extends DrawableObject {
       return this.y < 160; // orginal 160 return this.y < 160; // orginal 160 } }
     }
   }
-  //// Working on Bottle 
+  //// Working on Bottle
 
-  //end of bottle 
+  //end of bottle
 
   loadImage(path) {
     this.img = new Image();
@@ -76,6 +76,8 @@ class MovableObject extends DrawableObject {
     }
   }
 
+
+
   isColliding(mo) {
     const isColliding =
       this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // Right edge of the current object with offset applied is to the right of or touching the left edge of mo
@@ -87,11 +89,19 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    this.hurt_sound.play();
+   
+    this.hurt_sound.play().catch(error => {
+      console.error("Fehler beim Abspielen des Sounds:", error);
+    });
+  
     if (this.isAboveGround()) {
-      this.hurt_sound.pause();
+      
+      if (!this.hurt_sound.paused) {
+        this.hurt_sound.pause();
+      }
       return;
     }
+  
     this.energy -= 5;
     if (this.energy < 0) {
       this.energy = 0;
@@ -100,6 +110,17 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  endBossHit() {
+    this.energy -= 20;
+    if (this.energy < 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
+  }
+
+
+
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit; // 1000ms = 1s
     timePassed = timePassed / 1000; // Sekunden
@@ -107,7 +128,7 @@ class MovableObject extends DrawableObject {
   }
 
   isDead() {
-    // return this.energy == 0;
+    return this.energy == 0;
   }
 
   loadImages(arr) {
@@ -127,7 +148,6 @@ class MovableObject extends DrawableObject {
 
   moveRight() {
     this.x += this.speed;
-    console.log('Moving right');
   }
 
   moveLeft() {
