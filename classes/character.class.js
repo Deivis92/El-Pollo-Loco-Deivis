@@ -4,6 +4,7 @@ class Charackter extends MovableObject {
   width = 100;
   speed = 4;
   speedY = 0;
+  walk;
 
   otherDirection = false;
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
@@ -51,6 +52,8 @@ class Charackter extends MovableObject {
     "img/2_character_pepe/4_hurt/H-43.png",
   ];
 
+  // IMAGES_SLEEPING = 
+
   world;
   walking_sound = new Audio("./audio/walk.mp3");
   pepe_jumps = new Audio("./audio/pepe_jumps.mp3");
@@ -67,7 +70,7 @@ class Charackter extends MovableObject {
 
   animate() {
     this.walking_sound.volume = 0.2;
-    setInterval(() => {
+    this.walk = setInterval(() => {
       this.walking_sound.pause();
 
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -94,6 +97,7 @@ class Charackter extends MovableObject {
     setInterval(() => {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
+       
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       }

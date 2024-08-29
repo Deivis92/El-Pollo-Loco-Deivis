@@ -24,6 +24,17 @@ h1 {
   color: #3dafd1;
 }
 
+
+/* Impressum and Privacy Policy */
+h2 {
+  font-size: 72px;
+  letter-spacing: 5px;
+  text-shadow: 8px 8px 8px #a0220a;
+  color: #A0220A;
+}
+
+
+/* Impressum and Privacy Policy End */
 canvas {
   background-color: black;
   display: block;

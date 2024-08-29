@@ -9,7 +9,8 @@ class MovableObject extends DrawableObject {
   speed = 0; // orginal 0.15
   otherDirection = false;
   gravityInterval;
-  
+  energy = 100;
+
   speedY = 0;
   acceleration = 2.5;
   offset = {
@@ -18,7 +19,6 @@ class MovableObject extends DrawableObject {
     left: 0,
     right: 0,
   };
-  energy = 100;
   lastHit = 0;
   hurt_sound = new Audio("./audio/hurt.mp3");
 
@@ -76,8 +76,6 @@ class MovableObject extends DrawableObject {
     }
   }
 
-
-
   isColliding(mo) {
     const isColliding =
       this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // Right edge of the current object with offset applied is to the right of or touching the left edge of mo
@@ -89,19 +87,17 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-   
-    this.hurt_sound.play().catch(error => {
+    this.hurt_sound.play().catch((error) => {
       console.error("Fehler beim Abspielen des Sounds:", error);
     });
-  
+
     if (this.isAboveGround()) {
-      
       if (!this.hurt_sound.paused) {
         this.hurt_sound.pause();
       }
       return;
     }
-  
+
     this.energy -= 5;
     if (this.energy < 0) {
       this.energy = 0;
@@ -118,8 +114,6 @@ class MovableObject extends DrawableObject {
       this.lastHit = new Date().getTime();
     }
   }
-
-
 
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit; // 1000ms = 1s

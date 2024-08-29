@@ -8,7 +8,7 @@ class Endboss extends MovableObject {
   speed;
   speedRight;
   speedLeft;
-
+  
   offset = {
     top: 0,
     bottom: 0,
@@ -54,7 +54,7 @@ class Endboss extends MovableObject {
   IMAGES_DEAD = [
     "./img/4_enemie_boss_chicken/5_dead/G24.png",
     "./img/4_enemie_boss_chicken/5_dead/G25.png",
-    "./img/4_enemie_boss_chicken/5_dead/G26.png",
+    "./img/4_enemie_boss_chicken/5_dead/G26.png"
   ];
 
   constructor() {
@@ -73,10 +73,11 @@ class Endboss extends MovableObject {
 
   followPepe() {
     let checkAndStart = () => {
-     
-      if (typeof world !== "undefined" && typeof world.character !== "undefined") {
+      if (
+        typeof world !== "undefined" &&
+        typeof world.character !== "undefined"
+      ) {
         this.intervalForFollow();
-        
       } else {
         setTimeout(checkAndStart, 100);
       }
@@ -86,7 +87,7 @@ class Endboss extends MovableObject {
 
   intervalForFollow() {
     return (this.follow = setInterval(() => {
-      if (this.x > world.character.x + 50) {
+      if (this.x > world.character.x + 300) {
         this.moveLeft();
         this.otherDirection = false;
         this.playAnimation(this.IMAGES_WALKING);
@@ -100,11 +101,13 @@ class Endboss extends MovableObject {
 
   animate() {
     this.alive = setInterval(() => {
-      if (this.isHurt()) {
+      if (world && world.endBossCollision.isDead()) {
+        console.log("Endboss is dead.");
+        clearInterval(this.follow);
+        clearInterval(world.character.walk);
+        this.playAnimation(this.IMAGES_DEAD);
+      } else if (world && world.endBossCollision.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
-        } else if (world &&  typeof world.checkCollisionEndboss()) {
-          this.playAnimation(this.IMAGES_ATTACK);
-          console.log("endboss attack");
       } else {
         this.playAnimation(this.IMAGES_ALERT);
       }

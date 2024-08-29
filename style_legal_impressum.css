@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "zabaras";
+  src: url("fonts/Zabars.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("img/5_background/body_background/body_background3.jpg");
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "zabaras", Arial, Helvetica, sans-serif;
+}
+
+h2 {
+    font-size: 72px;
+    letter-spacing: 8px;
+    text-shadow: 8px 8px 8px #a0220a;
+    color: #3dafd1;
+  }

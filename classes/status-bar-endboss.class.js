@@ -1,5 +1,6 @@
 class StatusBarEndboss extends DrawableObject {
 
+  percentage = 100;
 
     IMAGES_ENDBOSSBAR = [
         "./img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
@@ -11,7 +12,6 @@ class StatusBarEndboss extends DrawableObject {
        
     ];
 
-    percentage = 100;
 
     constructor() {
         super();

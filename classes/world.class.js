@@ -11,7 +11,7 @@ class World {
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
-  endBoss = new Endboss();
+ endBossCollision = new Endboss();
   coins = new Coins();
   collect_bottle_sound = new Audio("./audio/collect_bottle.mp3");
   collect_coin_sound = new Audio("./audio/collect_coin.mp3");
@@ -113,8 +113,8 @@ class World {
 
   // endboss starts here
   checkCollisionEndboss() {
-    let enemyBoss = this.level.endBoss[0];
-    if (this.character.isColliding(enemyBoss)) {
+   
+    if (this.character.isColliding(this.endBossCollision)) {
       this.character.hit();
       this.statusBar.setPercentage(this.character.energy);
       console.log("endbos collision");
@@ -122,21 +122,24 @@ class World {
   }
 
   collisionBottleEndboss() {
-    let endBoss = this.level.endBoss[0]; // Assuming endBoss is a property of level
-
+    
+    
     this.throwableObjects.forEach((throwableObject, bottleIndex) => {
-      if (throwableObject.isColliding(endBoss)) {
+      if (throwableObject.isColliding(this.endBossCollision)) {
         if (throwableObject.isAboveGround() && throwableObject.speedY < 0) {
           // endBoss.isDead = true;  // Mark the end boss as dead
           throwableObject.speedY = 0;
           this.removeBottle(bottleIndex);
           console.log("End boss dead");
-          this.endBoss.endBossHit();
-          console.log("End boss energy:", this.endBoss.energy);
-          this.statusBarEndboss.setPercentage(this.endBoss.energy);
-          endBoss.lastHit = new Date().getTime();
+          this.endBossCollision.endBossHit();
+          console.log("End boss energy:", this.endBossCollision.energy);
+          this.statusBarEndboss.setPercentage(this.endBossCollision.energy);
+          this.endBossCollision.lastHit = new Date().getTime();
+
+          
         }
-      }
+       
+    }
     });
   }
 
