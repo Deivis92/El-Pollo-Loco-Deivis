@@ -13,4 +13,23 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('mouseleave');
         });
     }
+
+
+    const helpButton = document.getElementById('help');
+    const helpContainer = document.getElementById('help-container');
+
+    if (helpButton && helpContainer) {
+        helpButton.addEventListener('mouseenter', () => {
+            helpContainer.classList.add('active');
+            console.log('help mouseenter');
+        });
+
+        helpButton.addEventListener('mouseleave', () => {
+            helpContainer.classList.remove('active');
+            console.log('help mouseleave');
+        });
+    }
+
 });
+
+

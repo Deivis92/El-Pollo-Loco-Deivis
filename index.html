@@ -33,6 +33,9 @@
     <script src="./js/game.js"></script>
   </head>
   <body onload="init()">
+
+    <!-- Start Screen  -->
+    <h1>El Pollo Loco</h1>
     <div class="start-screen">
       <button class="cowboy-button">Start</button>
       <div class="controls" id="controls-container">
@@ -55,17 +58,43 @@
             <span class="text-size-controls">Jumps</span>
         </div>
       </div>
+
+       <div class="how-to-play" id="help-container">
+        <h2>How to Play</h2>
+        <div class="help-item">
+          <span class="text-size-controls">Avoid the chickens</span>
+        </div>
+        <div class="help-item">
+          <span class="text-size-controls">Throw bottles at the chickens</span>
+        </div>
+        <div class="help-item">
+          <span class="text-size-controls">Collect coins</span>
+        </div>
+        <div class="help-item">
+          <span class="text-size-controls">Defeat the Endboss</span>
+        </div>
+
+       </div>
+
+
+
+
+
+
+
       <button class="cowboy-controls-button" id="controls-button"></button>
+      <img class="sound-icon" src="./icons/sound_on.svg" alt="sound-one">
+      <button class="help-button" id="help"></button>
       <div class="impressum-policy">
         <a href="./imprint.html">Impressum</a>
         <a href="./privacy_policy.html">Privacy Policy</a>
       </div>
     </div>
+    <!-- Start Screen ends here  -->
       
       
       
       <div id="fullscreen">
-        <h1>El Pollo Loco</h1>
         <canvas id="canvas" width="720" height="480"> </canvas>
       </div>
    

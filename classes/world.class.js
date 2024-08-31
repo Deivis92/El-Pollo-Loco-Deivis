@@ -17,6 +17,7 @@ class World {
   collect_coin_sound = new Audio("./audio/collect_coin.mp3");
   throwableObjects = [];
   canThrowBottle = true;
+  allIntervals = [];
 
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
