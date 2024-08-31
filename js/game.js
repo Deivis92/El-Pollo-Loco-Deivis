@@ -2,6 +2,9 @@ let canvas;
 let world;
 let keyboard = new Keybord();
 
+
+
+
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
@@ -54,3 +57,5 @@ window.addEventListener("keyup", (e) => {
     keyboard.D = false;
   }
 });
+
+  

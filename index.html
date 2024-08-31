@@ -10,6 +10,7 @@
       href="./img/4_enemie_boss_chicken/1_walk/G1.png"
     />
     <link rel="stylesheet" href="style.css" />
+    <script src="./js/start.js"></script>
     <script src="./classes/drawable-object.class.js"></script>
     <script src="./classes/movable-object.class.js"></script>
     <script src="./classes/chicken.class.js"></script>
@@ -33,7 +34,32 @@
   </head>
   <body onload="init()">
     <div class="start-screen">
-      
+      <button class="cowboy-button">Start</button>
+      <div class="controls" id="controls-container">
+        
+        <h2>Controls</h2>
+        <div class="control-item" >
+            <span class="icon arrow-right"></span>
+            <span class="text-size-controls">Moves Right</span>
+        </div>
+        <div class="control-item">
+            <span class="icon arrow-left"></span>
+            <span class="text-size-controls">Moves Left</span>
+        </div>
+        <div class="control-item">
+            <span class="icon key-d"></span>
+            <span class="text-size-controls">Throw Bottle</span>
+        </div>
+        <div class="control-item">
+            <span class="icon space-bar"></span>
+            <span class="text-size-controls">Jumps</span>
+        </div>
+      </div>
+      <button class="cowboy-controls-button" id="controls-button"></button>
+      <div class="impressum-policy">
+        <a href="./imprint.html">Impressum</a>
+        <a href="./privacy_policy.html">Privacy Policy</a>
+      </div>
     </div>
       
       
