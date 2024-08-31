@@ -66,7 +66,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_ATTACK);
     this.speedRight = 10;
-    this.speed = 20;
+    this.speed = 13;
     this.x = 2500; // 2500
     this.animate();
     
@@ -75,9 +75,10 @@ class Endboss extends MovableObject {
 
   monitorCharacterPosition() {
     setInterval(() => {
-      if(!this.hasFollowStarted && world && world.character.x >= 2200) {
+      if (!this.hasFollowStarted && world && world.character.x >= 2200) {
         this.hasFollowStarted = true;
         this.followPepe();
+    
       }
     }, 100);
   }
@@ -104,6 +105,7 @@ class Endboss extends MovableObject {
         this.playAnimation(this.IMAGES_WALKING);
       } else if (this.x < world.character.x - 150) {
         this.moveRight();
+        this.speedRight = 17;
         this.otherDirection = true;
         this.playAnimation(this.IMAGES_WALKING);
       }
