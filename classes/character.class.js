@@ -68,10 +68,9 @@ class Charackter extends MovableObject {
   world;
   walking_sound = new Audio("./audio/walk.mp3");
   pepe_jumps = new Audio("./audio/pepe_jumps.mp3");
-  
+
   lastMoveTime = Date.now();
   sleepTimeout = 5000; // 5 seconds
-
 
   constructor() {
     super().loadImage("./img/2_character_pepe/2_walk/W-21.png");
@@ -88,6 +87,7 @@ class Charackter extends MovableObject {
     this.walking_sound.volume = 0.2;
     this.walk = setInterval(() => {
       this.walking_sound.pause();
+      
 
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();

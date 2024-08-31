@@ -29,22 +29,20 @@ class StatusBarCoins extends MovableObject {
   }
 
   resolveImageIndexCoins() {
-    if (this.coins > 5) {
-      this.coins = 5;
-    }
-  
-    if (this.coins == 5) {
-      return 5;
+    // Map coin values to the correct image index
+    if (this.coins >= 10) {
+      return 5; // 100% image
+    } else if (this.coins >= 8) {
+      return 4; // 80% image
+    } else if (this.coins >= 6) {
+      return 3; // 60% image
     } else if (this.coins >= 4) {
-      return 4;
-    } else if (this.coins >= 3) {
-      return 3;
+      return 2; // 40% image
     } else if (this.coins >= 2) {
-      return 2;
-    } else if (this.coins >= 1) {
-      return 1;
+      return 1; // 20% image
     } else {
-      return 0;
+      return 0; // 0% image
     }
   }
 }
+

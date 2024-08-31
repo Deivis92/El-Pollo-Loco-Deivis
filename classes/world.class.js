@@ -27,6 +27,11 @@ class World {
     this.setWorld();
     this.checkCollisions();
     this.collectBottle();
+    this.lastCollisionTime = 0; // To track the last time energy was reduced
+    this.collisionCooldown = 500; // Cooldown period in milliseconds
+    this.lastCollisionTimeEndBoss = 0; // To track the last time energy was reduced
+    this.collisionCooldownEndBoss = 300; // Cooldown period in milliseconds
+    this.run();
     this.run();
     
   }
@@ -93,6 +98,8 @@ class World {
   }
 
   checkCollisions() {
+    const currentTime = Date.now();
+    
     this.level.enemies.forEach((enemy, enemyIndex) => {
       if (this.character.isColliding(enemy)) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
@@ -103,9 +110,12 @@ class World {
             this.level.enemies.splice(enemyIndex, 1);
           }, 200);
         } else {
-          this.character.hit();
-
-          this.statusBar.setPercentage(this.character.energy);
+          // Check if enough time has passed since last collision
+          if (currentTime - this.lastCollisionTime >= this.collisionCooldown) {
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+            this.lastCollisionTime = currentTime; // Update last collision time
+          }
         }
       }
     });
@@ -113,13 +123,21 @@ class World {
 
   // endboss starts here
   checkCollisionEndboss() {
-   
+    const currentTime = Date.now();
+
     if (this.character.isColliding(this.endBossCollision)) {
-      this.character.hit();
-      this.statusBar.setPercentage(this.character.energy);
-      console.log("endbos collision");
+      // Check if enough time has passed since the last collision with the end boss
+      if (currentTime - this.lastCollisionTimeEndBoss >= this.collisionCooldownEndBoss) {
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.energy);
+        console.log("endboss collision");
+
+        // Update last collision time
+        this.lastCollisionTimeEndBoss = currentTime;
+      }
     }
   }
+
 
   collisionBottleEndboss() {
     
@@ -173,7 +191,7 @@ class World {
   // bottle ends
 
   collectBottle() {
-    if (this.statusBarBottle.bottles >= 5) {
+    if (this.statusBarBottle.bottles >= 10) {
       return; // Stop further collection if the bottle count exceeds 5
     }
     this.level.groundBottles.forEach((bottle, bottleIndex) => {
@@ -257,7 +275,7 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);

@@ -17,7 +17,7 @@ class StatusBarBottle extends MovableObject {
     this.y = 0;
     this.width = 200;
     this.height = 50;
-    this.setBottles(50);
+    this.setBottles(2);
   }
 
   setBottles(bottles) {
@@ -28,19 +28,21 @@ class StatusBarBottle extends MovableObject {
 
   resolveImageIndexBottles() {
    
-
-    if (this.bottles == 5) {
-      return 5;
+   
+   
+    
+    if (this.bottles >= 10) {
+      return 5; // 100% image
+    } else if (this.bottles >= 8) {
+      return 4; // 80% image
+    } else if (this.bottles >= 6) {
+      return 3; // 60% image
     } else if (this.bottles >= 4) {
-      return 4;
-    } else if (this.bottles >= 3) {
-      return 3;
+      return 2; // 40% image
     } else if (this.bottles >= 2) {
-      return 2;
-    } else if (this.bottles >= 1) {
-      return 1;
+      return 1; // 20% image
     } else {
-      return 0;
+      return 0; // 0% image
     }
   }
 

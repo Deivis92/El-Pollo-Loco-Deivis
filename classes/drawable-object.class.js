@@ -13,26 +13,26 @@ class DrawableObject {
     this.img.src = path;
   }
 
-  drawFrame(ctx) {
-    if (
-      this instanceof Charackter ||
-      this instanceof Chicken ||
-      this instanceof Endboss ||
-      this instanceof SmallChicken
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = "5";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
+  // drawFrame(ctx) {
+  //   if (
+  //     this instanceof Charackter ||
+  //     this instanceof Chicken ||
+  //     this instanceof Endboss ||
+  //     this instanceof SmallChicken
+  //   ) {
+  //     ctx.beginPath();
+  //     ctx.lineWidth = "5";
+  //     ctx.strokeStyle = "blue";
+  //     ctx.rect(this.x, this.y, this.width, this.height);
+  //     ctx.stroke();
 
-      ctx.beginPath();
-      ctx.lineWidth = "5";
-      ctx.strokeStyle = "red";
-      ctx.rect(this.x - 5, this.y - 5, this.width + 10, this.height + 10);
-      ctx.stroke();
-    }
-  }
+  //     ctx.beginPath();
+  //     ctx.lineWidth = "5";
+  //     ctx.strokeStyle = "red";
+  //     ctx.rect(this.x - 5, this.y - 5, this.width + 10, this.height + 10);
+  //     ctx.stroke();
+  //   }
+  // }
 
   draw(ctx) {
     try {

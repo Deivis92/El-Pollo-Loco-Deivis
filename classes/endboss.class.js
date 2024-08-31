@@ -124,6 +124,6 @@ class Endboss extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_ALERT);
       }
-    }, 200);
+    }, 400);
   }
 }
