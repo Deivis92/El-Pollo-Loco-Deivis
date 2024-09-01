@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keybord();
+let intervalIDs = [];
 
 
 
@@ -58,4 +59,13 @@ window.addEventListener("keyup", (e) => {
   }
 });
 
+function stopGame() {
+  // Alle gespeicherten Intervalle beenden
+  intervalIDs.forEach(intervalID => {
+    clearInterval(intervalID);
+  });
+
+  // Leere das Array nach dem Stoppen der Intervalle
+  intervalIDs = [];
+}
   

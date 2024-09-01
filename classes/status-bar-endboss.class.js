@@ -27,7 +27,8 @@ class StatusBarEndboss extends DrawableObject {
     }
 
     makeVisible() {
-      setInterval(() => {
+       let statusBarBoss =  setInterval(() => {
+        intervalIDs.push(statusBarBoss);
         if(world && world.character.x >= 2000) {
           this.isVisible = true;
         }

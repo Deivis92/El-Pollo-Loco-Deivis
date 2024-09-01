@@ -7,6 +7,7 @@ class World {
   keyboard;
   camera_x = 0;
   statusBarBottle = new StatusBarBottle();
+  // mobile = new Mobile();
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
@@ -42,7 +43,8 @@ class World {
   }
 
   run() {
-    setInterval(() => {
+    let worldInterval1 = setInterval(() => {
+      intervalIDs.push(worldInterval1);
       // check colisions
       this.checkCollisions();
       this.collectBottle();
@@ -247,6 +249,7 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
     // Space for fixed objects
+    // this.addToMap(this.mobile);
     this.addToMap(this.statusBarBottle);
     this.addToMap(this.statusCoins);
     this.addToMap(this.statusBarEndboss);

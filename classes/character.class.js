@@ -65,12 +65,25 @@ class Charackter extends MovableObject {
     "./img/2_character_pepe/1_idle/idle/I-10.png",
   ];
 
+  IMAGES_SLEEPING_ZZZ = [
+    "./img/2_character_pepe/1_idle/long_idle/I-11.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-12.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-13.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-14.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-15.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-16.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-17.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-18.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-19.png",
+    "./img/2_character_pepe/1_idle/long_idle/I-20.png",
+  ];
+
   world;
   walking_sound = new Audio("./audio/walk.mp3");
   pepe_jumps = new Audio("./audio/pepe_jumps.mp3");
 
   lastMoveTime = Date.now();
-  sleepTimeout = 5000; // 5 seconds
+  sleepTimeout = 200; // 5 seconds
 
   constructor() {
     super().loadImage("./img/2_character_pepe/2_walk/W-21.png");
@@ -79,15 +92,17 @@ class Charackter extends MovableObject {
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_SLEEPING);
+    this.loadImages(this.IMAGES_SLEEPING_ZZZ);
     this.applyGravity();
     this.animate();
   }
 
   animate() {
     this.walking_sound.volume = 0.2;
-    this.walk = setInterval(() => {
+
+    let charackterMoving = setInterval(() => {
+      intervalIDs.push(charackterMoving);
       this.walking_sound.pause();
-      
 
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
@@ -113,7 +128,8 @@ class Charackter extends MovableObject {
       }
     }, 1000 / 60);
 
-    setInterval(() => {
+    let charackterInterval2 = setInterval(() => {
+      intervalIDs.push(charackterInterval2);
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
       } else if (this.isHurt()) {
@@ -127,9 +143,17 @@ class Charackter extends MovableObject {
       }
     }, 50);
 
-    setInterval(() => {
+    let charackterInterval3 = setInterval(() => {
+      intervalIDs.push(charackterInterval3);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout) {
         this.playAnimation(this.IMAGES_SLEEPING);
+      }
+    }, 700);
+
+    let charackterInterval4 = setInterval(() => {
+      intervalIDs.push(charackterInterval4);
+      if (Date.now() - this.lastMoveTime > this.sleepTimeout * 25) {
+        this.playAnimation(this.IMAGES_SLEEPING_ZZZ);
       }
     }, 700);
   }

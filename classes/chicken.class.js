@@ -3,9 +3,9 @@ class Chicken extends MovableObject {
   height = 70;
   width = 50;
   chickenDead = false;
-  speedRight;  // Speed when moving right
-  speedLeft;   // Speed when moving left
-  movingRight = false;  // Direction state
+  speedRight; // Speed when moving right
+  speedLeft; // Speed when moving left
+  movingRight = false; // Direction state
   offset = {
     top: 0,
     bottom: 0,
@@ -39,7 +39,8 @@ class Chicken extends MovableObject {
   }
 
   startMovementAnimation() {
-    setInterval(() => {
+    let chickenInterval1 = setInterval(() => {
+      intervalIDs.push(chickenInterval1);
       this.handleMovement();
     }, 1000 / 60); // 60 FPS
   }
@@ -54,7 +55,8 @@ class Chicken extends MovableObject {
         this.otherDirection = true;
       }
     } else {
-      if (this.x <= 100) { // Change this value as needed for the left boundary
+      if (this.x <= 100) {
+        // Change this value as needed for the left boundary
         this.movingRight = true; // Switch direction to right
         this.otherDirection = true; // Reset to false for normal direction
       } else {
@@ -65,7 +67,8 @@ class Chicken extends MovableObject {
   }
 
   startStateAnimation() {
-    setInterval(() => {
+    let chicken2 = setInterval(() => {
+      intervalIDs.push(chicken2);
       this.handleStateAnimation();
     }, 200); // Animation frame rate for state changes
   }

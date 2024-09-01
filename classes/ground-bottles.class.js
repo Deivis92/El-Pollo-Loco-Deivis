@@ -23,13 +23,12 @@ class GroundBottles extends MovableObject {
     this.playAnimation(this.IMAGES_GROUND_BOTTLES);
     this.x = 300 + Math.random() * 1700;
     this.animate();
-    
   }
 
   animate() {
-    setInterval(() => {
+    let GroundBottlesInterval = setInterval(() => {
+      intervalIDs.push(GroundBottlesInterval);
       this.playAnimation(this.IMAGES_GROUND_BOTTLES);
     }, 500);
   }
-
 }

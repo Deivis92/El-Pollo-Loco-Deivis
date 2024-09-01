@@ -37,6 +37,7 @@ class MovableObject extends DrawableObject {
       return true;
     } else {
       return this.y < 160; // orginal 160 return this.y < 160; // orginal 160 } }
+      
     }
   }
   //// Working on Bottle
@@ -89,7 +90,7 @@ class MovableObject extends DrawableObject {
     this.hurt_sound.play().catch((error) => {
       console.error("Fehler beim Abspielen des Sounds:", error);
     });
-  
+
     if (this.isAboveGround()) {
       // Use a small delay to ensure the sound has time to start playing
       setTimeout(() => {
@@ -99,7 +100,7 @@ class MovableObject extends DrawableObject {
       }, 50); // Short delay to mitigate race condition
       return;
     }
-  
+
     this.energy = Math.max(this.energy - 5, 0);
     this.lastHit = new Date().getTime();
   }

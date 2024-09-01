@@ -41,7 +41,8 @@ class SmallChicken extends MovableObject {
   }
 
   startMovementAnimation() {
-    setInterval(() => {
+    let smallChickenInterval =  setInterval(() => {
+      intervalIDs.push(smallChickenInterval);
       this.handleMovement();
     }, 1000 / 60); // 60 FPS
   }
@@ -67,7 +68,8 @@ class SmallChicken extends MovableObject {
   }
 
   startStateAnimation() {
-    setInterval(() => {
+    let smallChickenInterval2 = setInterval(() => {
+      intervalIDs.push(smallChickenInterval2);
       this.handleStateAnimation();
     }, 200); // Animation frame rate for state changes
   }

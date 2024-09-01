@@ -5,12 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (controlsButton && controlsContainer) {
         controlsButton.addEventListener('mouseenter', () => {
             controlsContainer.classList.add('active');
-            console.log('mouseenter');
         });
 
         controlsButton.addEventListener('mouseleave', () => {
             controlsContainer.classList.remove('active');
-            console.log('mouseleave');
         });
     }
 
@@ -21,12 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (helpButton && helpContainer) {
         helpButton.addEventListener('mouseenter', () => {
             helpContainer.classList.add('active');
-            console.log('help mouseenter');
         });
 
         helpButton.addEventListener('mouseleave', () => {
             helpContainer.classList.remove('active');
-            console.log('help mouseleave');
         });
     }
 

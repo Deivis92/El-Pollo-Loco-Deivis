@@ -3,13 +3,12 @@ class Endboss extends MovableObject {
   width = 300;
   y = 1;
   x = 1000; // 1000
-  alive;
-  follow;
+
   speed;
   speedRight;
   speedLeft;
   hasFollowStarted = false;
-  
+
   offset = {
     top: 0,
     bottom: 0,
@@ -55,7 +54,7 @@ class Endboss extends MovableObject {
   IMAGES_DEAD = [
     "./img/4_enemie_boss_chicken/5_dead/G24.png",
     "./img/4_enemie_boss_chicken/5_dead/G25.png",
-    "./img/4_enemie_boss_chicken/5_dead/G26.png"
+    "./img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
   constructor() {
@@ -69,16 +68,16 @@ class Endboss extends MovableObject {
     this.speed = 13;
     this.x = 2500; // 2500
     this.animate();
-    
+
     this.monitorCharacterPosition();
   }
 
   monitorCharacterPosition() {
-    setInterval(() => {
+    let endBossInterval1 = setInterval(() => {
+      intervalIDs.push(endBossInterval1); // Speichere die ID des Intervalls in der Variable "interval"
       if (!this.hasFollowStarted && world && world.character.x >= 2200) {
         this.hasFollowStarted = true;
         this.followPepe();
-    
       }
     }, 100);
   }
@@ -98,7 +97,8 @@ class Endboss extends MovableObject {
   }
 
   intervalForFollow() {
-    return (this.follow = setInterval(() => {
+    let endBossInterval2 = setInterval(() => {
+      intervalIDs.push(endBossInterval2);
       if (this.x > world.character.x - 25) {
         this.moveLeft();
         this.otherDirection = false;
@@ -109,15 +109,14 @@ class Endboss extends MovableObject {
         this.otherDirection = true;
         this.playAnimation(this.IMAGES_WALKING);
       }
-    }, 1000 / 15));
+    }, 1000 / 15);
   }
 
   animate() {
     this.alive = setInterval(() => {
       if (world && world.endBossCollision.isDead()) {
         console.log("Endboss is dead.");
-        clearInterval(this.follow);
-        clearInterval(world.character.walk);
+        stopGame();
         this.playAnimation(this.IMAGES_DEAD);
       } else if (world && world.endBossCollision.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
