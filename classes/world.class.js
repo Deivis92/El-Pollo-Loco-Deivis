@@ -7,12 +7,13 @@ class World {
   keyboard;
   camera_x = 0;
   statusBarBottle = new StatusBarBottle();
-  // mobile = new Mobile();
+
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
- endBossCollision = new Endboss();
+  endBossCollision = new Endboss();
+
   coins = new Coins();
   collect_bottle_sound = new Audio("./audio/collect_bottle.mp3");
   collect_coin_sound = new Audio("./audio/collect_coin.mp3");
@@ -24,7 +25,7 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
- 
+
     this.draw();
     this.setWorld();
     this.checkCollisions();
@@ -35,7 +36,6 @@ class World {
     this.collisionCooldownEndBoss = 300; // Cooldown period in milliseconds
     this.run();
     this.run();
-    
   }
 
   setWorld() {
@@ -54,7 +54,6 @@ class World {
       this.bottleOnGround();
       this.checkCollisionEndboss();
       this.collisionBottleEndboss();
-      
     }, 1000 / 60);
   }
 
@@ -102,7 +101,7 @@ class World {
 
   checkCollisions() {
     const currentTime = Date.now();
-    
+
     this.level.enemies.forEach((enemy, enemyIndex) => {
       if (this.character.isColliding(enemy)) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
@@ -130,7 +129,10 @@ class World {
 
     if (this.character.isColliding(this.endBossCollision)) {
       // Check if enough time has passed since the last collision with the end boss
-      if (currentTime - this.lastCollisionTimeEndBoss >= this.collisionCooldownEndBoss) {
+      if (
+        currentTime - this.lastCollisionTimeEndBoss >=
+        this.collisionCooldownEndBoss
+      ) {
         this.character.hit();
         this.statusBar.setPercentage(this.character.energy);
         console.log("endboss collision");
@@ -141,10 +143,7 @@ class World {
     }
   }
 
-
   collisionBottleEndboss() {
-    
-    
     this.throwableObjects.forEach((throwableObject, bottleIndex) => {
       if (throwableObject.isColliding(this.endBossCollision)) {
         if (throwableObject.isAboveGround() && throwableObject.speedY < 0) {
@@ -156,11 +155,8 @@ class World {
           console.log("End boss energy:", this.endBossCollision.energy);
           this.statusBarEndboss.setPercentage(this.endBossCollision.energy);
           this.endBossCollision.lastHit = new Date().getTime();
-
-          
         }
-       
-    }
+      }
     });
   }
 
@@ -249,7 +245,7 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
     // Space for fixed objects
-    // this.addToMap(this.mobile);
+   
     this.addToMap(this.statusBarBottle);
     this.addToMap(this.statusCoins);
     this.addToMap(this.statusBarEndboss);

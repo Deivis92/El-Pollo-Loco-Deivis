@@ -3,15 +3,12 @@ let world;
 let keyboard = new Keybord();
 let intervalIDs = [];
 
-
-
-
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-  document.getElementById("canvas").classList.remove('d-none');
-  document.getElementById("start-screen").classList.add('d-none');
-  console.log("My Charackter is", world.character);
+  document.getElementById("canvas").classList.remove("d-none");
+  document.getElementById("start-screen").classList.add("d-none");
+  console.log("My Character is", world.character);
 }
 
 window.addEventListener("keydown", (e) => {
@@ -44,38 +41,35 @@ function setupMobileControls() {
   }
 
   function handleTouchEvent(e, key, isPressed) {
-    e.preventDefault();
+    // Only call preventDefault if the event is cancelable
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     handleButtonPress(key, isPressed);
   }
 
   function setupButtonEvents(button, key) {
-    button.addEventListener('touchstart', (e) => handleTouchEvent(e, key, true));
-    button.addEventListener('touchend', (e) => handleTouchEvent(e, key, false));
-    button.addEventListener('click', (e) => handleTouchEvent(e, key, true));
-    button.addEventListener('mouseup', (e) => handleTouchEvent(e, key, false));
+    button.addEventListener("touchstart", (e) => handleTouchEvent(e, key, true));
+    button.addEventListener("touchend", (e) => handleTouchEvent(e, key, false));
+    button.addEventListener("mousedown", (e) => handleTouchEvent(e, key, true));
+    button.addEventListener("mouseup", (e) => handleTouchEvent(e, key, false));
   }
 
-  setupButtonEvents(leftButton, 'LEFT');
-  setupButtonEvents(rightButton, 'RIGHT');
-  setupButtonEvents(jumpButton, 'SPACE');
-  setupButtonEvents(throwButton, 'D');
+  setupButtonEvents(leftButton, "LEFT");
+  setupButtonEvents(rightButton, "RIGHT");
+  setupButtonEvents(jumpButton, "SPACE");
+  setupButtonEvents(throwButton, "D");
 }
 
-// Call setupMobileControls when the page loads
-window.addEventListener('load', setupMobileControls);
-
-
-
-
-
+window.addEventListener("load", setupMobileControls);
 
 function stopGame() {
-  // Alle gespeicherten Intervalle beenden
-  intervalIDs.forEach(intervalID => {
+  // Stop all running intervals
+  intervalIDs.forEach((intervalID) => {
     clearInterval(intervalID);
   });
 
-  // Leere das Array nach dem Stoppen der Intervalle
+  // Empty the array after stopping the intervals
   intervalIDs = [];
 }
 
@@ -90,7 +84,7 @@ function restartGame() {
   // 1. Stop any running intervals or animations
   stopGame();
   // 2. Reset game state or reload the page
-  // location.reload(); // This reloads the page, restarting the game.
+
   init(); // Re-initialize the game
 }
 
@@ -104,39 +98,31 @@ function closeFullscreen() {
   exitFullscreen(fullscreen);
 }
 
-
 function enterFullscreen(element) {
-  if(element.requestFullscreen) {
+  if (element.requestFullscreen) {
     element.requestFullscreen();
-  } else if(element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+  } else if (element.msRequestFullscreen) {
+    // for IE11 (remove June 15, 2022)
     element.msRequestFullscreen();
-  } else if(element.webkitRequestFullscreen) {  // iOS Safari
+  } else if (element.webkitRequestFullscreen) {
+    // iOS Safari
     element.webkitRequestFullscreen();
   }
 }
 
 function exitFullscreen() {
-  if(document.exitFullscreen) {
+  if (document.exitFullscreen) {
     document.exitFullscreen();
-  } else if(document.webkitExitFullscreen) {
+  } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
-
-
-  document.addEventListener('DOMContentLoaded', function() {
-    // Select all images with the class 'icon-mobile'
-    const icons = document.querySelectorAll('.icon-mobile');
-
-    icons.forEach(icon => {
-        icon.addEventListener('contextmenu', function(event) {
-            event.preventDefault(); // Prevent the context menu from appearing
-        });
-    });
-});
-
-
-
 }
 
-
-  
+document.addEventListener("DOMContentLoaded", function () {
+  const icons = document.querySelectorAll(".icon-mobile");
+  icons.forEach((icon) => {
+    icon.addEventListener("contextmenu", function (event) {
+      event.preventDefault(); // Prevent the context menu from appearing
+    });
+  });
+});
