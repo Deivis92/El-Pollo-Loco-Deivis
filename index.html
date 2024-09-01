@@ -33,33 +33,31 @@
     <script src="./js/game.js"></script>
   </head>
   <body onload="init()">
-
     <!-- Start Screen  -->
     <h1>El Pollo Loco</h1>
     <div class="start-screen d-none">
       <button class="cowboy-button">Start</button>
       <div class="controls" id="controls-container">
-        
         <h2>Controls</h2>
-        <div class="control-item" >
-            <span class="icon arrow-right"></span>
-            <span class="text-size-controls">Moves Right</span>
+        <div class="control-item">
+          <span class="icon arrow-right"></span>
+          <span class="text-size-controls">Moves Right</span>
         </div>
         <div class="control-item">
-            <span class="icon arrow-left"></span>
-            <span class="text-size-controls">Moves Left</span>
+          <span class="icon arrow-left"></span>
+          <span class="text-size-controls">Moves Left</span>
         </div>
         <div class="control-item">
-            <span class="icon key-d"></span>
-            <span class="text-size-controls">Throw Bottle</span>
+          <span class="icon key-d"></span>
+          <span class="text-size-controls">Throw Bottle</span>
         </div>
         <div class="control-item">
-            <span class="icon space-bar"></span>
-            <span class="text-size-controls">Jumps</span>
+          <span class="icon space-bar"></span>
+          <span class="text-size-controls">Jumps</span>
         </div>
       </div>
 
-       <div class="how-to-play" id="help-container">
+      <div class="how-to-play" id="help-container">
         <h2>How to Play</h2>
         <div class="help-item">
           <span class="text-size-controls">Avoid the chickens</span>
@@ -73,17 +71,10 @@
         <div class="help-item">
           <span class="text-size-controls">Defeat the Endboss</span>
         </div>
-
-       </div>
-
-
-
-
-
-
+      </div>
 
       <button class="cowboy-controls-button" id="controls-button"></button>
-      <img class="sound-icon" src="./icons/sound_on.svg" alt="sound-one">
+      <img class="sound-icon" src="./icons/sound_on.svg" alt="sound-one" />
       <button class="help-button" id="help"></button>
       <div class="impressum-policy">
         <a href="./imprint.html">Impressum</a>
@@ -91,12 +82,21 @@
       </div>
     </div>
     <!-- Start Screen ends here  -->
-      
-      
-      
-      <div id="fullscreen">
-        <canvas id="canvas" width="720" height="480"> </canvas>
-      </div>
-   
+
+    <!-- mobile controls -->
+    <div class="mobile-controls" id="mobile-controls">
+      <img class="icon-mobile" src="./icons/left_icon.png" alt="left-arrow" />
+      <img class="icon-mobile" src="./icons/right_icon.png" alt="right-arrow" />
+     
+    </div>
+
+    <div class="mobile-controls2">
+      <img class="icon-mobile" src="./icons/jump_icon.png" alt="jump-icon" />
+      <img class="icon-mobile" src="./icons/throw_icon.png" alt="throw-icon" />
+    </div>
+
+    <div id="fullscreen">
+      <canvas id="canvas" width="720" height="480"> </canvas>
+    </div>
   </body>
 </html>
