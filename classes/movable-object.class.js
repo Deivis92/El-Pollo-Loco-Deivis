@@ -121,8 +121,27 @@ class MovableObject extends DrawableObject {
   }
 
   isDead() {
-    return this.energy == 0;
-  }
+    if (this.energy === 0) {
+        // Start the fade-out animation for the canvas
+        document.getElementById('canvas').classList.add('fade-out');
+
+        // Wait 1 second (1000 milliseconds) for the canvas animation to complete
+        setTimeout(() => {
+            // Hide the canvas after the animation
+            document.getElementById('canvas').classList.add('d-none');
+
+            // Start the fade-in animation for the game-over screen
+            document.getElementById('game-over').classList.remove('d-none');
+            document.getElementById('game-over').classList.add('fade-in');
+
+            // Stop the game
+            stopGame();
+        }, 1000); // Duration of the fade-out animation
+
+        return true;  // Indicate that the character is dead
+    }
+    return false;  // Indicate that the character is not dead
+}
 
   loadImages(arr) {
     arr.forEach((path) => {

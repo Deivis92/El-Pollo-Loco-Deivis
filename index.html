@@ -11,32 +11,32 @@
     />
     <link rel="stylesheet" href="style.css" />
     <script src="./js/start.js"></script>
-    <script src="./classes/drawable-object.class.js"></script>
-    <script src="./classes/movable-object.class.js"></script>
-    <script src="./classes/chicken.class.js"></script>
-    <script src="./classes/small-chicken.class.js"></script>
-    <script src="./classes/ground-bottles.class.js"></script>
-    <script src="./classes/cloud.class.js"></script>
-    <script src="./classes/status-bar.class.js"></script>
-    <script src="./classes/status-bar-bottle.class.js"></script>
-    <script src="./classes/coins.class.js"></script>
-    <script src="./classes/status-bar-coins.class.js"></script>
-    <script src="./classes/background-object.class.js"></script>
-    <script src="./classes/status-bar-endboss.class.js"></script>
-    <script src="./classes/world.class.js"></script>
-    <script src="./classes/keybord.class.js"></script>
-    <script src="./classes/character.class.js"></script>
-    <script src="./classes/level.class.js"></script>
-    <script src="./classes/endboss.class.js"></script>
-    <script src="./classes/throwable-object.class.js"></script>
-    <script src="./classes/levels/level1.js"></script>
-    <script src="./js/game.js"></script>
+    <script src="./classes/drawable-object.class.js" defer></script>
+    <script src="./classes/movable-object.class.js" defer></script>
+    <script src="./classes/chicken.class.js" defer></script>
+    <script src="./classes/small-chicken.class.js" defer></script>
+    <script src="./classes/ground-bottles.class.js" defer></script>
+    <script src="./classes/cloud.class.js" defer></script>
+    <script src="./classes/status-bar.class.js" defer></script>
+    <script src="./classes/status-bar-bottle.class.js" defer></script>
+    <script src="./classes/coins.class.js" defer></script>
+    <script src="./classes/status-bar-coins.class.js" defer></script>
+    <script src="./classes/background-object.class.js" defer></script>
+    <script src="./classes/status-bar-endboss.class.js" defer></script>
+    <script src="./classes/world.class.js" defer></script>
+    <script src="./classes/keybord.class.js" defer></script>
+    <script src="./classes/character.class.js" defer></script>
+    <script src="./classes/level.class.js" defer></script>
+    <script src="./classes/endboss.class.js" defer></script>
+    <script src="./classes/throwable-object.class.js" defer></script>
+    <script src="./classes/levels/level1.js" defer></script>
+    <script src="./js/game.js" defer></script>
   </head>
-  <body onload="init()">
+  <body>
     <!-- Start Screen  -->
     <h1>El Pollo Loco</h1>
-    <div class="start-screen d-none">
-      <button class="cowboy-button">Start</button>
+    <div class="start-screen" id="start-screen">
+      <button onclick="init()" class="cowboy-button">Start</button>
       <div class="controls" id="controls-container">
         <h2>Controls</h2>
         <div class="control-item">
@@ -85,18 +85,30 @@
 
     <!-- mobile controls -->
     <div class="mobile-controls" id="mobile-controls">
-      <img class="icon-mobile" src="./icons/left_icon.png" alt="left-arrow" />
-      <img class="icon-mobile" src="./icons/right_icon.png" alt="right-arrow" />
+      <a></a><img class="icon-mobile" src="./icons/left_icon.png" alt="left-arrow" /></a>
+    <a><img class="icon-mobile" src="./icons/right_icon.png" alt="right-arrow" /></a>
      
     </div>
 
     <div class="mobile-controls2">
-      <img class="icon-mobile" src="./icons/jump_icon.png" alt="jump-icon" />
-      <img class="icon-mobile" src="./icons/throw_icon.png" alt="throw-icon" />
+    <a><img class="icon-mobile" src="./icons/jump_icon.png" alt="jump-icon" /></a>
+    <a><img class="icon-mobile" src="./icons/throw_icon.png" alt="throw-icon" /></a>
     </div>
 
     <div id="fullscreen">
-      <canvas id="canvas" width="720" height="480"> </canvas>
+      <canvas class="d-none" id="canvas" width="720" height="480"> </canvas>
     </div>
+
+
+    <!---- Dead Screen -->
+
+    <div class="game-over d-none" id="game-over">
+      <img src="./img/9_intro_outro_screens/game_over/you lost.png" alt="lost-screen">
+      <button onclick="restartGame()" class="restart-button" id="restart-button">Restart!</button>
+      
+    </div>
+
+
+
   </body>
 </html>
