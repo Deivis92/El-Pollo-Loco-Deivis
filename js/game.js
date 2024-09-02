@@ -74,7 +74,7 @@ function stopGame() {
 }
 
 function restartGame() {
-  // Logic to reset the game and start over
+  showIconsCanvas();
   console.log("Game is restarting...");
   document.getElementById("game-over").classList.add("d-none");
   document.getElementById("canvas").classList.remove("d-none");
@@ -115,6 +115,16 @@ function exitFullscreen() {
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
+}
+
+function hideIconsCanvas() {
+  document.getElementById('sound-icon').classList.add('d-none');
+  document.getElementById('fullscreen-icon').classList.add('d-none');
+}
+
+function showIconsCanvas() {
+  document.getElementById('sound-icon').classList.remove('d-none');
+  document.getElementById('fullscreen-icon').classList.remove('d-none');
 }
 
 document.addEventListener("DOMContentLoaded", function () {

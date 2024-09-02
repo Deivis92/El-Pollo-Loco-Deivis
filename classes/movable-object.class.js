@@ -99,7 +99,9 @@ class MovableObject extends DrawableObject {
   }
 
   isDead() {
+    
     if (this.energy === 0) {
+      hideIconsCanvas();
         // Start the fade-out animation for the canvas
         document.getElementById('canvas').classList.add('fade-out');
 
