@@ -116,6 +116,7 @@ class MovableObject extends DrawableObject {
 
             // Stop the game
             stopGame();
+           
         }, 1000); // Duration of the fade-out animation
 
         return true;  // Indicate that the character is dead
