@@ -4,11 +4,13 @@ let keyboard = new Keybord();
 let intervalIDs = [];
 
 function init() {
+  initLevel();
   canvas = document.getElementById("canvas");
+  showIconsCanvas();
   world = new World(canvas, keyboard);
   document.getElementById("canvas").classList.remove("d-none");
   document.getElementById("start-screen").classList.add("d-none");
-  console.log("My Character is", world.character);
+ 
 }
 
 window.addEventListener("keydown", (e) => {
@@ -31,10 +33,18 @@ window.addEventListener("keyup", (e) => {
 
 // Handle touch and click events for mobile controls
 function setupMobileControls() {
-  const leftButton = document.querySelector('.icon-mobile[src="./icons/left_icon.png"]');
-  const rightButton = document.querySelector('.icon-mobile[src="./icons/right_icon.png"]');
-  const jumpButton = document.querySelector('.icon-mobile[src="./icons/jump_icon.png"]');
-  const throwButton = document.querySelector('.icon-mobile[src="./icons/throw_icon.png"]');
+  const leftButton = document.querySelector(
+    '.icon-mobile[src="./icons/left_icon.png"]'
+  );
+  const rightButton = document.querySelector(
+    '.icon-mobile[src="./icons/right_icon.png"]'
+  );
+  const jumpButton = document.querySelector(
+    '.icon-mobile[src="./icons/jump_icon.png"]'
+  );
+  const throwButton = document.querySelector(
+    '.icon-mobile[src="./icons/throw_icon.png"]'
+  );
 
   function handleButtonPress(key, isPressed) {
     keyboard[key] = isPressed;
@@ -49,7 +59,9 @@ function setupMobileControls() {
   }
 
   function setupButtonEvents(button, key) {
-    button.addEventListener("touchstart", (e) => handleTouchEvent(e, key, true));
+    button.addEventListener("touchstart", (e) =>
+      handleTouchEvent(e, key, true)
+    );
     button.addEventListener("touchend", (e) => handleTouchEvent(e, key, false));
     button.addEventListener("mousedown", (e) => handleTouchEvent(e, key, true));
     button.addEventListener("mouseup", (e) => handleTouchEvent(e, key, false));
@@ -77,12 +89,14 @@ function restartGame() {
   showIconsCanvas();
   console.log("Game is restarting...");
   document.getElementById("game-over").classList.add("d-none");
+  document.getElementById("game-win").classList.add("d-none");
   document.getElementById("canvas").classList.remove("d-none");
   document.getElementById("canvas").classList.remove("fade-out");
 
   // Example logic:
   // 1. Stop any running intervals or animations
   stopGame();
+
   // 2. Reset game state or reload the page
 
   init(); // Re-initialize the game
@@ -118,13 +132,13 @@ function exitFullscreen() {
 }
 
 function hideIconsCanvas() {
-  document.getElementById('sound-icon').classList.add('d-none');
-  document.getElementById('fullscreen-icon').classList.add('d-none');
+  document.getElementById("sound-icon").classList.add("d-none");
+  document.getElementById("fullscreen-icon").classList.add("d-none");
 }
 
 function showIconsCanvas() {
-  document.getElementById('sound-icon').classList.remove('d-none');
-  document.getElementById('fullscreen-icon').classList.remove('d-none');
+  document.getElementById("sound-icon").classList.remove("d-none");
+  document.getElementById("fullscreen-icon").classList.remove("d-none");
 }
 
 document.addEventListener("DOMContentLoaded", function () {

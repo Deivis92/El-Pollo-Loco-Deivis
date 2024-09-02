@@ -1,19 +1,17 @@
 class World {
   character = new Charackter();
 
-  level = level1;
+ level = level1;
   canvas;
   ctx;
   keyboard;
   camera_x = 0;
   statusBarBottle = new StatusBarBottle();
-
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
   endBossCollision = new Endboss();
-
   coins = new Coins();
   collect_bottle_sound = new Audio("./audio/collect_bottle.mp3");
   collect_coin_sound = new Audio("./audio/collect_coin.mp3");

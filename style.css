@@ -116,13 +116,11 @@ h1 {
   animation: fadeOut 1s forwards; /* 1 second duration */
 }
 
-#game-over.fade-in {
+.game-over.fade-in {
   animation: fadeIn 1s forwards; /* 1 second duration */
 }
 
-.game-win.fade-in {
-  animation: slideIn 1s forwards;
-}
+
 
 .controls {
   text-align: center;
@@ -383,7 +381,7 @@ h1 {
   width: 35px;
   height: 35px;
   position: absolute;
-  top: 15px;
+  top: -5px;
   padding: 16px;
   cursor: pointer;
 }

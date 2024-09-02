@@ -23,13 +23,13 @@
     <script src="./classes/status-bar-coins.class.js" defer></script>
     <script src="./classes/background-object.class.js" defer></script>
     <script src="./classes/status-bar-endboss.class.js" defer></script>
-    <script src="./classes/world.class.js" defer></script>
+    <script  src="./classes/levels/level1.js" defer></script>
+    <script  src="./classes/world.class.js" defer></script>
     <script src="./classes/keybord.class.js" defer></script>
     <script src="./classes/character.class.js" defer></script>
     <script src="./classes/level.class.js" defer></script>
     <script src="./classes/endboss.class.js" defer></script>
     <script src="./classes/throwable-object.class.js" defer></script>
-    <script src="./classes/levels/level1.js" defer></script>
     <script src="./js/game.js" defer></script>
   </head>
   <body>
@@ -74,7 +74,7 @@
       </div>
 
       <button class="cowboy-controls-button" id="controls-button"></button>
-      <img class="sound-icon" src="./icons/sound_on.svg" alt="sound-one" />
+      
       <button class="help-button" id="help"></button>
       <div class="impressum-policy">
         <a href="./imprint.html">Impressum</a>
@@ -97,7 +97,7 @@
 
     <div id="fullscreen">
       <div class="fullscreen-img" onclick="fullscreen()"  id="fullscreen-icon"><img src="./icons/fullscreen.png" alt="fullscreen"></div>
-      <div class="sound-img" id="sound-icon"><img class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" /> </div>
+      <div class="sound-img d-none" id="sound-icon"><img class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" /> </div>
      
       <canvas class="d-none" id="canvas" width="720" height="480"> </canvas>
     </div>
@@ -111,11 +111,11 @@
       
     </div>
     
-    <!-- <div class="game-win d-none" id="game-win">
+    <div class="game-win d-none" id="game-win">
       <img  src="./img/9_intro_outro_screens/win/won_2.png" alt="won-screen">
       <button onclick="restartGame()" class="restart-button" id="restart-button">Play Again!</button>
       
-    </div> -->
+    </div>
 
 
 

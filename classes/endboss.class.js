@@ -114,9 +114,9 @@ class Endboss extends MovableObject {
 
   animate() {
     this.alive = setInterval(() => {
-      if (world && world.endBossCollision.isDead()) {
+      if (world && world.endBossCollision.isDeadBoss()) {
         console.log("Endboss is dead.");
-        stopGame();
+       
         this.playAnimation(this.IMAGES_DEAD);
       } else if (world && world.endBossCollision.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
