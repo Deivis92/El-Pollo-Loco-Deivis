@@ -89,13 +89,12 @@ function restartGame() {
 }
 
 function fullscreen() {
-  let fullscreen = document.getElementById("fullscreen");
-  enterFullscreen(fullscreen);
+  let canvas = document.getElementById("canvas");
+  enterFullscreen(canvas);
 }
 
 function closeFullscreen() {
-  let fullscreen = document.getElementById("fullscreen");
-  exitFullscreen(fullscreen);
+  exitFullscreen();
 }
 
 function enterFullscreen(element) {
