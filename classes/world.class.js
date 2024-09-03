@@ -12,7 +12,7 @@ class World {
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
-  endBossCollision = new Endboss();
+  endBossCollision = this.level.endBoss[0];
   coins = new Coins();
  
   throwableObjects = [];

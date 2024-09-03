@@ -8,6 +8,8 @@ class Endboss extends MovableObject {
   speedRight;
   speedLeft;
   hasFollowStarted = false;
+  
+  
 
   offset = {
     top: 0,
@@ -117,15 +119,23 @@ class Endboss extends MovableObject {
       if (world && world.endBossCollision.isDeadBoss()) {
         console.log("Endboss is dead.");
        
-        this.playAnimation(this.IMAGES_DEAD);
+        
       } else if (world && world.endBossCollision.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else {
         this.playAnimation(this.IMAGES_ALERT);
       }
-      // console.log("Endboss is alive.", this.alive);
+      console.log("Endboss is alive.", this.alive);
     }, 400);
   }
+  deadAnimate() {
+    this.deadAnimation = setInterval(() => {
+      this.playAnimation(this.IMAGES_DEAD);
+    }, 100);
+  }
+
+
+  
 
   
 }
