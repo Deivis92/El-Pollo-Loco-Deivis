@@ -7,14 +7,14 @@ class World {
   keyboard;
   camera_x = 0;
   statusBarBottle = new StatusBarBottle();
+  audioManager = new AudioManager();
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
   endBossCollision = new Endboss();
   coins = new Coins();
-  collect_bottle_sound = new Audio("./audio/collect_bottle.mp3");
-  collect_coin_sound = new Audio("./audio/collect_coin.mp3");
+ 
   throwableObjects = [];
   canThrowBottle = true;
   allIntervals = [];
@@ -23,7 +23,6 @@ class World {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-
     this.draw();
     this.setWorld();
     this.checkCollisions();
@@ -179,7 +178,7 @@ class World {
           }
         }
       });
-    }); // Added missing closing parenthesis and curly brace
+    });
   }
 
   removeBottle(index) {
@@ -190,30 +189,29 @@ class World {
 
   collectBottle() {
     if (this.statusBarBottle.bottles >= 10) {
-      return; // Stop further collection if the bottle count exceeds 5
+      return; // Stop further collection if the bottle count exceeds 10
     }
     this.level.groundBottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
         this.level.groundBottles.splice(bottleIndex, 1); // Remove the collected bottle
         this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1); // Update the bottle count
 
-        // Play sound if it's not currently playing
-        if (!this.collect_bottle_sound.isPlaying) {
-          this.handleCollectBottleSound();
-        }
+        // Play sound using audioManager
+        this.audioManager.playSound('collect_bottle_sound');
+        
       }
     });
   }
 
-  handleCollectBottleSound() {
-    this.collect_bottle_sound.isPlaying = true;
-    this.collect_bottle_sound.play();
+  // handleCollectBottleSound() {
+  //   this.collect_bottle_sound.isPlaying = true;
+  //   this.collect_bottle_sound.play();
 
-    // Reset the flag when the sound ends
-    this.collect_bottle_sound.onended = () => {
-      this.collect_bottle_sound.isPlaying = false;
-    };
-  }
+  //   // Reset the flag when the sound ends
+  //   this.collect_bottle_sound.onended = () => {
+  //     this.collect_bottle_sound.isPlaying = false;
+  //   };
+  // }
 
   collectCoins() {
     let shouldPlaySound = false;
@@ -226,9 +224,8 @@ class World {
       }
     });
 
-    if (shouldPlaySound && this.collect_coin_sound.paused) {
-      this.collect_coin_sound.play();
-      this.collect_coin_sound.volume = 0.2; // Play sound only once
+    if (shouldPlaySound) {
+      this.audioManager.playSound('collect_coin_sound');
     }
   }
 

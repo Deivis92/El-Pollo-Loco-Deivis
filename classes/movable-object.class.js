@@ -120,7 +120,7 @@ class MovableObject extends DrawableObject {
     return false; // Indicate that the character is not dead
   }
   isDeadBoss() {
-    if (this.energy === 0) {
+    if (this.energy === 0 &&  world.endBossCollision.energy === 0) {
       stopGame();
       hideIconsCanvas();
       hideMobileControls();
@@ -131,7 +131,7 @@ class MovableObject extends DrawableObject {
 
         document.getElementById("game-win").classList.remove("d-none");
         document.getElementById("canvas").classList.add("d-none");
-      }, 0);
+      }, 2000);
 
       return true;
     }

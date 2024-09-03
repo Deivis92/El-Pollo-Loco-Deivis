@@ -123,7 +123,7 @@ class Endboss extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_ALERT);
       }
-      console.log("Endboss is alive.", this.alive);
+      // console.log("Endboss is alive.", this.alive);
     }, 400);
   }
 

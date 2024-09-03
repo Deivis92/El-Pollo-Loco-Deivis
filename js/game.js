@@ -2,16 +2,19 @@ let canvas;
 let world;
 let keyboard = new Keybord();
 let intervalIDs = [];
+let soundIcon;
 
 function init() {
   initLevel();
   canvas = document.getElementById("canvas");
   showIconsCanvas();
   world = new World(canvas, keyboard);
+  audioManager = new AudioManager();
   document.getElementById("canvas").classList.remove("d-none");
   document.getElementById("start-screen").classList.add("d-none");
   showMobileControls();
 }
+
 
 window.addEventListener("keydown", (e) => {
   if (e.keyCode === 39) keyboard.RIGHT = true;
@@ -103,13 +106,11 @@ function restartGame() {
 }
 
 function playAgain() {
-
   document.getElementById("game-win").classList.add("d-none");
   document.getElementById("canvas").classList.remove("d-none");
   showIconsCanvas();
   stopGame();
   init();
-  
 }
 
 function fullscreen() {
@@ -141,6 +142,10 @@ function exitFullscreen() {
   }
 }
 
+// Toggle sound and update icon
+
+// sound end
+
 function hideIconsCanvas() {
   document.getElementById("sound-icon").classList.add("d-none");
   document.getElementById("fullscreen-icon").classList.add("d-none");
@@ -152,7 +157,6 @@ function showIconsCanvas() {
 }
 
 function hideMobileControls() {
-
   document.getElementById("mobile-controls").classList.add("d-none");
   document.getElementById("mobile-controls2").classList.add("d-none");
 }
