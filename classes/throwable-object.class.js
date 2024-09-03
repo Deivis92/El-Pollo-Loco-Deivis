@@ -47,7 +47,7 @@ class ThrowableObject extends MovableObject {
     this.flying_bottle.volume = 0.2;
     this.flying_bottle.play();
 
-    // Capture the direction at the moment of the throw
+   
     const initialDirection = world.character.otherDirection;
 
     this.flyingInterval = setInterval(() => {
@@ -56,9 +56,9 @@ class ThrowableObject extends MovableObject {
         this.bottleLandet();
       } else {
         if (initialDirection) {
-          this.x -= 7; // Move left based on the initial direction
+          this.x -= 7; 
         } else {
-          this.x += 7; // Move right based on the initial direction
+          this.x += 7; 
         }
       }
     }, 1000 / 50);

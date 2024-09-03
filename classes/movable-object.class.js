@@ -37,7 +37,6 @@ class MovableObject extends DrawableObject {
       return true;
     } else {
       return this.y < 160; // orginal 160 return this.y < 160; // orginal 160 } }
-      
     }
   }
   //// Working on Bottle
@@ -52,8 +51,6 @@ class MovableObject extends DrawableObject {
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
-
-
 
   isColliding(mo) {
     const isColliding =
@@ -99,44 +96,47 @@ class MovableObject extends DrawableObject {
   }
 
   isDead() {
-    
     if (this.energy === 0) {
       hideIconsCanvas();
-        // Start the fade-out animation for the canvas
-        document.getElementById('canvas').classList.add('fade-out');
+      hideMobileControls();
+      // Start the fade-out animation for the canvas
+      document.getElementById("canvas").classList.add("fade-out");
 
-        // Wait 1 second (1000 milliseconds) for the canvas animation to complete
-        setTimeout(() => {
-            // Hide the canvas after the animation
-            document.getElementById('canvas').classList.add('d-none');
+      // Wait 1 second (1000 milliseconds) for the canvas animation to complete
+      setTimeout(() => {
+        // Hide the canvas after the animation
+        document.getElementById("canvas").classList.add("d-none");
 
-            // Start the fade-in animation for the game-over screen
-            document.getElementById('game-over').classList.remove('d-none');
-            document.getElementById('game-over').classList.add('fade-in');
+        // Start the fade-in animation for the game-over screen
+        document.getElementById("game-over").classList.remove("d-none");
+        document.getElementById("game-over").classList.add("fade-in");
 
-            // Stop the game
-            stopGame();
-           
-        }, 1000); // Duration of the fade-out animation
+        // Stop the game
+        stopGame();
+      }, 1000); // Duration of the fade-out animation
 
-        return true;  // Indicate that the character is dead
+      return true; // Indicate that the character is dead
     }
-    return false;  // Indicate that the character is not dead
-}
-isDeadBoss() {
-  if (this.energy === 0) {
-    stopGame();
+    return false; // Indicate that the character is not dead
+  }
+  isDeadBoss() {
+    if (this.energy === 0) {
+      stopGame();
       hideIconsCanvas();
+      hideMobileControls();
+      clearInterval(world.endBossCollision.alive);
       
       setTimeout(() => {
-        document.getElementById('game-win').classList.remove('d-none');
-          document.getElementById('canvas').classList.add('d-none');
-          
-      }, 2000);
+      
+
+        document.getElementById("game-win").classList.remove("d-none");
+        document.getElementById("canvas").classList.add("d-none");
+      }, 0);
+
       return true;
+    }
+    return false;
   }
-  return false;
-}
 
   loadImages(arr) {
     arr.forEach((path) => {

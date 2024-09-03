@@ -52,6 +52,7 @@ class World {
       this.bottleOnGround();
       this.checkCollisionEndboss();
       this.collisionBottleEndboss();
+      
     }, 1000 / 60);
   }
 

@@ -500,6 +500,19 @@ canvas {
     position: absolute;
   }
 
+  .game-over {
+    width: 100%;
+    height: 100vh;
+  }
+  .game-over img {
+   border-radius: 0;
+  }
+
+  .game-win {
+    width: 100%;
+    height: 100vh;
+  }
+
   .fullscreen-img {
     display: none;
   }

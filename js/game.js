@@ -10,7 +10,7 @@ function init() {
   world = new World(canvas, keyboard);
   document.getElementById("canvas").classList.remove("d-none");
   document.getElementById("start-screen").classList.add("d-none");
- 
+  showMobileControls();
 }
 
 window.addEventListener("keydown", (e) => {
@@ -87,19 +87,29 @@ function stopGame() {
 
 function restartGame() {
   showIconsCanvas();
+  stopGame();
   console.log("Game is restarting...");
   document.getElementById("game-over").classList.add("d-none");
-  document.getElementById("game-win").classList.add("d-none");
+
   document.getElementById("canvas").classList.remove("d-none");
   document.getElementById("canvas").classList.remove("fade-out");
 
   // Example logic:
   // 1. Stop any running intervals or animations
-  stopGame();
 
   // 2. Reset game state or reload the page
 
   init(); // Re-initialize the game
+}
+
+function playAgain() {
+
+  document.getElementById("game-win").classList.add("d-none");
+  document.getElementById("canvas").classList.remove("d-none");
+  showIconsCanvas();
+  stopGame();
+  init();
+  
 }
 
 function fullscreen() {
@@ -139,6 +149,17 @@ function hideIconsCanvas() {
 function showIconsCanvas() {
   document.getElementById("sound-icon").classList.remove("d-none");
   document.getElementById("fullscreen-icon").classList.remove("d-none");
+}
+
+function hideMobileControls() {
+
+  document.getElementById("mobile-controls").classList.add("d-none");
+  document.getElementById("mobile-controls2").classList.add("d-none");
+}
+
+function showMobileControls() {
+  document.getElementById("mobile-controls").classList.remove("d-none");
+  document.getElementById("mobile-controls2").classList.remove("d-none");
 }
 
 document.addEventListener("DOMContentLoaded", function () {

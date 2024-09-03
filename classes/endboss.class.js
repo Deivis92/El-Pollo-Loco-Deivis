@@ -3,7 +3,7 @@ class Endboss extends MovableObject {
   width = 300;
   y = 1;
   x = 1000; // 1000
-
+  alive;
   speed;
   speedRight;
   speedLeft;
@@ -123,6 +123,9 @@ class Endboss extends MovableObject {
       } else {
         this.playAnimation(this.IMAGES_ALERT);
       }
+      console.log("Endboss is alive.", this.alive);
     }, 400);
   }
+
+  
 }
