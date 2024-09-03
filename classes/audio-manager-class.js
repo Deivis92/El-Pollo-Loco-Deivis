@@ -9,14 +9,14 @@ class AudioManager {
             flying_bottle: new Audio("./audio/flying_bottle.mp3"),
             bottle_splash: new Audio("./audio/splash.mp3"),
             collect_bottle_sound: new Audio("./audio/collect_bottle.mp3"),
-            collect_coin_sound: new Audio("./audio/collect_coin.mp3")
+            collect_coin_sound: new Audio("./audio/collect_coin.mp3"),
+            pepe_snor: new Audio("./audio/pepe_snor.mp3")
         };
         this.isMuted = false;
         this.initializeSounds();
     }
 
     initializeSounds() {
-        // Set default mute state for all sounds
         this.updateAllSoundsMuteState();
     }
 
@@ -44,15 +44,36 @@ class AudioManager {
         }
     }
 
+    stopSound(soundName) {
+        if (this.sounds[soundName]) {
+            this.sounds[soundName].pause();
+            this.sounds[soundName].currentTime = 0; // Reset playback position to start
+        } else {
+            console.error(`Sound ${soundName} not found`);
+        }
+    }
+
+    restartSound(soundName) {
+        if (this.sounds[soundName]) {
+            this.stopSound(soundName); // Stop and reset the sound
+            this.playSound(soundName); // Play it again from the start
+        } else {
+            console.error(`Sound ${soundName} not found`);
+        }
+    }
+
+    setVolume(soundName, volume) {
+        if (this.sounds[soundName]) {
+            this.sounds[soundName].volume = Math.max(0, Math.min(1, volume)); // Ensure volume is between 0 and 1
+        } else {
+            console.error(`Sound ${soundName} not found`);
+        }
+    }
+
     toggleMute() {
         this.isMuted = !this.isMuted;
         console.log("Mute toggled:", this.isMuted);
         this.updateAllSoundsMuteState();
-    }
-
-    toggleSound(iconElement) {
-        this.toggleMute();
-        this.updateIcon(iconElement);
     }
 
     updateIcon(iconElement) {
@@ -70,9 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundIconElement = document.getElementById('sound-icon').querySelector('img');
 
     soundIconElement.addEventListener('click', () => {
-        audioManager.toggleSound(soundIconElement);
+        audioManager.toggleMute();
+        audioManager.updateIcon(soundIconElement);
     });
-
-    // Initial setup to set the correct icon based on the current mute state
-    audioManager.updateIcon(soundIconElement);
 });

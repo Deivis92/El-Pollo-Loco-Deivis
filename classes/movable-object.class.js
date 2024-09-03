@@ -10,7 +10,7 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   gravityInterval;
   energy = 100;
-
+ audioManager = new AudioManager();
   speedY = 0;
   acceleration = 2.5;
   offset = {
@@ -71,10 +71,12 @@ class MovableObject extends DrawableObject {
       setTimeout(() => {
         if (!this.hurt_sound.paused) {
           this.hurt_sound.pause();
+          
         }
       }, 50); // Short delay to mitigate race condition
       return;
     }
+    
 
     this.energy = Math.max(this.energy - 5, 0);
     this.lastHit = new Date().getTime();

@@ -5,7 +5,7 @@ class Charackter extends MovableObject {
   speed = 4;
   speedY = 0;
   walk;
-
+  audioManager = new AudioManager();
   otherDirection = false;
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {
@@ -79,9 +79,6 @@ class Charackter extends MovableObject {
   ];
 
   world;
-  walking_sound = new Audio("./audio/walk.mp3");
-  pepe_jumps = new Audio("./audio/pepe_jumps.mp3");
-
   lastMoveTime = Date.now();
   sleepTimeout = 200; // 5 seconds
 
@@ -98,36 +95,55 @@ class Charackter extends MovableObject {
   }
 
   animate() {
-    this.walking_sound.volume = 0.2;
-
+    this.audioManager.setVolume("walking_sound", 0.2);
+    this.audioManager.setVolume("pepe_jumps", 0.5); // Set volume for jump sound if needed
+    
+    let isWalking = false;
+    let jumpSoundPlayed = false;
+  
     let charackterMoving = setInterval(() => {
       intervalIDs.push(charackterMoving);
-      this.walking_sound.pause();
-
+  
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
-        this.walking_sound.play();
         this.otherDirection = false;
+        if (!isWalking) {
+          this.audioManager.playSound("walking_sound");
+          this.audioManager.stopSound("pepe_snor"); // Stop snoring sound when moving
+          isWalking = true;
+        }
         this.lastMoveTime = Date.now();
+        jumpSoundPlayed = false; // Reset jump sound flag when moving
+      } else if (this.world.keyboard.LEFT && this.x > 0) {
+        this.moveLeft();
+        this.otherDirection = true;
+        if (!isWalking) {
+          this.audioManager.playSound("walking_sound");
+          this.audioManager.stopSound("pepe_snor");
+          isWalking = true;
+        }
+        this.lastMoveTime = Date.now();
+        jumpSoundPlayed = false; // Reset jump sound flag when moving
+      } else {
+        if (isWalking) {
+          this.audioManager.stopSound("walking_sound");
+          isWalking = false;
+        }
       }
+  
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.jump();
-        if (this.pepe_jumps.paused) {
-          this.pepe_jumps.play();
+        if (!jumpSoundPlayed) {
+          this.audioManager.playSound("pepe_jumps");
+          this.audioManager.stopSound("pepe_snor");
+          jumpSoundPlayed = true; // Set flag to prevent retriggering
         }
         this.lastMoveTime = Date.now();
       }
-
+  
       this.world.camera_x = -this.x + 100;
-
-      if (this.world.keyboard.LEFT && this.x > 0) {
-        this.moveLeft();
-        this.walking_sound.play();
-        this.otherDirection = true;
-        this.lastMoveTime = Date.now();
-      }
     }, 1000 / 60);
-
+  
     let charackterInterval2 = setInterval(() => {
       intervalIDs.push(charackterInterval2);
       if (this.isDead()) {
@@ -142,18 +158,20 @@ class Charackter extends MovableObject {
         }
       }
     }, 50);
-
+  
     let charackterInterval3 = setInterval(() => {
       intervalIDs.push(charackterInterval3);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout) {
         this.playAnimation(this.IMAGES_SLEEPING);
+        
       }
     }, 700);
-
+  
     let charackterInterval4 = setInterval(() => {
       intervalIDs.push(charackterInterval4);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout * 25) {
         this.playAnimation(this.IMAGES_SLEEPING_ZZZ);
+        this.audioManager.playSound("pepe_snor");
       }
     }, 700);
   }
