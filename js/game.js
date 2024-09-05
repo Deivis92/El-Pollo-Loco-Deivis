@@ -9,12 +9,11 @@ function init() {
   canvas = document.getElementById("canvas");
   showIconsCanvas();
   world = new World(canvas, keyboard);
-  audioManager = new AudioManager();
+
   document.getElementById("canvas").classList.remove("d-none");
   document.getElementById("start-screen").classList.add("d-none");
   showMobileControls();
 }
-
 
 window.addEventListener("keydown", (e) => {
   if (e.keyCode === 39) keyboard.RIGHT = true;

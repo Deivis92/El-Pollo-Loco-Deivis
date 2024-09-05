@@ -86,12 +86,12 @@ class AudioManager {
 }
 
 // Usage Example
-document.addEventListener('DOMContentLoaded', () => {
-    const audioManager = new AudioManager();
-    const soundIconElement = document.getElementById('sound-icon').querySelector('img');
+// document.addEventListener('DOMContentLoaded', () => {
+//     const audioManager = new AudioManager();
+//     const soundIconElement = document.getElementById('sound-icon').querySelector('img');
 
-    soundIconElement.addEventListener('click', () => {
-        audioManager.toggleMute();
-        audioManager.updateIcon(soundIconElement);
-    });
-});
+//     soundIconElement.addEventListener('click', () => {
+//         audioManager.toggleMute();
+//         audioManager.updateIcon(soundIconElement);
+//     });
+// });

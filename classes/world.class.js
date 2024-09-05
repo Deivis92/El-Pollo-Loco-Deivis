@@ -32,11 +32,12 @@ class World {
     this.lastCollisionTimeEndBoss = 0; // To track the last time energy was reduced
     this.collisionCooldownEndBoss = 300; // Cooldown period in milliseconds
     this.run();
-    this.run();
+    
   }
 
   setWorld() {
     this.character.world = this;
+    this.audioManager.character = new AudioManager();
   }
 
   run() {

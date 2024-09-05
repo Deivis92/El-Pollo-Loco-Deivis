@@ -10,7 +10,7 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   gravityInterval;
   energy = 100;
- audioManager = new AudioManager();
+  audioManager = new AudioManager();
   speedY = 0;
   acceleration = 2.5;
   offset = {
@@ -20,7 +20,9 @@ class MovableObject extends DrawableObject {
     right: 0,
   };
   lastHit = 0;
-  hurt_sound = new Audio("./audio/hurt.mp3");
+
+
+  
 
   applyGravity() {
     this.gravityInterval = setInterval(() => {
@@ -61,25 +63,20 @@ class MovableObject extends DrawableObject {
 
     return isColliding;
   }
+
   hit() {
-    this.hurt_sound.play().catch((error) => {
-      console.error("Fehler beim Abspielen des Sounds:", error);
-    });
-
     if (this.isAboveGround()) {
-      // Use a small delay to ensure the sound has time to start playing
       setTimeout(() => {
-        if (!this.hurt_sound.paused) {
-          this.hurt_sound.pause();
-          
+        if (this.character > 160) {
+          // Use the appropriate method to check if the sound is playing
+          this.audioManager.stopSound("hurt_sound");
         }
-      }, 50); // Short delay to mitigate race condition
-      return;
+      }, 50);
+    } else {
+      this.audioManager.playSound("hurt_sound");
+      this.energy = Math.max(this.energy - 5, 0);
+      this.lastHit = new Date().getTime();
     }
-    
-
-    this.energy = Math.max(this.energy - 5, 0);
-    this.lastHit = new Date().getTime();
   }
 
   endBossHit() {
@@ -123,7 +120,7 @@ class MovableObject extends DrawableObject {
   }
   isDeadBoss() {
     if (world.endBossCollision.energy === 0) {
-      clearInterval(this.alive); 
+      clearInterval(this.alive);
       this.deadAnimate();
       stopGame();
       hideIconsCanvas();

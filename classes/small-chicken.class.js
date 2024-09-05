@@ -92,7 +92,7 @@ class SmallChicken extends MovableObject {
 
   handleChickenAlive() {
     this.playAnimation(this.IMAGES_WALKING_SMALL);
-    this.small_chicken_dead.pause();
+   this.audioManager.stopSound("small_chicken_dead");
     this.soundPlayed = false;
   }
 
@@ -100,8 +100,8 @@ class SmallChicken extends MovableObject {
     this.playAnimation(this.DEAD_SMALL_CHICKEN);
 
     if (!this.soundPlayed) {
-      this.small_chicken_dead.volume = 0.3;
-      this.small_chicken_dead.play();
+      this.audioManager.setVolume("small_chicken_dead", 0.2);
+     this.audioManager.playSound("small_chicken_dead");
       this.soundPlayed = true;
     }
   }

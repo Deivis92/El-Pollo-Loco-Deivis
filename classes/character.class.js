@@ -5,7 +5,7 @@ class Charackter extends MovableObject {
   speed = 4;
   speedY = 0;
   walk;
-  audioManager = new AudioManager();
+ 
   otherDirection = false;
   y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
   offset = {

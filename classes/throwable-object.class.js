@@ -9,8 +9,7 @@ class ThrowableObject extends MovableObject {
   splash = false;
   flyingInterval;
 
-  flying_bottle = new Audio("./audio/flying_bottle.mp3");
-  bottle_splash = new Audio("./audio/splash.mp3");
+  
 
   IMAGES_ROTATION = [
     "./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
@@ -44,8 +43,8 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.speedY = 20;
     this.applyGravity();
-    this.flying_bottle.volume = 0.2;
-    this.flying_bottle.play();
+    this.audioManager.setVolume('flying_bottle', 0.2);
+    this.audioManager.playSound('flying_bottle');
 
    
     const initialDirection = world.character.otherDirection;
@@ -71,8 +70,8 @@ class ThrowableObject extends MovableObject {
   }
 
   bottleLandet() {
-    this.bottle_splash.play();
-    this.bottle_splash.volume = 0.2;
+    this.audioManager.playSound('bottle_splash');
+    this.audioManager.setVolume('bottle_splash', 0.2);
     clearInterval(this.flyingInterval);
     clearInterval(this.gravityInterval);
   }
