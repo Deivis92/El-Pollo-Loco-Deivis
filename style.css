@@ -3,6 +3,10 @@
   src: url("fonts/Zabars.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 
+canvas {
+  box-shadow: 0 0 0 3px rgba(148,0,211,1), 0 0 0 6px rgba(75,0,130,1), 0 0 0 9px rgba(0,0,255,1), 0 0 0 12px rgba(0,255,0,1), 0 0 0 15px rgba(255,255,0,1), 0 0 0 18px rgba(255,127,0,1), 0 0 0 21px rgba(255,0,0,1);/
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -29,15 +33,16 @@ h1 {
   width: 720px;
   background-image: url("./img/9_intro_outro_screens/start/startscreen_2.png");
   z-index: 10;
-  background-size: cover; /* Ensures the image covers the entire container */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevents repeating the image */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
   background-size: 100% 100%;
   position: relative;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 0 0 3px rgba(148,0,211,1), 0 0 0 6px rgba(75,0,130,1), 0 0 0 9px rgba(0,0,255,1), 0 0 0 12px rgba(0,255,0,1), 0 0 0 15px rgba(255,255,0,1), 0 0 0 18px rgba(255,127,0,1), 0 0 0 21px rgba(255,0,0,1);
 }
 
 .game-over {
