@@ -6,7 +6,7 @@ class MovableObject extends DrawableObject {
   width = 100;
   imageCache = {};
   currentImage = 0;
-  speed = 0; // orginal 0.15
+  speed = 0;
   otherDirection = false;
   gravityInterval;
   energy = 100;
@@ -21,29 +21,22 @@ class MovableObject extends DrawableObject {
   };
   lastHit = 0;
 
-
-  
-
   applyGravity() {
     this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
-    }, 1000 / 30); // orginal 1000 / 25
+    }, 1000 / 30);
   }
 
   isAboveGround() {
     if (this instanceof ThrowableObject) {
-      // ThrowableObject should fall to the ground
       return true;
     } else {
-      return this.y < 160; // orginal 160 return this.y < 160; // orginal 160 } }
+      return this.y < 160;
     }
   }
-  //// Working on Bottle
-
-  //end of bottle
 
   loadImage(path) {
     this.img = new Image();
@@ -56,10 +49,10 @@ class MovableObject extends DrawableObject {
 
   isColliding(mo) {
     const isColliding =
-      this.x + this.width - this.offset.right >= mo.x + mo.offset.left && // Right edge of the current object with offset applied is to the right of or touching the left edge of mo
-      this.x + this.offset.left <= mo.x + mo.width - mo.offset.right && // Left edge of the current object with offset applied is to the left of or touching the right edge of mo
-      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top && // Bottom edge of the current object with offset applied is above or touching the top edge of mo
-      this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom; // Top edge of the current object with offset applied is below or touching the bottom edge of mo
+      this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
+      this.x + this.offset.left <= mo.x + mo.width - mo.offset.right &&
+      this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top &&
+      this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom;
 
     return isColliding;
   }
@@ -68,7 +61,6 @@ class MovableObject extends DrawableObject {
     if (this.isAboveGround()) {
       setTimeout(() => {
         if (this.character > 160) {
-          // Use the appropriate method to check if the sound is playing
           this.audioManager.stopSound("hurt_sound");
         }
       }, 50);
@@ -98,33 +90,26 @@ class MovableObject extends DrawableObject {
     if (this.energy === 0) {
       hideIconsCanvas();
       hideMobileControls();
-      // Start the fade-out animation for the canvas
       document.getElementById("canvas").classList.add("fade-out");
 
-      // Wait 1 second (1000 milliseconds) for the canvas animation to complete
       setTimeout(() => {
-        // Hide the canvas after the animation
         document.getElementById("canvas").classList.add("d-none");
-
-        // Start the fade-in animation for the game-over screen
         document.getElementById("game-over").classList.remove("d-none");
         document.getElementById("game-over").classList.add("fade-in");
-
-        // Stop the game
         stopGame();
-      }, 1000); // Duration of the fade-out animation
+      }, 1000);
 
-      return true; // Indicate that the character is dead
+      return true;
     }
-    return false; // Indicate that the character is not dead
+    return false;
   }
+
   isDeadBoss() {
     if (world.endBossCollision.energy === 0) {
       clearInterval(this.alive);
       this.deadAnimate();
       stopGame();
       hideIconsCanvas();
-
       hideMobileControls();
 
       setTimeout(() => {
@@ -161,7 +146,7 @@ class MovableObject extends DrawableObject {
   }
 
   jump() {
-    this.speedY = 30; // Geschwindigkeit nach oben
+    this.speedY = 30;
   }
 
   chickenDead() {

@@ -1,7 +1,7 @@
 class World {
   character = new Charackter();
 
- level = level1;
+  level = level1;
   canvas;
   ctx;
   keyboard;
@@ -14,7 +14,7 @@ class World {
   statusBarEndboss = new StatusBarEndboss();
   endBossCollision = this.level.endBoss[0];
   coins = new Coins();
- 
+
   throwableObjects = [];
   canThrowBottle = true;
   allIntervals = [];
@@ -32,12 +32,10 @@ class World {
     this.lastCollisionTimeEndBoss = 0; // To track the last time energy was reduced
     this.collisionCooldownEndBoss = 300; // Cooldown period in milliseconds
     this.run();
-    
   }
 
   setWorld() {
     this.character.world = this;
-    this.audioManager.character = new AudioManager();
   }
 
   run() {
@@ -52,7 +50,6 @@ class World {
       this.bottleOnGround();
       this.checkCollisionEndboss();
       this.collisionBottleEndboss();
-      
     }, 1000 / 60);
   }
 
@@ -198,8 +195,7 @@ class World {
         this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1); // Update the bottle count
 
         // Play sound using audioManager
-        this.audioManager.playSound('collect_bottle_sound');
-        
+        this.audioManager.playSound("collect_bottle_sound");
       }
     });
   }
@@ -226,7 +222,7 @@ class World {
     });
 
     if (shouldPlaySound) {
-      this.audioManager.playSound('collect_coin_sound');
+      this.audioManager.playSound("collect_coin_sound");
     }
   }
 
@@ -242,7 +238,7 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
     // Space for fixed objects
-   
+
     this.addToMap(this.statusBarBottle);
     this.addToMap(this.statusCoins);
     this.addToMap(this.statusBarEndboss);

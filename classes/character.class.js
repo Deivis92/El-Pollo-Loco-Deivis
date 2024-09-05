@@ -7,10 +7,10 @@ class Charackter extends MovableObject {
   walk;
  
   otherDirection = false;
-  y = 50; //original 50 // collision with chicken Y // und 103 offset bottom 13
+  y = 50; 
   offset = {
     top: 0,
-    bottom: 40, // passend grafik auf chicken zu springen
+    bottom: 40,
     left: 0,
     right: 0,
   };
@@ -80,7 +80,7 @@ class Charackter extends MovableObject {
 
   world;
   lastMoveTime = Date.now();
-  sleepTimeout = 200; // 5 seconds
+  sleepTimeout = 200; 
 
   constructor() {
     super().loadImage("./img/2_character_pepe/2_walk/W-21.png");
@@ -95,35 +95,27 @@ class Charackter extends MovableObject {
   }
 
   animate() {
+    this.setInitialVolumes();
+    this.handleCharacterMovement();
+    this.handleCharacterAnimation();
+    this.handleCharacterSleep();
+    this.handleCharacterSnore();
+  }
+  
+  setInitialVolumes() {
     this.audioManager.setVolume("walking_sound", 0.2);
     this.audioManager.setVolume("pepe_jumps", 0.5); // Set volume for jump sound if needed
-    
+  }
+  
+  handleCharacterMovement() {
     let isWalking = false;
     let jumpSoundPlayed = false;
-  
     let charackterMoving = setInterval(() => {
       intervalIDs.push(charackterMoving);
   
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-        this.moveRight();
-        this.otherDirection = false;
-        if (!isWalking) {
-          this.audioManager.playSound("walking_sound");
-          this.audioManager.stopSound("pepe_snor"); // Stop snoring sound when moving
-          isWalking = true;
-        }
-        this.lastMoveTime = Date.now();
-        jumpSoundPlayed = false; // Reset jump sound flag when moving
-      } else if (this.world.keyboard.LEFT && this.x > 0) {
-        this.moveLeft();
-        this.otherDirection = true;
-        if (!isWalking) {
-          this.audioManager.playSound("walking_sound");
-          this.audioManager.stopSound("pepe_snor");
-          isWalking = true;
-        }
-        this.lastMoveTime = Date.now();
-        jumpSoundPlayed = false; // Reset jump sound flag when moving
+      if (this.handleMovement(isWalking, jumpSoundPlayed)) {
+        isWalking = true;
+        jumpSoundPlayed = false;
       } else {
         if (isWalking) {
           this.audioManager.stopSound("walking_sound");
@@ -132,20 +124,51 @@ class Charackter extends MovableObject {
       }
   
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-        this.jump();
-        if (!jumpSoundPlayed) {
-          this.audioManager.playSound("pepe_jumps");
-          this.audioManager.stopSound("pepe_snor");
-          jumpSoundPlayed = true; // Set flag to prevent retriggering
-        }
-        this.lastMoveTime = Date.now();
+        this.handleJump(jumpSoundPlayed);
+        jumpSoundPlayed = true;
       }
   
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
+  }
   
+  handleMovement(isWalking, jumpSoundPlayed) {
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+      this.moveRight();
+      this.otherDirection = false;
+      this.handleWalkingSound(isWalking);
+      this.lastMoveTime = Date.now();
+      return true;
+    } else if (this.world.keyboard.LEFT && this.x > 0) {
+      this.moveLeft();
+      this.otherDirection = true;
+      this.handleWalkingSound(isWalking);
+      this.lastMoveTime = Date.now();
+      return true;
+    }
+    return false;
+  }
+  
+  handleWalkingSound(isWalking) {
+    if (!isWalking) {
+      this.audioManager.playSound("walking_sound");
+      this.audioManager.stopSound("pepe_snor"); // Stop snoring sound when moving
+    }
+  }
+  
+  handleJump(jumpSoundPlayed) {
+    this.jump();
+    if (!jumpSoundPlayed) {
+      this.audioManager.playSound("pepe_jumps");
+      this.audioManager.stopSound("pepe_snor");
+    }
+    this.lastMoveTime = Date.now();
+  }
+  
+  handleCharacterAnimation() {
     let charackterInterval2 = setInterval(() => {
       intervalIDs.push(charackterInterval2);
+  
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
       } else if (this.isHurt()) {
@@ -153,20 +176,27 @@ class Charackter extends MovableObject {
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMPING);
       } else {
-        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          this.playAnimation(this.IMAGES_WALKING);
-        }
+        this.handleWalkingAnimation();
       }
     }, 50);
+  }
   
+  handleWalkingAnimation() {
+    if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+      this.playAnimation(this.IMAGES_WALKING);
+    }
+  }
+  
+  handleCharacterSleep() {
     let charackterInterval3 = setInterval(() => {
       intervalIDs.push(charackterInterval3);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout) {
         this.playAnimation(this.IMAGES_SLEEPING);
-        
       }
     }, 700);
+  }
   
+  handleCharacterSnore() {
     let charackterInterval4 = setInterval(() => {
       intervalIDs.push(charackterInterval4);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout * 25) {
