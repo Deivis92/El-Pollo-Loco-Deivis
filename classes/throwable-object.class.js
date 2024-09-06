@@ -9,8 +9,6 @@ class ThrowableObject extends MovableObject {
   splash = false;
   flyingInterval;
 
-  
-
   IMAGES_ROTATION = [
     "./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
     "./img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
@@ -27,8 +25,15 @@ class ThrowableObject extends MovableObject {
     "./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
 
+  // Audio elements
+  bottleSplashSound; 
+  flyingBottleSound; 
+  
   constructor(x, y) {
     super().loadImage("./img/6_salsa_bottle/salsa_bottle.png");
+    this.bottleSplashSound = new Audio('./audio/splash.mp3');
+    this.flyingBottleSound = new Audio('./audio/flying_bottle.mp3');
+    sounds.push(this.bottleSplashSound, this.flyingBottleSound);
     this.loadImages(this.IMAGES_ROTATION);
     this.loadImages(this.IMAGES_SPLASH);
     this.speedY = 0;
@@ -43,10 +48,9 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.speedY = 20;
     this.applyGravity();
-    this.audioManager.setVolume('flying_bottle', 0.2);
-    this.audioManager.playSound('flying_bottle');
+    this.flyingBottleSound.volume = 0.2;
+    this.flyingBottleSound.play();
 
-   
     const initialDirection = world.character.otherDirection;
 
     this.flyingInterval = setInterval(() => {
@@ -70,8 +74,8 @@ class ThrowableObject extends MovableObject {
   }
 
   bottleLandet() {
-    this.audioManager.playSound('bottle_splash');
-    this.audioManager.setVolume('bottle_splash', 0.2);
+    this.bottleSplashSound.volume = 0.2;
+    this.bottleSplashSound.play();
     clearInterval(this.flyingInterval);
     clearInterval(this.gravityInterval);
   }

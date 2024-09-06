@@ -13,8 +13,6 @@ class Chicken extends MovableObject {
     right: 0,
   };
 
- 
-
   IMAGES_WALKING = [
     "./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "./img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
@@ -23,13 +21,15 @@ class Chicken extends MovableObject {
 
   DEAD_CHICKEN = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
 
-  
+  // Audio elements
+  deadChickenSound;
+  soundPlayed = false;
 
-  constructor(audioManager) {
-   
-    super(audioManager);
+  constructor() {
+    super();
+    this.deadChickenSound = new Audio('./audio/dead_chicken.mp3');
+    sounds.push(this.deadChickenSound);
     this.loadImage("./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
-    
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.DEAD_CHICKEN);
     this.x = 300 + Math.random() * 1500;
@@ -96,7 +96,8 @@ class Chicken extends MovableObject {
 
   handleChickenAlive() {
     this.playAnimation(this.IMAGES_WALKING);
-    this.audioManager.stopSound('dead_chicken');
+    this.deadChickenSound.pause();
+    this.deadChickenSound.currentTime = 0;
     this.soundPlayed = false;
   }
 
@@ -104,8 +105,8 @@ class Chicken extends MovableObject {
     this.playAnimation(this.DEAD_CHICKEN);
 
     if (!this.soundPlayed) {
-      this.audioManager.setVolume('dead_chicken', 0.2);
-      this.audioManager.playSound('dead_chicken');
+      this.deadChickenSound.volume = 0.2;
+      this.deadChickenSound.play();
       this.soundPlayed = true;
     }
   }

@@ -1,30 +1,27 @@
 class World {
-  character;
-  audioManager;
-  // chicken;
+  character = new Character();
+
   level = level1;
   canvas;
   ctx;
   keyboard;
   camera_x = 0;
   statusBarBottle = new StatusBarBottle();
-  audioManager = new AudioManager();
   statusBar = new StatusBar();
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
   endBossCollision = this.level.endBoss[0];
   coins = new Coins();
-
   throwableObjects = [];
   canThrowBottle = true;
   allIntervals = [];
+  
+  collectBottleSound;
+  collectCoinSound;
+
 
   constructor(canvas) {
-    this.audioManager = new AudioManager(); // Create AudioManager in constructor
-    this.character = new Character(this.audioManager);
-    // this.chicken = new Chicken(this.audioManager);
-    
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
@@ -36,6 +33,9 @@ class World {
     this.collisionCooldown = 500;
     this.lastCollisionTimeEndBoss = 0;
     this.collisionCooldownEndBoss = 300;
+    this.collectBottleSound = new Audio("./audio/collect_bottle.mp3");
+    this.collectCoinSound = new Audio("./audio/collect_coin.mp3");
+    sounds.push(this.collectBottleSound, this.collectCoinSound);
     this.run();
   }
 
@@ -185,7 +185,7 @@ class World {
       if (this.character.isColliding(bottle)) {
         this.level.groundBottles.splice(bottleIndex, 1);
         this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
-        this.audioManager.playSound("collect_bottle_sound");
+        this.collectBottleSound.play(); // Directly play the sound
       }
     });
   }
@@ -200,7 +200,7 @@ class World {
       }
     });
     if (shouldPlaySound) {
-      this.audioManager.playSound("collect_coin_sound");
+      this.collectCoinSound.play(); // Directly play the sound
     }
   }
 

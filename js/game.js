@@ -3,6 +3,8 @@ let world;
 let keyboard = new Keybord();
 let intervalIDs = [];
 let soundIcon;
+let sounds = [];
+let isMuted = false;
 
 function init() {
   initLevel();
@@ -14,6 +16,32 @@ function init() {
   document.getElementById("start-screen").classList.add("d-none");
   showMobileControls();
 }
+
+
+
+
+
+
+function toggleSound() {
+  isMuted = !isMuted; // Toggle mute state
+
+  sounds.forEach((sound) => {
+    sound.muted = isMuted; // Mute or unmute the sound
+  });
+
+  // Update the sound icon based on the mute state
+  updateSoundIcon();
+}
+
+function updateSoundIcon() {
+  let soundIcon = document.getElementBy("sound-icon");
+  if (isMuted) {
+    soundIcon.src = "./icons/mute.svg";
+  } else {
+    soundIcon.src = "./icons/sound_on.svg";
+  }
+}
+
 
 window.addEventListener("keydown", (e) => {
   if (e.keyCode === 39) keyboard.RIGHT = true;
@@ -88,6 +116,7 @@ function stopGame() {
 }
 
 function restartGame() {
+  stopAllSounds();
   showIconsCanvas();
   stopGame();
   console.log("Game is restarting...");
@@ -105,11 +134,19 @@ function restartGame() {
 }
 
 function playAgain() {
+  stopAllSounds();
   document.getElementById("game-win").classList.add("d-none");
   document.getElementById("canvas").classList.remove("d-none");
   showIconsCanvas();
   stopGame();
   init();
+}
+
+function stopAllSounds() {
+  sounds.forEach((sound) => {
+    sound.pause(); // Stop playing the sound
+    sound.currentTime = 0; // Reset sound position
+  });
 }
 
 function fullscreen() {

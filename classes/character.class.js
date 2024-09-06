@@ -1,13 +1,13 @@
 class Character extends MovableObject {
-  height = 270; // 270
-  x = 120; // 120
+  height = 270;
+  x = 120;
   width = 100;
   speed = 4;
   speedY = 0;
   walk;
- 
+
   otherDirection = false;
-  y = 50; 
+  y = 50;
   offset = {
     top: 0,
     bottom: 40,
@@ -78,12 +78,21 @@ class Character extends MovableObject {
     "./img/2_character_pepe/1_idle/long_idle/I-20.png",
   ];
 
+  // Audio elements
+  walkingSound;
+  jumpSound;
+  snoreSound;
+
   world;
   lastMoveTime = Date.now();
-  sleepTimeout = 200; 
+  sleepTimeout = 200;
 
-  constructor(audioManager) {
-    super(audioManager);
+  constructor() {
+    super();
+    this.walkingSound = new Audio("./audio/walk.mp3");
+    this.jumpSound = new Audio("./audio/pepe_jumps.mp3");
+    this.snoreSound = new Audio("./audio/pepe_snor.mp3");
+    sounds.push(this.walkingSound, this.jumpSound, this.snoreSound);
     this.loadImage("./img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
@@ -102,37 +111,38 @@ class Character extends MovableObject {
     this.handleCharacterSleep();
     this.handleCharacterSnore();
   }
-  
+
   setInitialVolumes() {
-    this.audioManager.setVolume("walking_sound", 0.2);
-    this.audioManager.setVolume("pepe_jumps", 0.5); // Set volume for jump sound if needed
+    this.walkingSound.volume = 0.2;
+    this.jumpSound.volume = 0.5; // Set volume for jump sound if needed
   }
-  
+
   handleCharacterMovement() {
     let isWalking = false;
     let jumpSoundPlayed = false;
-    let charackterMoving = setInterval(() => {
-      intervalIDs.push(charackterMoving);
-  
+    let characterMoving = setInterval(() => {
+      intervalIDs.push(characterMoving);
+
       if (this.handleMovement(isWalking, jumpSoundPlayed)) {
         isWalking = true;
         jumpSoundPlayed = false;
       } else {
         if (isWalking) {
-          this.audioManager.stopSound("walking_sound");
+          this.walkingSound.pause();
+          this.walkingSound.currentTime = 0;
           isWalking = false;
         }
       }
-  
+
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.handleJump(jumpSoundPlayed);
         jumpSoundPlayed = true;
       }
-  
+
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
   }
-  
+
   handleMovement(isWalking, jumpSoundPlayed) {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -149,27 +159,29 @@ class Character extends MovableObject {
     }
     return false;
   }
-  
+
   handleWalkingSound(isWalking) {
     if (!isWalking) {
-      this.audioManager.playSound("walking_sound");
-      this.audioManager.stopSound("pepe_snor"); // Stop snoring sound when moving
+      this.walkingSound.play();
+      this.snoreSound.pause();
+      this.snoreSound.currentTime = 0;
     }
   }
-  
+
   handleJump(jumpSoundPlayed) {
     this.jump();
     if (!jumpSoundPlayed) {
-      this.audioManager.playSound("pepe_jumps");
-      this.audioManager.stopSound("pepe_snor");
+      this.jumpSound.play();
+      this.snoreSound.pause();
+      this.snoreSound.currentTime = 0;
     }
     this.lastMoveTime = Date.now();
   }
-  
+
   handleCharacterAnimation() {
-    let charackterInterval2 = setInterval(() => {
-      intervalIDs.push(charackterInterval2);
-  
+    let characterInterval2 = setInterval(() => {
+      intervalIDs.push(characterInterval2);
+
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
       } else if (this.isHurt()) {
@@ -181,28 +193,28 @@ class Character extends MovableObject {
       }
     }, 50);
   }
-  
+
   handleWalkingAnimation() {
     if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       this.playAnimation(this.IMAGES_WALKING);
     }
   }
-  
+
   handleCharacterSleep() {
-    let charackterInterval3 = setInterval(() => {
-      intervalIDs.push(charackterInterval3);
+    let characterInterval3 = setInterval(() => {
+      intervalIDs.push(characterInterval3);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout) {
         this.playAnimation(this.IMAGES_SLEEPING);
       }
     }, 700);
   }
-  
+
   handleCharacterSnore() {
-    let charackterInterval4 = setInterval(() => {
-      intervalIDs.push(charackterInterval4);
+    let characterInterval4 = setInterval(() => {
+      intervalIDs.push(characterInterval4);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout * 25) {
         this.playAnimation(this.IMAGES_SLEEPING_ZZZ);
-        this.audioManager.playSound("pepe_snor");
+        this.snoreSound.play();
       }
     }, 700);
   }

@@ -23,10 +23,14 @@ class SmallChicken extends MovableObject {
     "./img/3_enemies_chicken/chicken_small/2_dead/dead.png",
   ];
 
-  small_chicken_dead = new Audio("./audio/small_chicken_dead.mp3");
+  smallChickenDeadSound;
+  soundPlayed = false;
 
   constructor() {
-    super().loadImage("./img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
+    super();
+    this.smallChickenDeadSound = new Audio('./audio/dead_chicken.mp3');
+    sounds.push(this.smallChickenDeadSound);
+    this.loadImage("./img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING_SMALL);
     this.loadImages(this.DEAD_SMALL_CHICKEN);
     this.x = 300 + Math.random() * 1500; // Random start position
@@ -41,7 +45,7 @@ class SmallChicken extends MovableObject {
   }
 
   startMovementAnimation() {
-    let smallChickenInterval =  setInterval(() => {
+    let smallChickenInterval = setInterval(() => {
       intervalIDs.push(smallChickenInterval);
       this.handleMovement();
     }, 1000 / 60); // 60 FPS
@@ -92,7 +96,8 @@ class SmallChicken extends MovableObject {
 
   handleChickenAlive() {
     this.playAnimation(this.IMAGES_WALKING_SMALL);
-   this.audioManager.stopSound("small_chicken_dead");
+    this.smallChickenDeadSound.pause();
+    this.smallChickenDeadSound.currentTime = 0;
     this.soundPlayed = false;
   }
 
@@ -100,8 +105,8 @@ class SmallChicken extends MovableObject {
     this.playAnimation(this.DEAD_SMALL_CHICKEN);
 
     if (!this.soundPlayed) {
-      this.audioManager.setVolume("small_chicken_dead", 0.2);
-     this.audioManager.playSound("small_chicken_dead");
+      this.smallChickenDeadSound.volume = 0.2;
+      this.smallChickenDeadSound.play();
       this.soundPlayed = true;
     }
   }

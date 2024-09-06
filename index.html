@@ -26,7 +26,7 @@
     <script  src="./classes/levels/level1.js" defer></script>
     <script  src="./classes/world.class.js" defer></script>
     <script src="./classes/keybord.class.js" defer></script>
-    <script src="./classes/audio-manager-class.js" defer></script>
+   
     <script src="./classes/character.class.js" defer></script>
     <script src="./classes/level.class.js" defer></script>
     <script src="./classes/endboss.class.js" defer></script>
@@ -98,7 +98,7 @@
 
     <div id="fullscreen">
       <div class="fullscreen-img" onclick="fullscreen()"  id="fullscreen-icon"><img src="./icons/fullscreen.png" alt="fullscreen"></div>
-      <div class="sound-img d-none" id="sound-icon"><img  class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" /> </div>
+      <div class="sound-img d-none" id="sound-icon"><img onclick="toggleSound()" class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" /> </div>
      
       <canvas class="d-none" id="canvas" width="720" height="480"> </canvas>
     </div>

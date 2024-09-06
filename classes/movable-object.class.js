@@ -10,7 +10,6 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   gravityInterval;
   energy = 100;
- audioManager;
   speedY = 0;
   acceleration = 2.5;
   offset = {
@@ -20,15 +19,19 @@ class MovableObject extends DrawableObject {
     right: 0,
   };
   lastHit = 0;
+  
+  constructor() {
+    super(); 
 
+    
+    this.hurtSound = new Audio('./audio/hurt.mp3');
+    this.win_sound = new Audio('./audio/win.mp3');
+    this.lost_sound = new Audio('./audio/lost.mp3');
 
-  constructor(audioManager) {
-    super();
-    this.audioManager = audioManager; // Store the passed audioManager instance
+    
+    sounds.push(this.hurtSound, this.win_sound, this.lost_sound);
   }
-
-
-
+  
   applyGravity() {
     this.gravityInterval = setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
@@ -69,11 +72,12 @@ class MovableObject extends DrawableObject {
     if (this.isAboveGround()) {
       setTimeout(() => {
         if (this.character > 160) {
-          this.audioManager.stopSound("hurt_sound");
+          this.hurtSound.pause(); // Stop hurt sound if above ground
+          this.hurtSound.currentTime = 0; // Reset sound
         }
       }, 50);
     } else {
-      this.audioManager.playSound("hurt_sound");
+      this.hurtSound.play(); // Play hurt sound
       this.energy = Math.max(this.energy - 5, 0);
       this.lastHit = new Date().getTime();
     }
@@ -90,7 +94,7 @@ class MovableObject extends DrawableObject {
 
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit; // 1000ms = 1s
-    timePassed = timePassed / 1000; // Sekunden
+    timePassed = timePassed / 1000; // Seconds
     return timePassed < 1;
   }
 
@@ -98,6 +102,7 @@ class MovableObject extends DrawableObject {
     if (this.energy === 0) {
       hideIconsCanvas();
       hideMobileControls();
+      this.lost_sound.play();
       document.getElementById("canvas").classList.add("fade-out");
 
       setTimeout(() => {
@@ -115,6 +120,7 @@ class MovableObject extends DrawableObject {
   isDeadBoss() {
     if (world.endBossCollision.energy === 0) {
       clearInterval(this.alive);
+      this.win_sound.play();
       this.deadAnimate();
       stopGame();
       hideIconsCanvas();
