@@ -10,7 +10,7 @@ class MovableObject extends DrawableObject {
   otherDirection = false;
   gravityInterval;
   energy = 100;
-  audioManager = new AudioManager();
+ audioManager;
   speedY = 0;
   acceleration = 2.5;
   offset = {
@@ -20,6 +20,14 @@ class MovableObject extends DrawableObject {
     right: 0,
   };
   lastHit = 0;
+
+
+  constructor(audioManager) {
+    super();
+    this.audioManager = audioManager; // Store the passed audioManager instance
+  }
+
+
 
   applyGravity() {
     this.gravityInterval = setInterval(() => {

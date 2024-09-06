@@ -11,6 +11,10 @@ class AudioManager {
       collect_bottle_sound: new Audio("./audio/collect_bottle.mp3"),
       collect_coin_sound: new Audio("./audio/collect_coin.mp3"),
       pepe_snor: new Audio("./audio/pepe_snor.mp3"),
+      win: new Audio("./audio/win.mp3"),
+      lost: new Audio("./audio/lost.mp3"),
+      theme_song: new Audio("./audio/theme_song.mp3"),
+      hit_endboss: new Audio("./audio/hit_endboss.mp3"),
     };
     this.isMuted = false;
     this.initializeSounds();

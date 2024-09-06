@@ -1,4 +1,4 @@
-class Charackter extends MovableObject {
+class Character extends MovableObject {
   height = 270; // 270
   x = 120; // 120
   width = 100;
@@ -82,8 +82,9 @@ class Charackter extends MovableObject {
   lastMoveTime = Date.now();
   sleepTimeout = 200; 
 
-  constructor() {
-    super().loadImage("./img/2_character_pepe/2_walk/W-21.png");
+  constructor(audioManager) {
+    super(audioManager);
+    this.loadImage("./img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
     this.loadImages(this.IMAGES_DEAD);

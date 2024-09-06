@@ -1,6 +1,7 @@
 class World {
-  character = new Charackter();
-
+  character;
+  audioManager;
+  // chicken;
   level = level1;
   canvas;
   ctx;
@@ -20,11 +21,15 @@ class World {
   allIntervals = [];
 
   constructor(canvas) {
+    this.audioManager = new AudioManager(); // Create AudioManager in constructor
+    this.character = new Character(this.audioManager);
+    // this.chicken = new Chicken(this.audioManager);
+    
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.draw();
     this.setWorld();
+    this.draw();
     this.checkCollisions();
     this.collectBottle();
     this.lastCollisionTime = 0;
