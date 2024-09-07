@@ -85,7 +85,7 @@ class Character extends MovableObject {
 
   world;
   lastMoveTime = Date.now();
-  sleepTimeout = 200;
+  sleepTimeout = 300;
 
   constructor() {
     super();

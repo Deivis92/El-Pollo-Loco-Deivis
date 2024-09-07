@@ -27,6 +27,7 @@ class MovableObject extends DrawableObject {
     this.hurtSound = new Audio('./audio/hurt.mp3');
     this.win_sound = new Audio('./audio/win.mp3');
     this.lost_sound = new Audio('./audio/lost.mp3');
+    
 
     
     sounds.push(this.hurtSound, this.win_sound, this.lost_sound);
