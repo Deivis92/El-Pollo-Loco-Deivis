@@ -85,7 +85,7 @@ function setupMobileControls() {
     '.icon-mobile[src="./icons/throw_icon.png"]'
   );
 
-  function handleButtonPress(key, isPressed) {
+function handleButtonPress(key, isPressed) {
     keyboard[key] = isPressed;
   }
 
@@ -98,14 +98,10 @@ function setupMobileControls() {
   }
 
   function setupButtonEvents(button, key) {
-    // touchstart and touchend events are non-passive to allow preventDefault
-    button.addEventListener("touchstart", (e) =>
-      handleTouchEvent(e, key, true)
-    );
-    button.addEventListener("touchend", (e) =>
-      handleTouchEvent(e, key, false)
-    );
-  
+    // touchstart and touchend events should not be passive if preventDefault is used
+    button.addEventListener("touchstart", (e) => handleTouchEvent(e, key, true), { passive: false });
+    button.addEventListener("touchend", (e) => handleTouchEvent(e, key, false), { passive: false });
+
     // mousedown and mouseup events remain the same
     button.addEventListener("mousedown", (e) => handleTouchEvent(e, key, true));
     button.addEventListener("mouseup", (e) => handleTouchEvent(e, key, false));
