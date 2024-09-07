@@ -189,6 +189,22 @@ function exitFullscreen() {
   }
 }
 
+function checkOrientation() {
+  const landscapeWarning = document.getElementById('landscape-warning');
+
+  if (window.innerHeight > window.innerWidth) {
+    // Portrait mode
+    landscapeWarning.classList.remove('d-none');
+  } else {
+    // Landscape mode
+    landscapeWarning.classList.add('d-none');
+  }
+}
+
+// Check orientation on load and resize
+window.addEventListener('load', checkOrientation);
+window.addEventListener('resize', checkOrientation);
+
 // Toggle sound and update icon
 
 // sound end
