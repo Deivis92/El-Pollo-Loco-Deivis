@@ -28,12 +28,13 @@ class SmallChicken extends MovableObject {
 
   constructor() {
     super();
-    this.smallChickenDeadSound = new Audio('./audio/dead_chicken.mp3');
+    this.smallChickenDeadSound = new Audio('./audio/small_chicken_dead.mp3');
+    this.smallChickenDeadSound.volume = 1;
     sounds.push(this.smallChickenDeadSound);
     this.loadImage("./img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING_SMALL);
     this.loadImages(this.DEAD_SMALL_CHICKEN);
-    this.x = 300 + Math.random() * 1500; // Random start position
+    this.x = 400 + Math.random() * 1500; // Random start position
     this.speedRight = 0.15 + Math.random() * 0.5; // Adjusted speed range
     this.speedLeft = 0.15 + Math.random() * 0.5;  // Adjusted speed range
     this.animate();

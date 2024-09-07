@@ -7,16 +7,25 @@ let sounds = [];
 let isMuted = false;
 
 function init() {
+  // Show loader
+  document.getElementById("loader").style.display = "flex";
+
+  // Start loading the game resources and world immediately
   initLevel();
   canvas = document.getElementById("canvas");
   showIconsCanvas();
   world = new World(canvas, keyboard);
 
-  document.getElementById("canvas").classList.remove("d-none");
-  document.getElementById("start-screen").classList.add("d-none");
-  showMobileControls();
-}
+  // Show the loader for a fixed amount of time (e.g., 4 seconds)
+  setTimeout(() => {
+    document.getElementById("canvas").classList.remove("d-none");
+    document.getElementById("start-screen").classList.add("d-none");
+    showMobileControls();
 
+    // Hide loader after 4 seconds, regardless of whether world is ready or not
+    document.getElementById("loader").style.display = "none";
+  }, 4000); // Adjust the timeout to control how long the loader is shown
+}
 
 
 
@@ -119,7 +128,8 @@ function restartGame() {
   stopAllSounds();
   showIconsCanvas();
   stopGame();
-  console.log("Game is restarting...");
+ 
+  
   document.getElementById("game-over").classList.add("d-none");
 
   document.getElementById("canvas").classList.remove("d-none");

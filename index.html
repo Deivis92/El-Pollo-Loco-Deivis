@@ -84,6 +84,13 @@
     </div>
     <!-- Start Screen ends here  -->
 
+    <!-- Loader-->
+    <div class="loader" id="loader">
+      <img src="./img/pepe_load.gif.gif" alt="Loading...">
+      <p>Loading, please wait...</p>
+    </div>
+    <!-- Loader ends -->
+
     <!-- mobile controls -->
     <div class="mobile-controls" id="mobile-controls">
       <a></a><img class="icon-mobile" src="./icons/left_icon.png" alt="left-arrow" /></a>
@@ -98,7 +105,7 @@
 
     <div id="fullscreen">
       <div class="fullscreen-img" onclick="fullscreen()"  id="fullscreen-icon"><img src="./icons/fullscreen.png" alt="fullscreen"></div>
-      <div class="sound-img d-none" id="sound-icon"><img onclick="toggleSound()" class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" /> </div>
+      <div class="sound-img"><img onclick="toggleSound()"  id="sound-icon" class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" /> </div>
      
       <canvas class="d-none" id="canvas" width="720" height="480"> </canvas>
     </div>

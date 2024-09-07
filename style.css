@@ -382,6 +382,8 @@ h1 {
   padding: 16px;
   cursor: pointer;
 }
+
+
 .sound-icon-canvas {
   width: 35px;
   height: 35px;
@@ -390,9 +392,41 @@ h1 {
   padding: 16px;
   cursor: pointer;
 }
+
 .sound-icon {
   transition: filter 0.3s ease;
 }
+
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./img/5_background/body_background/body_background2.jpg');
+  background-size: cover;  /* Makes the background cover the entire area */
+  background-position: center;  /* Centers the background image */
+  background-repeat: no-repeat;  /* Prevents repeating the background */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 32px;
+  letter-spacing: 3px;
+  z-index: 100; /* Make sure it's on top of everything */
+  display: none;
+}
+
+.loader img {
+  width: 100px;
+  height: 270px;
+}
+  
+
+
 
 .sound-icon:hover, .sound-icon-canvas:hover, .fullscreen-img:hover {
   filter: drop-shadow(
