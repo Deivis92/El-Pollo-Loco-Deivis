@@ -1,3 +1,7 @@
+/**
+ * Represents a character in the game.
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
   height = 270;
   x = 120;
@@ -87,6 +91,9 @@ class Character extends MovableObject {
   lastMoveTime = Date.now();
   sleepTimeout = 300;
 
+  /**
+   * Creates an instance of the Character class.
+   */
   constructor() {
     super();
     this.walkingSound = new Audio("./audio/walk.mp3");
@@ -104,6 +111,9 @@ class Character extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts character animations and handles character behavior.
+   */
   animate() {
     this.setInitialVolumes();
     this.handleCharacterMovement();
@@ -112,37 +122,39 @@ class Character extends MovableObject {
     this.handleCharacterSnore();
   }
 
+  /**
+   * Sets the initial volume levels for sound effects.
+   */
   setInitialVolumes() {
     this.walkingSound.volume = 0.2;
-    this.jumpSound.volume = 0.5; // Set volume for jump sound if needed
+    this.jumpSound.volume = 0.5;
   }
 
+  /**
+   * Handles character movement and plays appropriate sounds.
+   */
   handleCharacterMovement() {
     let isWalking = false;
     let jumpSoundPlayed = false;
     let characterMoving = setInterval(() => {
       intervalIDs.push(characterMoving);
-
-      if (this.handleMovement(isWalking, jumpSoundPlayed)) {
-        isWalking = true;
-        jumpSoundPlayed = false;
-      } else {
-        if (isWalking) {
-          this.walkingSound.pause();
-          this.walkingSound.currentTime = 0;
-          isWalking = false;
-        }
-      }
-
+      isWalking = this.handleMovement(isWalking, jumpSoundPlayed) ? true: (isWalking && (this.walkingSound.pause(), this.walkingSound.currentTime = 0, false));
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.handleJump(jumpSoundPlayed);
         jumpSoundPlayed = true;
+      } else if (this.isAboveGround()) {
+        jumpSoundPlayed = false;
       }
-
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
   }
 
+  /**
+   * Handles character movement based on keyboard input.
+   * @param {boolean} isWalking - Indicates if the character is currently walking.
+   * @param {boolean} jumpSoundPlayed - Indicates if the jump sound has been played.
+   * @returns {boolean} - True if the character is moving, otherwise false.
+   */
   handleMovement(isWalking, jumpSoundPlayed) {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -160,6 +172,10 @@ class Character extends MovableObject {
     return false;
   }
 
+  /**
+   * Handles the walking sound effect.
+   * @param {boolean} isWalking - Indicates if the character is currently walking.
+   */
   handleWalkingSound(isWalking) {
     if (!isWalking) {
       this.walkingSound.play();
@@ -168,6 +184,10 @@ class Character extends MovableObject {
     }
   }
 
+  /**
+   * Handles the character's jump action and plays the jump sound effect.
+   * @param {boolean} jumpSoundPlayed - Indicates if the jump sound has been played.
+   */
   handleJump(jumpSoundPlayed) {
     this.jump();
     if (!jumpSoundPlayed) {
@@ -178,10 +198,12 @@ class Character extends MovableObject {
     this.lastMoveTime = Date.now();
   }
 
+  /**
+   * Handles character animation based on the character's state.
+   */
   handleCharacterAnimation() {
     let characterInterval2 = setInterval(() => {
       intervalIDs.push(characterInterval2);
-
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
       } else if (this.isHurt()) {
@@ -194,12 +216,18 @@ class Character extends MovableObject {
     }, 50);
   }
 
+  /**
+   * Handles the walking animation of the character.
+   */
   handleWalkingAnimation() {
     if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       this.playAnimation(this.IMAGES_WALKING);
     }
   }
 
+  /**
+   * Handles the character's sleeping animation when inactive.
+   */
   handleCharacterSleep() {
     let characterInterval3 = setInterval(() => {
       intervalIDs.push(characterInterval3);
@@ -209,6 +237,9 @@ class Character extends MovableObject {
     }, 700);
   }
 
+  /**
+   * Handles the character's snoring animation and sound effect.
+   */
   handleCharacterSnore() {
     let characterInterval4 = setInterval(() => {
       intervalIDs.push(characterInterval4);
