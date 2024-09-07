@@ -2,14 +2,12 @@
 <html lang="en" translate="no">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El Pollo Loco</title>
-    <link
-      rel="icon"
-      type="image/png"
-      href="./img/4_enemie_boss_chicken/1_walk/G1.png"
-    />
+    <link rel="icon" type="image/png" href="./img/4_enemie_boss_chicken/1_walk/G1.png" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="start-screen-style.css">
+    <link rel="stylesheet" href="media-query.css">
     <script src="./classes/drawable-object.class.js" defer></script>
     <script src="./js/start.js"></script>
     <script src="./classes/movable-object.class.js" defer></script>
@@ -23,10 +21,9 @@
     <script src="./classes/status-bar-coins.class.js" defer></script>
     <script src="./classes/background-object.class.js" defer></script>
     <script src="./classes/status-bar-endboss.class.js" defer></script>
-    <script  src="./classes/levels/level1.js" defer></script>
-    <script  src="./classes/world.class.js" defer></script>
+    <script src="./classes/levels/level1.js" defer></script>
+    <script src="./classes/world.class.js" defer></script>
     <script src="./classes/keybord.class.js" defer></script>
-   
     <script src="./classes/character.class.js" defer></script>
     <script src="./classes/level.class.js" defer></script>
     <script src="./classes/endboss.class.js" defer></script>
@@ -34,7 +31,6 @@
     <script src="./js/game.js" defer></script>
   </head>
   <body>
-    <!-- Start Screen  -->
     <h1>El Pollo Loco</h1>
     <div class="start-screen" id="start-screen">
       <button onclick="init()" class="cowboy-button">Start</button>
@@ -57,7 +53,6 @@
           <span class="text-size-controls">Jumps</span>
         </div>
       </div>
-
       <div class="how-to-play" id="help-container">
         <h2>How to Play</h2>
         <div class="help-item">
@@ -73,66 +68,45 @@
           <span class="text-size-controls">Defeat the Endboss</span>
         </div>
       </div>
-
       <button class="cowboy-controls-button" id="controls-button"></button>
-      
       <button class="help-button" id="help"></button>
       <div class="impressum-policy">
         <a href="./imprint.html">Impressum</a>
         <a href="./privacy_policy.html">Privacy Policy</a>
       </div>
     </div>
-    <!-- Start Screen ends here  -->
-
-    <!-- Loader-->
     <div class="loader" id="loader">
-      <img src="./img/pepe_load.gif.gif" alt="Loading...">
+      <img src="./img/pepe_load.gif.gif" alt="Loading..." />
       <p>Loading, please wait...</p>
     </div>
-    <!-- Loader ends -->
-    <!-- Landscape Modus-->
     <div class="landscape-warning" id="landscape-warning">
-      <img src="./img/landscape_modus.gif" alt="landscape-warning">
+      <img src="./img/landscape_modus.gif" alt="landscape-warning" />
       <h2>Please Rotate Your Device</h2>
-      
     </div>
-    <!-- Landscape Modus-->
-
-    <!-- mobile controls -->
     <div class="mobile-controls" id="mobile-controls">
-      <a></a><img class="icon-mobile" src="./icons/left_icon.png" alt="left-arrow" /></a>
-    <a><img class="icon-mobile" src="./icons/right_icon.png" alt="right-arrow" /></a>
-     
+      <a><img class="icon-mobile" src="./icons/left_icon.png" alt="left-arrow" /></a>
+      <a><img class="icon-mobile" src="./icons/right_icon.png" alt="right-arrow" /></a>
     </div>
-
     <div class="mobile-controls2" id="mobile-controls2">
-    <a><img class="icon-mobile" src="./icons/jump_icon.png" alt="jump-icon" /></a>
-    <a><img class="icon-mobile" src="./icons/throw_icon.png" alt="throw-icon" /></a>
+      <a><img class="icon-mobile" src="./icons/jump_icon.png" alt="jump-icon" /></a>
+      <a><img class="icon-mobile" src="./icons/throw_icon.png" alt="throw-icon" /></a>
     </div>
-
     <div id="fullscreen">
-      <div class="fullscreen-img" onclick="fullscreen()"  id="fullscreen-icon"><img src="./icons/fullscreen.png" alt="fullscreen"></div>
-      <div class="sound-img"><img onclick="toggleSound()"  id="sound-icon" class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" /> </div>
-     
-      <canvas class="d-none" id="canvas" width="720" height="480"> </canvas>
+      <div class="fullscreen-img" onclick="fullscreen()" id="fullscreen-icon">
+        <img src="./icons/fullscreen.png" alt="fullscreen" />
+      </div>
+      <div class="sound-img">
+        <img onclick="toggleSound()" id="sound-icon" class="sound-icon-canvas" src="./icons/sound_on.svg" alt="sound-one" />
+      </div>
+      <canvas class="d-none" id="canvas" width="720" height="480"></canvas>
     </div>
-
-
-    <!---- Dead Screen -->
-
     <div class="game-over d-none" id="game-over">
-      <img src="./img/9_intro_outro_screens/game_over/you lost.png" alt="lost-screen">
+      <img src="./img/9_intro_outro_screens/game_over/you lost.png" alt="lost-screen" />
       <button onclick="restartGame()" class="restart-button" id="restart-button">Restart!</button>
-      
     </div>
-    
     <div class="game-win d-none" id="game-win">
-      <img  src="./img/9_intro_outro_screens/win/won_2.png" alt="won-screen">
+      <img src="./img/9_intro_outro_screens/win/won_2.png" alt="won-screen" />
       <button onclick="playAgain()" class="restart-button" id="restart-button">Play Again!</button>
-      
     </div>
-
-
-
   </body>
 </html>

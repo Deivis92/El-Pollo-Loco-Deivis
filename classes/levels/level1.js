@@ -1,6 +1,19 @@
-let level1; 
+/**
+ * @type {Level} - The level object for the game.
+ */
+let level1;
 
-
+/**
+ * Initializes the game level by creating instances of various game objects and assigning them to the level1 variable.
+ * 
+ * Creates and configures the following objects:
+ * - **Chickens**: A list of `Chicken` and `SmallChicken` instances.
+ * - **Endboss**: A single `Endboss` instance.
+ * - **Ground Bottles**: A list of `GroundBottles` instances.
+ * - **Clouds**: A list of `Cloud` instances.
+ * - **Background Objects**: A list of `BackgroundObject` instances for different layers.
+ * - **Coins**: A list of `Coins` instances.
+ */
 function initLevel() {
   level1 = new Level(
     [
@@ -94,8 +107,4 @@ function initLevel() {
       new Coins(),
     ]
   );
-  
 }
-
-
-
