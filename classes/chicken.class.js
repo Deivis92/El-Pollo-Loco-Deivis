@@ -1,3 +1,7 @@
+/**
+ * Represents a chicken enemy in the game.
+ * @extends MovableObject
+ */
 class Chicken extends MovableObject {
   y = 360;
   height = 70;
@@ -25,6 +29,9 @@ class Chicken extends MovableObject {
   deadChickenSound;
   soundPlayed = false;
 
+  /**
+   * Creates an instance of the Chicken class.
+   */
   constructor() {
     super();
     this.deadChickenSound = new Audio('./audio/dead_chicken.mp3');
@@ -38,11 +45,17 @@ class Chicken extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Starts animations for movement and state.
+   */
   animate() {
     this.startMovementAnimation();
     this.startStateAnimation();
   }
 
+  /**
+   * Starts the movement animation for the chicken.
+   */
   startMovementAnimation() {
     let chickenInterval1 = setInterval(() => {
       intervalIDs.push(chickenInterval1);
@@ -50,20 +63,22 @@ class Chicken extends MovableObject {
     }, 1000 / 60); // 60 FPS
   }
 
+  /**
+   * Handles the movement of the chicken.
+   */
   handleMovement() {
     if (this.movingRight) {
       if (this.x >= 2300) {
-        this.movingRight = false; // Switch direction to left
-        this.otherDirection = false; // Set to true for flipping
+        this.movingRight = false;
+        this.otherDirection = false;
       } else {
         this.moveRight();
         this.otherDirection = true;
       }
     } else {
       if (this.x <= 100) {
-        // Change this value as needed for the left boundary
-        this.movingRight = true; // Switch direction to right
-        this.otherDirection = true; // Reset to false for normal direction
+        this.movingRight = true;
+        this.otherDirection = true;
       } else {
         this.moveLeft();
         this.otherDirection = false;
@@ -71,6 +86,9 @@ class Chicken extends MovableObject {
     }
   }
 
+  /**
+   * Starts the state animation for the chicken.
+   */
   startStateAnimation() {
     let chicken2 = setInterval(() => {
       intervalIDs.push(chicken2);
@@ -78,6 +96,9 @@ class Chicken extends MovableObject {
     }, 200); // Animation frame rate for state changes
   }
 
+  /**
+   * Handles the state animation of the chicken.
+   */
   handleStateAnimation() {
     if (!this.chickenDead) {
       this.handleChickenAlive();
@@ -86,14 +107,23 @@ class Chicken extends MovableObject {
     }
   }
 
+  /**
+   * Moves the chicken to the right.
+   */
   moveRight() {
-    this.x += this.speedRight; // Move right with speedRight
+    this.x += this.speedRight;
   }
 
+  /**
+   * Moves the chicken to the left.
+   */
   moveLeft() {
-    this.x -= this.speedLeft; // Move left with speedLeft
+    this.x -= this.speedLeft;
   }
 
+  /**
+   * Handles the chicken's behavior and animation when alive.
+   */
   handleChickenAlive() {
     this.playAnimation(this.IMAGES_WALKING);
     this.deadChickenSound.pause();
@@ -101,6 +131,9 @@ class Chicken extends MovableObject {
     this.soundPlayed = false;
   }
 
+  /**
+   * Handles the chicken's behavior and animation when dead.
+   */
   handleChickenDead() {
     this.playAnimation(this.DEAD_CHICKEN);
 

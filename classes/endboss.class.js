@@ -1,3 +1,7 @@
+/**
+ * Represents the end boss in the game.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
   height = 450;
   width = 300;
@@ -57,6 +61,9 @@ class Endboss extends MovableObject {
     "./img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
+  /**
+   * Creates an instance of the Endboss class.
+   */
   constructor() {
     super().loadImage("./img/4_enemie_boss_chicken/2_alert/G5.png");
     this.loadImages(this.IMAGES_ALERT);
@@ -66,15 +73,17 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_ATTACK);
     this.speedRight = 10;
     this.speed = 13;
-    this.x = 2500; // 2500
+    this.x = 2500;
     this.animate();
-
     this.monitorCharacterPosition();
   }
 
+  /**
+   * Monitors the character's position to start following when appropriate.
+   */
   monitorCharacterPosition() {
     let endBossInterval1 = setInterval(() => {
-      intervalIDs.push(endBossInterval1); // Speichere die ID des Intervalls in der Variable "interval"
+      intervalIDs.push(endBossInterval1);
       if (!this.hasFollowStarted && world && world.character.x >= 2200) {
         this.hasFollowStarted = true;
         this.followPepe();
@@ -82,6 +91,9 @@ class Endboss extends MovableObject {
     }, 100);
   }
 
+  /**
+   * Starts following the character once the condition is met.
+   */
   followPepe() {
     let checkAndStart = () => {
       if (
@@ -96,6 +108,9 @@ class Endboss extends MovableObject {
     checkAndStart();
   }
 
+  /**
+   * Controls the following behavior of the end boss.
+   */
   intervalForFollow() {
     let endBossInterval2 = setInterval(() => {
       intervalIDs.push(endBossInterval2);
@@ -112,9 +127,13 @@ class Endboss extends MovableObject {
     }, 1000 / 15);
   }
 
+  /**
+   * Starts animations for the end boss's various states.
+   */
   animate() {
     this.alive = setInterval(() => {
       if (world && world.endBossCollision.isDeadBoss()) {
+        // Optionally handle end boss death
       } else if (world && world.endBossCollision.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else {
@@ -122,6 +141,10 @@ class Endboss extends MovableObject {
       }
     }, 400);
   }
+
+  /**
+   * Starts the dead animation for the end boss.
+   */
   deadAnimate() {
     this.deadAnimation = setInterval(() => {
       this.playAnimation(this.IMAGES_DEAD);

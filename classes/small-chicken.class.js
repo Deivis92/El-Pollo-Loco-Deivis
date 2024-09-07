@@ -1,11 +1,15 @@
+/**
+ * Represents a small chicken in the game.
+ * @extends MovableObject
+ */
 class SmallChicken extends MovableObject {
   y = 370;
   height = 56;
   width = 38;
   chickenDead = false;
-  speedRight;  // Speed when moving right
-  speedLeft;   // Speed when moving left
-  movingRight = false; // Start by moving left
+  speedRight;
+  speedLeft;
+  movingRight = false; 
   offset = {
     top: -40,
     bottom: 0,
@@ -13,19 +17,39 @@ class SmallChicken extends MovableObject {
     right: 20,
   };
 
+  /**
+   * Array of image paths for the chicken's walking animation.
+   * @type {string[]}
+   */
   IMAGES_WALKING_SMALL = [
     "./img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
     "./img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
     "./img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
   ];
 
+  /**
+   * Array of image paths for the chicken's dead state.
+   * @type {string[]}
+   */
   DEAD_SMALL_CHICKEN = [
     "./img/3_enemies_chicken/chicken_small/2_dead/dead.png",
   ];
 
+  /**
+   * Audio instance for the chicken's death sound.
+   * @type {HTMLAudioElement}
+   */
   smallChickenDeadSound;
+
+  /**
+   * Flag to track if the death sound has been played.
+   * @type {boolean}
+   */
   soundPlayed = false;
 
+  /**
+   * Creates an instance of SmallChicken.
+   */
   constructor() {
     super();
     this.smallChickenDeadSound = new Audio('./audio/small_chicken_dead.mp3');
@@ -34,37 +58,46 @@ class SmallChicken extends MovableObject {
     this.loadImage("./img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING_SMALL);
     this.loadImages(this.DEAD_SMALL_CHICKEN);
-    this.x = 400 + Math.random() * 1500; // Random start position
-    this.speedRight = 0.15 + Math.random() * 0.5; // Adjusted speed range
-    this.speedLeft = 0.15 + Math.random() * 0.5;  // Adjusted speed range
+    this.x = 400 + Math.random() * 1500;
+    this.speedRight = 0.15 + Math.random() * 0.5;
+    this.speedLeft = 0.15 + Math.random() * 0.5;
     this.animate();
   }
 
+  /**
+   * Starts the animations for movement and state.
+   */
   animate() {
     this.startMovementAnimation();
     this.startStateAnimation();
   }
 
+  /**
+   * Starts the movement animation loop.
+   */
   startMovementAnimation() {
     let smallChickenInterval = setInterval(() => {
       intervalIDs.push(smallChickenInterval);
       this.handleMovement();
-    }, 1000 / 60); // 60 FPS
+    }, 1000 / 60);
   }
 
+  /**
+   * Handles the movement of the chicken, switching direction as needed.
+   */
   handleMovement() {
     if (this.movingRight) {
       if (this.x >= 2300) {
-        this.movingRight = false; // Switch direction to left
-        this.otherDirection = false; // Set to true for flipping
+        this.movingRight = false;
+        this.otherDirection = false;
       } else {
         this.moveRight();
         this.otherDirection = true;
       }
     } else {
-      if (this.x <= 100) { // Change this value as needed for the left boundary
-        this.movingRight = true; // Switch direction to right
-        this.otherDirection = true; // Reset to false for normal direction
+      if (this.x <= 100) {
+        this.movingRight = true;
+        this.otherDirection = true;
       } else {
         this.moveLeft();
         this.otherDirection = false;
@@ -72,13 +105,19 @@ class SmallChicken extends MovableObject {
     }
   }
 
+  /**
+   * Starts the state animation loop.
+   */
   startStateAnimation() {
     let smallChickenInterval2 = setInterval(() => {
       intervalIDs.push(smallChickenInterval2);
       this.handleStateAnimation();
-    }, 200); // Animation frame rate for state changes
+    }, 200);
   }
 
+  /**
+   * Handles the animation based on the chicken's state (alive or dead).
+   */
   handleStateAnimation() {
     if (!this.chickenDead) {
       this.handleChickenAlive();
@@ -87,14 +126,23 @@ class SmallChicken extends MovableObject {
     }
   }
 
+  /**
+   * Moves the chicken to the right.
+   */
   moveRight() {
-    this.x += this.speedRight; // Move right with speedRight
+    this.x += this.speedRight;
   }
 
+  /**
+   * Moves the chicken to the left.
+   */
   moveLeft() {
-    this.x -= this.speedLeft; // Move left with speedLeft
+    this.x -= this.speedLeft;
   }
 
+  /**
+   * Handles the animation and sound for when the chicken is alive.
+   */
   handleChickenAlive() {
     this.playAnimation(this.IMAGES_WALKING_SMALL);
     this.smallChickenDeadSound.pause();
@@ -102,6 +150,9 @@ class SmallChicken extends MovableObject {
     this.soundPlayed = false;
   }
 
+  /**
+   * Handles the animation and sound for when the chicken is dead.
+   */
   handleChickenDead() {
     this.playAnimation(this.DEAD_SMALL_CHICKEN);
 
