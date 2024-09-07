@@ -23,18 +23,18 @@ function init() {
 
 
 function toggleSound() {
-  isMuted = !isMuted; // Toggle mute state
+  isMuted = !isMuted;
 
   sounds.forEach((sound) => {
-    sound.muted = isMuted; // Mute or unmute the sound
+    sound.muted = isMuted;
   });
 
-  // Update the sound icon based on the mute state
+  
   updateSoundIcon();
 }
 
 function updateSoundIcon() {
-  let soundIcon = document.getElementBy("sound-icon");
+  let soundIcon = document.getElementById("sound-icon");
   if (isMuted) {
     soundIcon.src = "./icons/mute.svg";
   } else {

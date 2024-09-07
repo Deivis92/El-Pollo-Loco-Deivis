@@ -35,8 +35,12 @@ class World {
     this.collisionCooldownEndBoss = 300;
     this.collectBottleSound = new Audio("./audio/collect_bottle.mp3");
     this.collectCoinSound = new Audio("./audio/collect_coin.mp3");
-    sounds.push(this.collectBottleSound, this.collectCoinSound);
+    this.hit_endboss = new Audio("./audio/hit_endboss.mp3");
+    this.theme_song = new Audio("./audio/theme_song.mp3");
+    sounds.push(this.collectBottleSound, this.collectCoinSound, this.hit_endboss, this.theme_song);
     this.run();
+    this.theme_song.play();
+    this.theme_song.volume = 0.2;
   }
 
   setWorld() {
@@ -147,6 +151,7 @@ class World {
         if (throwableObject.isAboveGround() && throwableObject.speedY < 0) {
           throwableObject.speedY = 0;
           this.removeBottle(bottleIndex);
+          this.hit_endboss.play();
           this.endBossCollision.endBossHit();
           this.statusBarEndboss.setPercentage(this.endBossCollision.energy);
           this.endBossCollision.lastHit = new Date().getTime();
