@@ -15,7 +15,7 @@ class MovableObject extends DrawableObject {
   gravityInterval;
   energy = 100;
   speedY = 0;
-  acceleration = 2.0;
+  acceleration = 1.8;
   offset = {
     top: 0,
     bottom: 0,

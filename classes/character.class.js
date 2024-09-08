@@ -9,6 +9,7 @@ class Character extends MovableObject {
   speed = 5;
   speedY = 0;
   walk;
+  isJumping = false;
 
   otherDirection = false;
   y = 50;
@@ -88,10 +89,10 @@ class Character extends MovableObject {
 
   world;
   lastMoveTime = Date.now();
-  sleepTimeout = 100;
+  sleepTimeout = 50;
 
   /**
-   * Creates an instance of the Character class.
+   * Creates an instance of the Character class and initializes necessary properties.
    */
   constructor() {
     super();
@@ -111,7 +112,7 @@ class Character extends MovableObject {
   }
 
   /**
-   * Starts character animations and handles character behavior.
+   * Starts the animation and behavior handling for the character.
    */
   animate() {
     this.setInitialVolumes();
@@ -135,7 +136,7 @@ class Character extends MovableObject {
   handleCharacterMovement() {
     let isWalking = false;
     let jumpSoundPlayed = false;
-    let characterMoving = setInterval(() => {
+    const characterMoving = setInterval(() => {
       intervalIDs.push(characterMoving);
       isWalking = this.handleMovement(isWalking, jumpSoundPlayed)
         ? true
@@ -206,18 +207,43 @@ class Character extends MovableObject {
    * Handles character animation based on the character's state.
    */
   handleCharacterAnimation() {
-    let characterInterval2 = setInterval(() => {
+    const characterInterval2 = setInterval(() => {
       intervalIDs.push(characterInterval2);
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
-        this.playAnimation(this.IMAGES_JUMPING);
+        this.startJumpAnimation();
       } else {
+        this.isJumping = false;
         this.handleWalkingAnimation();
       }
     }, 50);
+  }
+
+  /**
+   * Starts the jump animation if the character is jumping.
+   */
+  startJumpAnimation() {
+    if (!this.isJumping) {
+      this.isJumping = true;
+      this.jumpAnimation();
+    }
+  }
+
+  /**
+   * Handles the jump animation frames based on the character's vertical speed.
+   */
+  jumpAnimation() {
+    const jumpInterval = setInterval(() => {
+      if (!this.isJumping || !this.isAboveGround()) {
+        clearInterval(jumpInterval);
+        return;
+      }
+      const frames = this.speedY > 0 ? this.IMAGES_JUMPING.slice(0, 4) : this.IMAGES_JUMPING.slice(4, 8);
+      this.playAnimation(frames);
+    }, 700);
   }
 
   /**
@@ -233,7 +259,7 @@ class Character extends MovableObject {
    * Handles the character's sleeping animation when inactive.
    */
   handleCharacterSleep() {
-    let characterInterval3 = setInterval(() => {
+    const characterInterval3 = setInterval(() => {
       intervalIDs.push(characterInterval3);
       if (Date.now() - this.lastMoveTime > this.sleepTimeout) {
         this.playAnimation(this.IMAGES_SLEEPING);
@@ -283,7 +309,7 @@ class Character extends MovableObject {
   /**
    * Determines if the snore sound should be paused based on whether the 'D' key is pressed
    * or if the character is in a hurt state.
-   * @returns {boolean} True if the snore sound should be paused, otherwise false.
+   * @returns {boolean} - True if the snore sound should be paused, otherwise false.
    */
   shouldPauseSnoreSound() {
     return this.world.keyboard.D || this.isHurt();
@@ -291,7 +317,7 @@ class Character extends MovableObject {
 
   /**
    * Determines if the snore animation should be played based on the elapsed time since the last move.
-   * @returns {boolean} True if the snore animation should be played, otherwise false.
+   * @returns {boolean} - True if the snore animation should be played, otherwise false.
    */
   shouldPlaySnoreAnimation() {
     return Date.now() - this.lastMoveTime > this.sleepTimeout * 90;
