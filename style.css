@@ -178,6 +178,25 @@ h1 {
 .mobile-controls2 a {
  display: inline-block;
 }
+
+.mobile-controls-tablet {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 16px;
+  display: none;
+}
+
+
+.mobile-controls2-tablet {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 16px;
+  display: none;
+}
   
 .icon-mobile {
   width: 42px;

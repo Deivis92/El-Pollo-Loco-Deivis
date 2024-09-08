@@ -2,7 +2,6 @@ let canvas;
 let world;
 let keyboard = new Keybord();
 let intervalIDs = [];
-let soundIcon;
 let sounds = [];
 let isMuted = false;
 
@@ -15,10 +14,10 @@ function init() {
   canvas = document.getElementById("canvas");
   showIconsCanvas();
   world = new World(canvas, keyboard);
+  showMobileControls();
   setTimeout(() => {
     document.getElementById("canvas").classList.remove("d-none");
     document.getElementById("start-screen").classList.add("d-none");
-    showMobileControls();
     document.getElementById("loader").style.display = "none";
   }, 4000);
 }
@@ -38,12 +37,8 @@ function toggleSound() {
  * Updates the sound icon based on the mute state.
  */
 function updateSoundIcon() {
-  let soundIcon = document.getElementById("sound-icon");
-  if (isMuted) {
-    soundIcon.src = "./icons/mute.svg";
-  } else {
-    soundIcon.src = "./icons/sound_on.svg";
-  }
+  const soundIcon = document.getElementById("sound-icon");
+  soundIcon.src = isMuted ? "./icons/mute.svg" : "./icons/sound_on.svg";
 }
 
 /**
@@ -51,12 +46,14 @@ function updateSoundIcon() {
  * @param {KeyboardEvent} e - The keydown event.
  */
 window.addEventListener("keydown", (e) => {
-  if (e.keyCode === 39) keyboard.RIGHT = true;
-  if (e.keyCode === 37) keyboard.LEFT = true;
-  if (e.keyCode === 38) keyboard.UP = true;
-  if (e.keyCode === 40) keyboard.DOWN = true;
-  if (e.keyCode === 32) keyboard.SPACE = true;
-  if (e.keyCode === 68) keyboard.D = true;
+  switch (e.keyCode) {
+    case 39: keyboard.RIGHT = true; break;
+    case 37: keyboard.LEFT = true; break;
+    case 38: keyboard.UP = true; break;
+    case 40: keyboard.DOWN = true; break;
+    case 32: keyboard.SPACE = true; break;
+    case 68: keyboard.D = true; break;
+  }
 });
 
 /**
@@ -64,30 +61,24 @@ window.addEventListener("keydown", (e) => {
  * @param {KeyboardEvent} e - The keyup event.
  */
 window.addEventListener("keyup", (e) => {
-  if (e.keyCode === 39) keyboard.RIGHT = false;
-  if (e.keyCode === 37) keyboard.LEFT = false;
-  if (e.keyCode === 38) keyboard.UP = false;
-  if (e.keyCode === 40) keyboard.DOWN = false;
-  if (e.keyCode === 32) keyboard.SPACE = false;
-  if (e.keyCode === 68) keyboard.D = false;
+  switch (e.keyCode) {
+    case 39: keyboard.RIGHT = false; break;
+    case 37: keyboard.LEFT = false; break;
+    case 38: keyboard.UP = false; break;
+    case 40: keyboard.DOWN = false; break;
+    case 32: keyboard.SPACE = false; break;
+    case 68: keyboard.D = false; break;
+  }
 });
 
 /**
  * Sets up mobile controls by adding event listeners to buttons.
  */
 function setupMobileControls() {
-  const leftButton = document.querySelector(
-    '.icon-mobile[src="./icons/left_icon.png"]'
-  );
-  const rightButton = document.querySelector(
-    '.icon-mobile[src="./icons/right_icon.png"]'
-  );
-  const jumpButton = document.querySelector(
-    '.icon-mobile[src="./icons/jump_icon.png"]'
-  );
-  const throwButton = document.querySelector(
-    '.icon-mobile[src="./icons/throw_icon.png"]'
-  );
+  const leftButtons = document.querySelectorAll('.icon-mobile[src="./icons/left_icon.png"]');
+  const rightButtons = document.querySelectorAll('.icon-mobile[src="./icons/right_icon.png"]');
+  const jumpButtons = document.querySelectorAll('.icon-mobile[src="./icons/jump_icon.png"]');
+  const throwButtons = document.querySelectorAll('.icon-mobile[src="./icons/throw_icon.png"]');
 
   /**
    * Updates the keyboard state based on button press.
@@ -105,7 +96,6 @@ function setupMobileControls() {
    * @param {boolean} isPressed - Whether the button is pressed.
    */
   function handleTouchEvent(e, key, isPressed) {
-    // Only call preventDefault if the event is cancelable
     if (e.cancelable) {
       e.preventDefault();
     }
@@ -113,32 +103,23 @@ function setupMobileControls() {
   }
 
   /**
-   * Sets up touch and mouse events for a button.
-   * @param {HTMLElement} button - The button element.
+   * Sets up touch and mouse events for a list of buttons.
+   * @param {NodeList} buttons - The list of button elements.
    * @param {string} key - The key to update.
    */
-  function setupButtonEvents(button, key) {
-    // touchstart and touchend events should not be passive if preventDefault is used
-    button.addEventListener(
-      "touchstart",
-      (e) => handleTouchEvent(e, key, true),
-      { passive: false }
-    );
-    button.addEventListener(
-      "touchend",
-      (e) => handleTouchEvent(e, key, false),
-      { passive: false }
-    );
-
-    // mousedown and mouseup events remain the same
-    button.addEventListener("mousedown", (e) => handleTouchEvent(e, key, true));
-    button.addEventListener("mouseup", (e) => handleTouchEvent(e, key, false));
+  function setupButtonEvents(buttons, key) {
+    buttons.forEach((button) => {
+      button.addEventListener("touchstart", (e) => handleTouchEvent(e, key, true), { passive: false });
+      button.addEventListener("touchend", (e) => handleTouchEvent(e, key, false), { passive: false });
+      button.addEventListener("mousedown", (e) => handleTouchEvent(e, key, true));
+      button.addEventListener("mouseup", (e) => handleTouchEvent(e, key, false));
+    });
   }
 
-  setupButtonEvents(leftButton, "LEFT");
-  setupButtonEvents(rightButton, "RIGHT");
-  setupButtonEvents(jumpButton, "SPACE");
-  setupButtonEvents(throwButton, "D");
+  setupButtonEvents(leftButtons, "LEFT");
+  setupButtonEvents(rightButtons, "RIGHT");
+  setupButtonEvents(jumpButtons, "SPACE");
+  setupButtonEvents(throwButtons, "D");
 }
 
 /**
@@ -150,12 +131,7 @@ window.addEventListener("load", setupMobileControls);
  * Stops all running intervals and clears the interval IDs array.
  */
 function stopGame() {
-  // Stop all running intervals
-  intervalIDs.forEach((intervalID) => {
-    clearInterval(intervalID);
-  });
-
-  // Empty the array after stopping the intervals
+  intervalIDs.forEach((intervalID) => clearInterval(intervalID));
   intervalIDs = [];
 }
 
@@ -166,18 +142,9 @@ function restartGame() {
   stopAllSounds();
   showIconsCanvas();
   stopGame();
-
   document.getElementById("game-over").classList.add("d-none");
-
   document.getElementById("canvas").classList.remove("d-none");
-  
-
-  // Example logic:
-  // 1. Stop any running intervals or animations
-
-  // 2. Reset game state or reload the page
-
-  init(); // Re-initialize the game
+  init();
 }
 
 /**
@@ -197,8 +164,8 @@ function playAgain() {
  */
 function stopAllSounds() {
   sounds.forEach((sound) => {
-    sound.pause(); // Stop playing the sound
-    sound.currentTime = 0; // Reset sound position
+    sound.pause();
+    sound.currentTime = 0;
   });
 }
 
@@ -206,12 +173,11 @@ function stopAllSounds() {
  * Enters fullscreen mode for the canvas element.
  */
 function fullscreen() {
-  let canvas = document.getElementById("canvas");
-  enterFullscreen(canvas);
+  enterFullscreen(document.getElementById("canvas"));
 }
 
 /**
- * Exits fullscreen mode.
+ * Exits fullscreen mode if currently in fullscreen.
  */
 function closeFullscreen() {
   if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement) {
@@ -274,6 +240,8 @@ function showIconsCanvas() {
 function hideMobileControls() {
   document.getElementById("mobile-controls").classList.add("d-none");
   document.getElementById("mobile-controls2").classList.add("d-none");
+  document.getElementById("mobile-controls-tablet").classList.add("d-none");
+  document.getElementById("mobile-controls2-tablet").classList.add("d-none");
 }
 
 /**
@@ -282,16 +250,18 @@ function hideMobileControls() {
 function showMobileControls() {
   document.getElementById("mobile-controls").classList.remove("d-none");
   document.getElementById("mobile-controls2").classList.remove("d-none");
+  document.getElementById("mobile-controls-tablet").classList.remove("d-none");
+  document.getElementById("mobile-controls2-tablet").classList.remove("d-none");
 }
 
 /**
  * Prevents the context menu from appearing on mobile control icons.
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const icons = document.querySelectorAll(".icon-mobile");
   icons.forEach((icon) => {
-    icon.addEventListener("contextmenu", function (event) {
-      event.preventDefault(); // Prevent the context menu from appearing
+    icon.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
     });
   });
 });

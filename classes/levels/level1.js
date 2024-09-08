@@ -32,17 +32,17 @@ function initLevel() {
     [new Endboss()],
   
     [
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles(),
-      // new GroundBottles()
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles(),
+      new GroundBottles()
     ],
   
     [new Cloud(), new Cloud(), new Cloud(), new Cloud(), new Cloud()],

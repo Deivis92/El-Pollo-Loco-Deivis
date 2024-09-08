@@ -6,6 +6,7 @@
     display: none;
   }
 }
+
 @media only screen and (max-height: 480px) {
   canvas {
     height: 100vh;
@@ -30,6 +31,12 @@
   .landscape-warning {
     display: none;
   }
+
+  .mobile-controls-tablet,
+  .mobile-controls2-tablet {
+    display: none !important;
+  }
+
   #fullscreen {
     width: 100%;
     position: initial;
@@ -80,4 +87,60 @@
   .mobile-controls2 {
     display: flex;
   }
+}
+
+@media (min-width: 600px) and (max-width: 1366px) and (orientation: portrait) {
+  .mobile-controls-tablet,
+  .mobile-controls2-tablet {
+    display: flex;
+  }
+
+  .game-over {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+
+  .game-win {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+  .game-win img {
+    width: 720px;
+    height: 480px;
+  }
+
+  .game-over {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+  }
+
+  .restart-button {
+    bottom: 300px;
+  }
+
+  h1 {
+    display: none;
+  }
+
+  .fullscreen-img img {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) and (orientation: landscape) {
+  .mobile-controls-tablet,
+  .mobile-controls2-tablet {
+    display: flex;
+  }
+
+  .fullscreen-img img {
+    display: none;
+  }
+}
+
+.d-none {
+  display: none;
 }

@@ -82,7 +82,6 @@ class Character extends MovableObject {
     "./img/2_character_pepe/1_idle/long_idle/I-20.png",
   ];
 
-
   walkingSound;
   jumpSound;
   snoreSound;
@@ -138,7 +137,12 @@ class Character extends MovableObject {
     let jumpSoundPlayed = false;
     let characterMoving = setInterval(() => {
       intervalIDs.push(characterMoving);
-      isWalking = this.handleMovement(isWalking, jumpSoundPlayed) ? true: (isWalking && (this.walkingSound.pause(), this.walkingSound.currentTime = 0, false));
+      isWalking = this.handleMovement(isWalking, jumpSoundPlayed)
+        ? true
+        : isWalking &&
+          (this.walkingSound.pause(),
+          (this.walkingSound.currentTime = 0),
+          false);
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.handleJump(jumpSoundPlayed);
         jumpSoundPlayed = true;
@@ -238,15 +242,58 @@ class Character extends MovableObject {
   }
 
   /**
-   * Handles the character's snoring animation and sound effect.
+   * Handles the character's snoring behavior by setting up the necessary intervals
+   * to check for key presses and manage the snore animation.
    */
   handleCharacterSnore() {
-    let characterInterval4 = setInterval(() => {
-      intervalIDs.push(characterInterval4);
-      if (Date.now() - this.lastMoveTime > this.sleepTimeout * 90) {
+    this.setupKeyPressCheck();
+    this.setupSnoreAnimation();
+  }
+
+  /**
+   * Sets up an interval to check for 'D' key press or if the character is hurt.
+   * If either condition is true, the snore sound is paused and the last move time is updated.
+   */
+  setupKeyPressCheck() {
+    const checkKeyPressInterval = setInterval(() => {
+      intervalIDs.push(checkKeyPressInterval);
+
+      if (this.shouldPauseSnoreSound()) {
+        this.lastMoveTime = Date.now();
+        this.snoreSound.pause();
+      }
+    }, 50);
+  }
+
+  /**
+   * Sets up an interval to handle the snore animation.
+   * If enough time has passed since the last move, the snoring animation is played and the snore sound is played.
+   */
+  setupSnoreAnimation() {
+    const snoreAnimationInterval = setInterval(() => {
+      intervalIDs.push(snoreAnimationInterval);
+
+      if (this.shouldPlaySnoreAnimation()) {
         this.playAnimation(this.IMAGES_SLEEPING_ZZZ);
         this.snoreSound.play();
       }
     }, 700);
+  }
+
+  /**
+   * Determines if the snore sound should be paused based on whether the 'D' key is pressed
+   * or if the character is in a hurt state.
+   * @returns {boolean} True if the snore sound should be paused, otherwise false.
+   */
+  shouldPauseSnoreSound() {
+    return this.world.keyboard.D || this.isHurt();
+  }
+
+  /**
+   * Determines if the snore animation should be played based on the elapsed time since the last move.
+   * @returns {boolean} True if the snore animation should be played, otherwise false.
+   */
+  shouldPlaySnoreAnimation() {
+    return Date.now() - this.lastMoveTime > this.sleepTimeout * 90;
   }
 }

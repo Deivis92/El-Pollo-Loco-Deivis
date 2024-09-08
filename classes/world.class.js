@@ -41,6 +41,10 @@ class World {
     this.collectBottle();
     this.run();
     this.playThemeSong();
+    this.lastThrowTime = 0; // Initialize the last throw time
+    this.throwCooldown = 1000; // 1 second cooldown period
+    this.canThrowBottle = true;
+
   }
   
   /**
@@ -103,15 +107,20 @@ class World {
    * Check for throwable objects and handle their throwing.
    */
   checkThrowObjects() {
+    const currentTime = Date.now(); // Get the current timestamp
+
     if (
       this.keyboard.D &&
       this.canThrowBottle &&
       this.statusBarBottle.bottles > 0
     ) {
-      this.throwBottle();
-    }
-    if (!this.keyboard.D) {
-      this.canThrowBottle = true;
+      if (currentTime - this.lastThrowTime >= this.throwCooldown) {
+        this.throwBottle();
+        this.lastThrowTime = currentTime; // Update the last throw time
+        this.canThrowBottle = false; // Prevent throwing immediately
+      }
+    } else if (!this.keyboard.D) {
+      this.canThrowBottle = true; // Allow throwing if the key is not pressed
     }
   }
 
