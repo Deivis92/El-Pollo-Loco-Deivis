@@ -7,14 +7,14 @@ class Chicken extends MovableObject {
   height = 70;
   width = 50;
   chickenDead = false;
-  speedRight; // Speed when moving right
-  speedLeft; // Speed when moving left
+  speedRight; 
+  speedLeft;
   movingRight = false; // Direction state
   offset = {
     top: 0,
     bottom: 0,
-    left: 0,
-    right: 0,
+    left: 25,
+    right: 25,
   };
 
   IMAGES_WALKING = [
@@ -40,8 +40,8 @@ class Chicken extends MovableObject {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.DEAD_CHICKEN);
     this.x = 400 + Math.random() * 1500;
-    this.speedRight = 0.15 + Math.random() * 0.5;
-    this.speedLeft = 0.15 + Math.random() * 0.5;
+    this.speedRight = 0.15 + Math.random() * 0.5; 
+    this.speedLeft = 0.15 + Math.random() * 0.5;  
     this.animate();
   }
 
