@@ -13,6 +13,7 @@ class World {
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
+  
   endBossCollision = this.level.endBoss[0];
   coins = new Coins();
   throwableObjects = [];
@@ -243,8 +244,7 @@ class World {
             enemy.chickenDead = true;
             throwableObject.speedY = 0;
             this.removeBottle(bottleIndex);
-
-            setTimeout(() => {
+             setTimeout(() => {
               this.level.enemies.splice(enemyIndex, 1);
             }, 200);
           }
@@ -271,6 +271,7 @@ class World {
     this.level.groundBottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
         this.level.groundBottles.splice(bottleIndex, 1);
+        
         this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
         this.collectBottleSound.play();
       }
