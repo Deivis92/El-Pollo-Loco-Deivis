@@ -243,7 +243,7 @@ class Character extends MovableObject {
       }
       const frames = this.speedY > 0 ? this.IMAGES_JUMPING.slice(0, 4) : this.IMAGES_JUMPING.slice(4, 8);
       this.playAnimation(frames);
-    }, 700);
+    }, 200);
   }
 
   /**
