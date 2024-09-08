@@ -20,6 +20,10 @@
   .landscape-warning {
     display: flex;
   }
+
+  .start-screen {
+    width: 100vw;
+  }
 }
 
 @media only screen and (orientation: landscape) and (max-width: 933px) {
