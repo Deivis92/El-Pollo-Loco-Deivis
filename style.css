@@ -104,36 +104,6 @@ h1 {
   display: none;
 }
 
-@keyframes fadeOut {
-  from {
-    transform: translateY(0) rotate(0deg);
-    visibility: visible;
-  }
-  to {
-    transform: translateY(-50px) rotate(360deg); /* Rotate 360 degrees */
-    visibility: hidden;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    transform: translateY(50px) rotate(-360deg); 
-    visibility: hidden;
-  }
-  to {
-    transform: translateY(0) rotate(0deg);
-    visibility: visible;
-  }
-}
-
-#canvas.fade-out {
-  animation: fadeOut 1s forwards; 
-}
-
-.game-over.fade-in {
-  animation: fadeIn 1s forwards; 
-}
-
 .sound-icon {
   width: 40px;
   height: 40px;

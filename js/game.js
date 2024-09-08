@@ -170,7 +170,7 @@ function restartGame() {
   document.getElementById("game-over").classList.add("d-none");
 
   document.getElementById("canvas").classList.remove("d-none");
-  document.getElementById("canvas").classList.remove("fade-out");
+  
 
   // Example logic:
   // 1. Stop any running intervals or animations
