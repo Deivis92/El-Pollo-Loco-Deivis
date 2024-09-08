@@ -13,6 +13,9 @@ class ThrowableObject extends MovableObject {
   splash = false;
   flyingInterval;
 
+  bottleSplashSound;
+  flyingBottleSound;
+
   IMAGES_ROTATION = [
     "./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
     "./img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
@@ -28,9 +31,6 @@ class ThrowableObject extends MovableObject {
     "./img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
     "./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
-
-  bottleSplashSound;
-  flyingBottleSound;
 
   /**
    * Create a throwable object.
@@ -57,10 +57,7 @@ class ThrowableObject extends MovableObject {
    * Throw the object.
    */
   throw() {
-    this.speedY = 20;
-    this.applyGravity();
-    this.flyingBottleSound.volume = 0.2;
-    this.flyingBottleSound.play();
+    this.handleThrow();
     const initialDirection = world.character.otherDirection;
     this.flyingInterval = setInterval(() => {
       this.bottleGroundHit();
@@ -70,6 +67,17 @@ class ThrowableObject extends MovableObject {
         this.x += initialDirection ? -7 : 7;
       }
     }, 1000 / 50);
+  }
+
+  /**
+   * Handle the throw action.
+   */
+  handleThrow() {
+    this.speedY = 20;
+    this.applyGravity();
+    this.flyingBottleSound.volume = isMuted ? 0 : 0.2;
+    this.flyingBottleSound.muted = isMuted;
+    this.flyingBottleSound.play();
   }
 
   /**
@@ -85,7 +93,8 @@ class ThrowableObject extends MovableObject {
    * Handle the bottle landing.
    */
   bottleLandet() {
-    this.bottleSplashSound.volume = 0.2;
+    this.bottleSplashSound.volume = isMuted ? 0 : 0.2;
+    this.bottleSplashSound.muted = isMuted;
     this.bottleSplashSound.play();
     clearInterval(this.flyingInterval);
     clearInterval(this.gravityInterval);

@@ -29,9 +29,11 @@ function toggleSound() {
   isMuted = !isMuted;
   sounds.forEach((sound) => {
     sound.muted = isMuted;
+    console.log(`Sound ${sound.src} is now ${isMuted ? 'muted' : 'unmuted'}`);
   });
   updateSoundIcon();
 }
+
 
 /**
  * Updates the sound icon based on the mute state.
