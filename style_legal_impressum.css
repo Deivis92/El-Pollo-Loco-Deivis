@@ -10,7 +10,6 @@ body {
   justify-content: center;
   background-image: url("img/5_background/body_background/body_background3.jpg");
   object-fit: cover;
-  background-repeat: no-repeat;
   background-position: center;
   min-height: 100vh;
   margin: 0;
