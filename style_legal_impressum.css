@@ -32,7 +32,11 @@ h2 {
   justify-content: center;
   text-align: center;
   font-family: Open-Sans, sans-serif;
+  background-color: #c28a30;
+  border-radius: 15px;
+  padding: 16px;
 }
+
 
 .contact-info p {
   font-size: 24px;
@@ -47,6 +51,9 @@ h2 {
   justify-content: center;
   text-align: center;
   font-family: Open-Sans, sans-serif;
+  background-color: #c28a30;
+  border-radius: 0;
+  padding: 16px;
 }
 .privacy-policy p {
   font-size: 24px;
