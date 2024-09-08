@@ -34,8 +34,6 @@ class ThrowableObject extends MovableObject {
 
   /**
    * Create a throwable object.
-   * @param {number} x - The x-coordinate of the object.
-   * @param {number} y - The y-coordinate of the object.
    */
   constructor(x, y) {
     super().loadImage("./img/6_salsa_bottle/salsa_bottle.png");
@@ -98,6 +96,24 @@ class ThrowableObject extends MovableObject {
     this.bottleSplashSound.play();
     clearInterval(this.flyingInterval);
     clearInterval(this.gravityInterval);
+  }
+
+  /**
+   * Trigger the splash animation and remove the object after a delay.
+   */
+  triggerSplashAnimation() {
+    this.splash = true;
+    this.playAnimation(this.IMAGES_SPLASH);
+    setTimeout(() => this.remove(), 1000);
+  }
+
+  /**
+   * Remove the object from the world.
+   */
+  remove() {
+    clearInterval(this.flyingInterval);
+    clearInterval(this.gravityInterval);
+    // Implement removal logic, e.g., remove from the world's throwableObjects array
   }
 
   /**

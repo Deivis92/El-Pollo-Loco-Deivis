@@ -10,14 +10,6 @@ class GroundBottles extends MovableObject {
   currentImageIndex = 0;
   img;
 
-  /**
-   * The offset values for collision detection.
-   * @type {Object}
-   * @property {number} top - The top offset.
-   * @property {number} bottom - The bottom offset.
-   * @property {number} left - The left offset.
-   * @property {number} right - The right offset.
-   */
   offset = {
     top: 0,
     bottom: 0,
@@ -25,10 +17,6 @@ class GroundBottles extends MovableObject {
     right: 45,
   };
 
-  /**
-   * Array of image paths for the bottle animation.
-   * @type {string[]}
-   */
   IMAGES_GROUND_BOTTLES = [
     "./img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
     "./img/6_salsa_bottle/2_salsa_bottle_on_ground.png",

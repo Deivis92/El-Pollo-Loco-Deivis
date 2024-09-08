@@ -13,28 +13,22 @@ class World {
   statusCoins = new StatusBarCoins();
   groundBottles = new GroundBottles();
   statusBarEndboss = new StatusBarEndboss();
-  
   endBossCollision = this.level.endBoss[0];
   coins = new Coins();
   throwableObjects = [];
   canThrowBottle = true;
   allIntervals = [];
-  
   collectBottleSound;
   collectCoinSound;
 
   /**
    * Create an instance of the World class.
-   * @param {HTMLCanvasElement} canvas - The canvas element for rendering.
    */
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.lastCollisionTime = 0;
-    this.collisionCooldown = 500;
-    this.lastCollisionTimeEndBoss = 0;
-    this.collisionCooldownEndBoss = 300;
+    this.collisionTimeData();
     this.initSounds();
     this.setWorld();
     this.draw();
@@ -42,12 +36,28 @@ class World {
     this.collectBottle();
     this.run();
     this.playThemeSong();
-    this.lastThrowTime = 0; // Initialize the last throw time
-    this.throwCooldown = 1000; // 1 second cooldown period
-    this.canThrowBottle = true;
-
+    this.throwData();
   }
-  
+
+  /**
+   * Initialize collision timing data.
+   */
+  collisionTimeData() {
+    this.lastCollisionTime = 0;
+    this.collisionCooldown = 500;
+    this.lastCollisionTimeEndBoss = 0;
+    this.collisionCooldownEndBoss = 300;
+  }
+
+  /**
+   * Initialize throwable object data.
+   */
+  throwData() {
+    this.lastThrowTime = 0;
+    this.throwCooldown = 1000;
+    this.canThrowBottle = true;
+  }
+
   /**
    * Initialize sound effects.
    */
@@ -56,9 +66,14 @@ class World {
     this.collectCoinSound = new Audio("./audio/collect_coin.mp3");
     this.hit_endboss = new Audio("./audio/hit_endboss.mp3");
     this.theme_song = new Audio("./audio/theme_song.mp3");
-    sounds.push(this.collectBottleSound, this.collectCoinSound, this.hit_endboss, this.theme_song);
+    sounds.push(
+      this.collectBottleSound,
+      this.collectCoinSound,
+      this.hit_endboss,
+      this.theme_song
+    );
   }
-  
+
   /**
    * Play the theme song.
    */
@@ -108,8 +123,7 @@ class World {
    * Check for throwable objects and handle their throwing.
    */
   checkThrowObjects() {
-    const currentTime = Date.now(); // Get the current timestamp
-
+    const currentTime = Date.now();
     if (
       this.keyboard.D &&
       this.canThrowBottle &&
@@ -117,11 +131,11 @@ class World {
     ) {
       if (currentTime - this.lastThrowTime >= this.throwCooldown) {
         this.throwBottle();
-        this.lastThrowTime = currentTime; // Update the last throw time
-        this.canThrowBottle = false; // Prevent throwing immediately
+        this.lastThrowTime = currentTime;
+        this.canThrowBottle = false;
       }
     } else if (!this.keyboard.D) {
-      this.canThrowBottle = true; // Allow throwing if the key is not pressed
+      this.canThrowBottle = true;
     }
   }
 
@@ -144,7 +158,6 @@ class World {
    */
   checkCollisions() {
     const currentTime = Date.now();
-
     this.level.enemies.forEach((enemy, enemyIndex) => {
       if (this.character.isColliding(enemy)) {
         this.handleCollision(enemy, enemyIndex, currentTime);
@@ -154,9 +167,6 @@ class World {
 
   /**
    * Handle collision with an enemy.
-   * @param {Enemy} enemy - The enemy that is colliding with the character.
-   * @param {number} enemyIndex - The index of the enemy in the level's enemies array.
-   * @param {number} currentTime - The current timestamp in milliseconds.
    */
   handleCollision(enemy, enemyIndex, currentTime) {
     if (this.character.isAboveGround() && this.character.speedY < 0) {
@@ -168,8 +178,6 @@ class World {
 
   /**
    * Mark an enemy as dead and remove it from the level.
-   * @param {Enemy} enemy - The enemy to be killed.
-   * @param {number} enemyIndex - The index of the enemy in the level's enemies array.
    */
   killEnemy(enemy, enemyIndex) {
     enemy.chickenDead = true;
@@ -182,8 +190,6 @@ class World {
 
   /**
    * Check if enough time has passed since the last collision.
-   * @param {number} currentTime - The current timestamp in milliseconds.
-   * @returns {boolean} - Whether the collision cooldown period has elapsed.
    */
   isCollisionCooldownOver(currentTime) {
     return currentTime - this.lastCollisionTime >= this.collisionCooldown;
@@ -191,7 +197,6 @@ class World {
 
   /**
    * Handle damage to the character and update the status bar.
-   * @param {number} currentTime - The current timestamp in milliseconds.
    */
   handleDamage(currentTime) {
     this.character.hit();
@@ -223,14 +228,24 @@ class World {
       if (throwableObject.isColliding(this.endBossCollision)) {
         if (throwableObject.isAboveGround() && throwableObject.speedY < 0) {
           throwableObject.speedY = 0;
-          this.removeBottle(bottleIndex);
-          this.hit_endboss.play();
-          this.endBossCollision.endBossHit();
-          this.statusBarEndboss.setPercentage(this.endBossCollision.energy);
-          this.endBossCollision.lastHit = new Date().getTime();
+          throwableObject.triggerSplashAnimation();
+          setTimeout(() => {
+            this.removeBottle(bottleIndex);
+          }, 200);
+          this.hittingEndboss();
         }
       }
     });
+  }
+
+  /**
+   * Play the hit sound and update the end boss status.
+   */
+  hittingEndboss() {
+    this.hit_endboss.play();
+    this.endBossCollision.endBossHit();
+    this.statusBarEndboss.setPercentage(this.endBossCollision.energy);
+    this.endBossCollision.lastHit = new Date().getTime();
   }
 
   /**
@@ -243,9 +258,10 @@ class World {
           if (throwableObject.isAboveGround() && throwableObject.speedY < 0) {
             enemy.chickenDead = true;
             throwableObject.speedY = 0;
-            this.removeBottle(bottleIndex);
-             setTimeout(() => {
+            throwableObject.triggerSplashAnimation();
+            setTimeout(() => {
               this.level.enemies.splice(enemyIndex, 1);
+              this.removeBottle(bottleIndex);
             }, 200);
           }
         }
@@ -255,7 +271,6 @@ class World {
 
   /**
    * Remove a throwable bottle from the game.
-   * @param {number} index - The index of the bottle to remove.
    */
   removeBottle(index) {
     this.throwableObjects.splice(index, 1);
@@ -271,8 +286,7 @@ class World {
     this.level.groundBottles.forEach((bottle, bottleIndex) => {
       if (this.character.isColliding(bottle)) {
         this.level.groundBottles.splice(bottleIndex, 1);
-        
-        this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
+         this.statusBarBottle.setBottles(this.statusBarBottle.bottles + 1);
         this.collectBottleSound.play();
       }
     });
@@ -345,7 +359,6 @@ class World {
 
   /**
    * Add a list of objects to the map.
-   * @param {MovableObject[]} objects - The list of objects to draw.
    */
   addObjectToMap(objects) {
     objects.forEach((o) => {
@@ -355,7 +368,6 @@ class World {
 
   /**
    * Draw a movable object to the canvas.
-   * @param {MovableObject} mo - The movable object to draw.
    */
   addToMap(mo) {
     if (mo.otherDirection) {
@@ -370,7 +382,6 @@ class World {
 
   /**
    * Flip an image horizontally.
-   * @param {MovableObject} mo - The movable object to flip.
    */
   flipImage(mo) {
     this.ctx.save();
@@ -381,7 +392,6 @@ class World {
 
   /**
    * Restore an image to its original orientation.
-   * @param {MovableObject} mo - The movable object to restore.
    */
   flipImageBack(mo) {
     mo.x = mo.x * -1;

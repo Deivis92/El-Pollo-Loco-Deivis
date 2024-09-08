@@ -13,12 +13,6 @@ coins;
 
   /**
    * Creates an instance of the Level class.
-   * @param {Array<Enemy>} enemies - The enemies in the level.
-   * @param {Endboss} endBoss - The end boss of the level.
-   * @param {Array<GroundBottle>} groundBottles - The ground bottles in the level.
-   * @param {Array<Cloud>} clouds - The clouds in the level.
-   * @param {Array<BackgroundObject>} backgroundObjects - The background objects in the level.
-   * @param {Array<Coin>} coins - The coins in the level.
    */
   constructor(enemies, endBoss, groundBottles, clouds, backgroundObjects, coins) {
     this.enemies = enemies;

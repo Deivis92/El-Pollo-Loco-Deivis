@@ -4,23 +4,15 @@
  * @extends DrawableObject
  */
 class StatusBar extends DrawableObject {
-  /**
-   * Array of image paths representing different health percentage levels.
-   * @type {string[]}
-   */
   IMAGES = [
     "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png",
     "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png",
     "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png",
     "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/60.png",
     "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png",
-    "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png", // 100% image
+    "./img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
   ];
 
-  /**
-   * The health percentage of the player.
-   * @type {number}
-   */
   percentage = 100;
 
   /**
@@ -39,8 +31,6 @@ class StatusBar extends DrawableObject {
 
   /**
    * Updates the health percentage and sets the appropriate image for the status bar.
-   *
-   * @param {number} percentage - The health percentage to display (0 to 100).
    */
   setPercentage(percentage) {
     this.percentage = percentage;
@@ -51,7 +41,7 @@ class StatusBar extends DrawableObject {
   /**
    * Determines the index of the image to use based on the health percentage.
    *
-   * @returns {number} The index of the image corresponding to the current health percentage.
+   * The index of the image corresponding to the current health percentage.
    */
   resolveImageIndex() {
     if (this.percentage >= 100) {

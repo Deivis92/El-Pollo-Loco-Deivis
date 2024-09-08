@@ -46,7 +46,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks if the object is above ground.
-   * @returns {boolean} True if above ground, false otherwise.
    */
   isAboveGround() {
     if (this instanceof ThrowableObject) {
@@ -58,7 +57,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Loads an image from a given path.
-   * @param {string} path - The path to the image.
    */
   loadImage(path) {
     this.img = new Image();
@@ -67,7 +65,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Draws the object on the canvas context.
-   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
    */
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -75,8 +72,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks if the object is colliding with another object.
-   * @param {MovableObject} mo - The other object to check collision with.
-   * @returns {boolean} True if colliding, false otherwise.
    */
   isColliding(mo) {
     const isColliding =
@@ -120,7 +115,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks if the object is hurt.
-   * @returns {boolean} True if the object is hurt, false otherwise.
    */
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit; // 1000ms = 1s
@@ -130,7 +124,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks if the object is dead.
-   * @returns {boolean} True if the object is dead, false otherwise.
    */
   isDead() {
     if (this.energy === 0) {
@@ -156,7 +149,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Checks if the end boss is dead.
-   * @returns {boolean} True if the end boss is dead, false otherwise.
    */
   isDeadBoss() {
     if (world.endBossCollision.energy === 0) {
@@ -186,7 +178,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Loads images from an array of paths.
-   * @param {string[]} arr - Array of image paths.
    */
   loadImages(arr) {
     arr.forEach((path) => {
@@ -198,7 +189,6 @@ class MovableObject extends DrawableObject {
 
   /**
    * Plays an animation from an array of images.
-   * @param {string[]} images - Array of image paths for animation.
    */
   playAnimation(images) {
     let i = this.currentImage % images.length;

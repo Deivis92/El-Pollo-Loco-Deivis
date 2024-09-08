@@ -114,8 +114,6 @@ function setupMobileControls() {
 
   /**
    * Updates the keyboard state based on button press.
-   * @param {string} key - The key to update.
-   * @param {boolean} isPressed - Whether the button is pressed.
    */
   function handleButtonPress(key, isPressed) {
     keyboard[key] = isPressed;
@@ -123,9 +121,6 @@ function setupMobileControls() {
 
   /**
    * Handles touch events and updates the keyboard state.
-   * @param {TouchEvent|MouseEvent} e - The touch or mouse event.
-   * @param {string} key - The key to update.
-   * @param {boolean} isPressed - Whether the button is pressed.
    */
   function handleTouchEvent(e, key, isPressed) {
     if (e.cancelable) {
@@ -136,30 +131,16 @@ function setupMobileControls() {
 
   /**
    * Sets up touch and mouse events for a list of buttons.
-   * @param {NodeList} buttons - The list of button elements.
-   * @param {string} key - The key to update.
    */
   function setupButtonEvents(buttons, key) {
-    buttons.forEach((button) => {
-      button.addEventListener(
-        "touchstart",
-        (e) => handleTouchEvent(e, key, true),
-        { passive: false }
-      );
-      button.addEventListener(
-        "touchend",
-        (e) => handleTouchEvent(e, key, false),
-        { passive: false }
-      );
-      button.addEventListener("mousedown", (e) =>
-        handleTouchEvent(e, key, true)
-      );
-      button.addEventListener("mouseup", (e) =>
-        handleTouchEvent(e, key, false)
-      );
+    buttons.forEach(button => {
+      button.addEventListener("touchstart", e => handleTouchEvent(e, key, true), { passive: false });
+      button.addEventListener("touchend", e => handleTouchEvent(e, key, false), { passive: false });
+      button.addEventListener("mousedown", e => handleTouchEvent(e, key, true));
+      button.addEventListener("mouseup", e => handleTouchEvent(e, key, false));
     });
   }
-
+  
   setupButtonEvents(leftButtons, "LEFT");
   setupButtonEvents(rightButtons, "RIGHT");
   setupButtonEvents(jumpButtons, "SPACE");

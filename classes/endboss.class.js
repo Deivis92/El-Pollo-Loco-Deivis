@@ -14,7 +14,7 @@ class Endboss extends MovableObject {
   hasFollowStarted = false;
 
   offset = {
-    top: 0,
+    top: 150,
     bottom: 0,
     left: 60,
     right: 50,
@@ -66,16 +66,24 @@ class Endboss extends MovableObject {
    */
   constructor() {
     super().loadImage("./img/4_enemie_boss_chicken/2_alert/G5.png");
+    this.loadAllImages();
+    this.speedRight = 8;
+    this.speed = 18;
+    this.x = 2500;
+    this.animate();
+    this.monitorCharacterPosition();
+  }
+
+  /**
+   * Loads all the images for the end boss's different states.
+   * This includes images for alert, walking, attacking, hurt, and dead states.
+   */
+  loadAllImages() {
     this.loadImages(this.IMAGES_ALERT);
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
     this.loadImages(this.IMAGES_ATTACK);
-    this.speedRight = 10;
-    this.speed = 13;
-    this.x = 2500;
-    this.animate();
-    this.monitorCharacterPosition();
   }
 
   /**
@@ -84,7 +92,7 @@ class Endboss extends MovableObject {
   monitorCharacterPosition() {
     let endBossInterval1 = setInterval(() => {
       intervalIDs.push(endBossInterval1);
-      if (!this.hasFollowStarted && world && world.character.x >= 2200) {
+      if (!this.hasFollowStarted && world && world.character.x >= 2100) {
         this.hasFollowStarted = true;
         this.followPepe();
       }
@@ -115,16 +123,33 @@ class Endboss extends MovableObject {
     let endBossInterval2 = setInterval(() => {
       intervalIDs.push(endBossInterval2);
       if (this.x > world.character.x - 25) {
-        this.moveLeft();
-        this.otherDirection = false;
-        this.playAnimation(this.IMAGES_WALKING);
+        this.followPepeLeft();
       } else if (this.x < world.character.x - 150) {
-        this.moveRight();
-        this.speedRight = 17;
-        this.otherDirection = true;
-        this.playAnimation(this.IMAGES_WALKING);
+        this.followPepeRight();
       }
     }, 1000 / 15);
+  }
+
+  /**
+   * Moves the end boss to the left while following the character.
+   * Updates the direction to face left and plays the walking animation.
+   */
+  followPepeLeft() {
+    this.moveLeft();
+    this.otherDirection = false;
+    this.playAnimation(this.IMAGES_WALKING);
+  }
+
+  /**
+   * Moves the end boss to the right while following the character.
+   * Increases the speed to move faster and updates the direction to face right.
+   * Plays the walking animation.
+   */
+  followPepeRight() {
+    this.moveRight();
+    this.speedRight = 8;
+    this.otherDirection = true;
+    this.playAnimation(this.IMAGES_WALKING);
   }
 
   /**

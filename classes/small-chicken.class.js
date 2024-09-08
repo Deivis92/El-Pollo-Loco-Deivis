@@ -9,42 +9,25 @@ class SmallChicken extends MovableObject {
   chickenDead = false;
   speedRight;
   speedLeft;
-  movingRight = false; 
+  movingRight = false;
   offset = {
-    top: -40,
+    top: 5,
     bottom: 0,
     left: 25,
     right: 25,
   };
 
-  /**
-   * Array of image paths for the chicken's walking animation.
-   * @type {string[]}
-   */
   IMAGES_WALKING_SMALL = [
     "./img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
     "./img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
     "./img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
   ];
 
-  /**
-   * Array of image paths for the chicken's dead state.
-   * @type {string[]}
-   */
   DEAD_SMALL_CHICKEN = [
     "./img/3_enemies_chicken/chicken_small/2_dead/dead.png",
   ];
 
-  /**
-   * Audio instance for the chicken's death sound.
-   * @type {HTMLAudioElement}
-   */
   smallChickenDeadSound;
-
-  /**
-   * Flag to track if the death sound has been played.
-   * @type {boolean}
-   */
   soundPlayed = false;
 
   /**
@@ -52,7 +35,7 @@ class SmallChicken extends MovableObject {
    */
   constructor() {
     super();
-    this.smallChickenDeadSound = new Audio('./audio/small_chicken_dead.mp3');
+    this.smallChickenDeadSound = new Audio("./audio/small_chicken_dead.mp3");
     this.smallChickenDeadSound.volume = 1;
     sounds.push(this.smallChickenDeadSound);
     this.loadImage("./img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
@@ -60,7 +43,7 @@ class SmallChicken extends MovableObject {
     this.loadImages(this.DEAD_SMALL_CHICKEN);
     this.x = 400 + Math.random() * 1500;
     this.speedRight = 0.15 + Math.random() * 0.5;
-    this.speedLeft = 0.15 + Math.random() * 0.5; 
+    this.speedLeft = 0.15 + Math.random() * 0.5;
     this.animate();
   }
 
@@ -87,21 +70,37 @@ class SmallChicken extends MovableObject {
    */
   handleMovement() {
     if (this.movingRight) {
-      if (this.x >= 2300) {
-        this.movingRight = false;
-        this.otherDirection = false;
-      } else {
-        this.moveRight();
-        this.otherDirection = true;
-      }
+      this.handleMovementRight();
     } else {
-      if (this.x <= 100) {
-        this.movingRight = true;
-        this.otherDirection = true;
-      } else {
-        this.moveLeft();
-        this.otherDirection = false;
-      }
+      this.handleMovementLeft();
+    }
+  }
+
+  /**
+   * Handles the movement of the chicken to the right.
+   * If the chicken reaches the edge of its movement area, it changes direction.
+   */
+  handleMovementRight() {
+    if (this.x >= 2300) {
+      this.movingRight = false;
+      this.otherDirection = false;
+    } else {
+      this.moveRight();
+      this.otherDirection = true;
+    }
+  }
+
+  /**
+   * Handles the movement of the chicken to the left.
+   * If the chicken reaches the edge of its movement area, it changes direction.
+   */
+  handleMovementLeft() {
+    if (this.x <= 100) {
+      this.movingRight = true;
+      this.otherDirection = true;
+    } else {
+      this.moveLeft();
+      this.otherDirection = false;
     }
   }
 

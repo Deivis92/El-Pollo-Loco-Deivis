@@ -9,15 +9,6 @@ class Coins extends MovableObject {
   width = 120;
   currentImageIndex = 0;
   img;
-
-  /**
-   * The offset values for collision detection.
-   * @type {Object}
-   * @property {number} top - The top offset.
-   * @property {number} bottom - The bottom offset.
-   * @property {number} left - The left offset.
-   * @property {number} right - The right offset.
-   */
   offset = {
     top: 0,
     bottom: 150,
@@ -25,10 +16,6 @@ class Coins extends MovableObject {
     right: 55,
   };
 
-  /**
-   * Array of image paths for coin animation.
-   * @type {string[]}
-   */
   IMAGES_COINS = ["./img/8_coin/coin_1.png", "./img/8_coin/coin_2.png"];
 
   /**

@@ -7,7 +7,7 @@ class Chicken extends MovableObject {
   height = 70;
   width = 50;
   chickenDead = false;
-  speedRight; 
+  speedRight;
   speedLeft;
   movingRight = false; // Direction state
   offset = {
@@ -34,14 +34,14 @@ class Chicken extends MovableObject {
    */
   constructor() {
     super();
-    this.deadChickenSound = new Audio('./audio/dead_chicken.mp3');
+    this.deadChickenSound = new Audio("./audio/dead_chicken.mp3");
     sounds.push(this.deadChickenSound);
     this.loadImage("./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.DEAD_CHICKEN);
     this.x = 400 + Math.random() * 1500;
-    this.speedRight = 0.15 + Math.random() * 0.5; 
-    this.speedLeft = 0.15 + Math.random() * 0.5;  
+    this.speedRight = 0.15 + Math.random() * 0.5;
+    this.speedLeft = 0.15 + Math.random() * 0.5;
     this.animate();
   }
 
@@ -70,20 +70,17 @@ class Chicken extends MovableObject {
     if (this.movingRight) {
       if (this.x >= 2300) {
         this.movingRight = false;
-        this.otherDirection = false;
       } else {
         this.moveRight();
-        this.otherDirection = true;
       }
     } else {
       if (this.x <= 100) {
         this.movingRight = true;
-        this.otherDirection = true;
       } else {
         this.moveLeft();
-        this.otherDirection = false;
       }
     }
+    this.otherDirection = this.movingRight;
   }
 
   /**

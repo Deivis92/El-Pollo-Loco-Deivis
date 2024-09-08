@@ -10,8 +10,7 @@ class Character extends MovableObject {
   speedY = 0;
   walk;
   isJumping = false;
-
-  otherDirection = false;
+ otherDirection = false;
   y = 50;
   offset = {
     top: 0,
@@ -89,7 +88,7 @@ class Character extends MovableObject {
 
   world;
   lastMoveTime = Date.now();
-  sleepTimeout = 50;
+  sleepTimeout = 100;
 
   /**
    * Creates an instance of the Character class and initializes necessary properties.
@@ -100,6 +99,15 @@ class Character extends MovableObject {
     this.jumpSound = new Audio("./audio/pepe_jumps.mp3");
     this.snoreSound = new Audio("./audio/pepe_snor.mp3");
     sounds.push(this.walkingSound, this.jumpSound, this.snoreSound);
+    this.loadAllImages();
+    this.applyGravity();
+    this.animate();
+  }
+
+  /**
+   * The `loadAllImages` function loads various sets of images for different character actions.
+   */
+  loadAllImages() {
     this.loadImage("./img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMPING);
@@ -107,8 +115,6 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_SLEEPING);
     this.loadImages(this.IMAGES_SLEEPING_ZZZ);
-    this.applyGravity();
-    this.animate();
   }
 
   /**
@@ -139,11 +145,7 @@ class Character extends MovableObject {
     const characterMoving = setInterval(() => {
       intervalIDs.push(characterMoving);
       isWalking = this.handleMovement(isWalking, jumpSoundPlayed)
-        ? true
-        : isWalking &&
-          (this.walkingSound.pause(),
-          (this.walkingSound.currentTime = 0),
-          false);
+        ? true : isWalking && (this.walkingSound.pause(), this.walkingSound.currentTime = 0, false);
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         this.handleJump(jumpSoundPlayed);
         jumpSoundPlayed = true;
@@ -156,9 +158,6 @@ class Character extends MovableObject {
 
   /**
    * Handles character movement based on keyboard input.
-   * @param {boolean} isWalking - Indicates if the character is currently walking.
-   * @param {boolean} jumpSoundPlayed - Indicates if the jump sound has been played.
-   * @returns {boolean} - True if the character is moving, otherwise false.
    */
   handleMovement(isWalking, jumpSoundPlayed) {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -179,7 +178,6 @@ class Character extends MovableObject {
 
   /**
    * Handles the walking sound effect.
-   * @param {boolean} isWalking - Indicates if the character is currently walking.
    */
   handleWalkingSound(isWalking) {
     if (!isWalking) {
@@ -191,7 +189,6 @@ class Character extends MovableObject {
 
   /**
    * Handles the character's jump action and plays the jump sound effect.
-   * @param {boolean} jumpSoundPlayed - Indicates if the jump sound has been played.
    */
   handleJump(jumpSoundPlayed) {
     this.jump();
@@ -241,7 +238,10 @@ class Character extends MovableObject {
         clearInterval(jumpInterval);
         return;
       }
-      const frames = this.speedY > 0 ? this.IMAGES_JUMPING.slice(0, 4) : this.IMAGES_JUMPING.slice(4, 8);
+      const frames =
+        this.speedY > 0
+          ? this.IMAGES_JUMPING.slice(0, 4)
+          : this.IMAGES_JUMPING.slice(4, 8);
       this.playAnimation(frames);
     }, 200);
   }
@@ -309,7 +309,6 @@ class Character extends MovableObject {
   /**
    * Determines if the snore sound should be paused based on whether the 'D' key is pressed
    * or if the character is in a hurt state.
-   * @returns {boolean} - True if the snore sound should be paused, otherwise false.
    */
   shouldPauseSnoreSound() {
     return this.world.keyboard.D || this.isHurt();
@@ -317,7 +316,6 @@ class Character extends MovableObject {
 
   /**
    * Determines if the snore animation should be played based on the elapsed time since the last move.
-   * @returns {boolean} - True if the snore animation should be played, otherwise false.
    */
   shouldPlaySnoreAnimation() {
     return Date.now() - this.lastMoveTime > this.sleepTimeout * 90;
