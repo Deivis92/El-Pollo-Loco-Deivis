@@ -13,8 +13,8 @@ class SmallChicken extends MovableObject {
   offset = {
     top: -40,
     bottom: 0,
-    left: 20,
-    right: 20,
+    left: 25,
+    right: 25,
   };
 
   /**
@@ -60,7 +60,7 @@ class SmallChicken extends MovableObject {
     this.loadImages(this.DEAD_SMALL_CHICKEN);
     this.x = 400 + Math.random() * 1500;
     this.speedRight = 0.15 + Math.random() * 0.5;
-    this.speedLeft = 0.15 + Math.random() * 0.5;
+    this.speedLeft = 0.15 + Math.random() * 0.5; 
     this.animate();
   }
 

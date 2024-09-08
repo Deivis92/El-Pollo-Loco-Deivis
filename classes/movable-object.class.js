@@ -15,23 +15,15 @@ class MovableObject extends DrawableObject {
   gravityInterval;
   energy = 100;
   speedY = 0;
-  acceleration = 2.5;
+  acceleration = 2.0;
   offset = {
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
   };
-
-  /**
-   * The timestamp of the last hit.
-   * @type {number}
-   */
   lastHit = 0;
 
-  /**
-   * Creates an instance of MovableObject.
-   */
   constructor() {
     super();
     this.hurtSound = new Audio("./audio/hurt.mp3");

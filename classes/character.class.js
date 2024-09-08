@@ -6,7 +6,7 @@ class Character extends MovableObject {
   height = 270;
   x = 120;
   width = 100;
-  speed = 4;
+  speed = 5;
   speedY = 0;
   walk;
 
@@ -89,7 +89,7 @@ class Character extends MovableObject {
 
   world;
   lastMoveTime = Date.now();
-  sleepTimeout = 300;
+  sleepTimeout = 100;
 
   /**
    * Creates an instance of the Character class.
@@ -243,7 +243,7 @@ class Character extends MovableObject {
   handleCharacterSnore() {
     let characterInterval4 = setInterval(() => {
       intervalIDs.push(characterInterval4);
-      if (Date.now() - this.lastMoveTime > this.sleepTimeout * 25) {
+      if (Date.now() - this.lastMoveTime > this.sleepTimeout * 90) {
         this.playAnimation(this.IMAGES_SLEEPING_ZZZ);
         this.snoreSound.play();
       }

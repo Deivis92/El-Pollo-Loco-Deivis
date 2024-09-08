@@ -1,37 +1,13 @@
 /**
  * Represents a bottle object on the ground that can be animated.
- * 
+ *
  * @extends MovableObject
  */
 class GroundBottles extends MovableObject {
-  /**
-   * The y-coordinate position of the bottle on the ground.
-   * @type {number}
-   */
   y = 360;
-
-  /**
-   * The height of the bottle.
-   * @type {number}
-   */
   height = 60;
-
-  /**
-   * The width of the bottle.
-   * @type {number}
-   */
   width = 50;
-
-  /**
-   * The index of the current image used for animation.
-   * @type {number}
-   */
   currentImageIndex = 0;
-
-  /**
-   * The image element for the bottle.
-   * @type {HTMLImageElement}
-   */
   img;
 
   /**
@@ -43,10 +19,10 @@ class GroundBottles extends MovableObject {
    * @property {number} right - The right offset.
    */
   offset = {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
+    top: 0,
+    bottom: 0,
+    left: 45,
+    right: 45,
   };
 
   /**
@@ -54,8 +30,8 @@ class GroundBottles extends MovableObject {
    * @type {string[]}
    */
   IMAGES_GROUND_BOTTLES = [
-      "./img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
-      "./img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
+    "./img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
+    "./img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
   ];
 
   /**
@@ -63,11 +39,11 @@ class GroundBottles extends MovableObject {
    * Initializes the bottle's image and sets its position.
    */
   constructor() {
-      super().loadImage("./img/6_salsa_bottle/1_salsa_bottle_on_ground.png");
-      this.loadImages(this.IMAGES_GROUND_BOTTLES);
-      this.playAnimation(this.IMAGES_GROUND_BOTTLES);
-      this.x = 300 + Math.random() * 1700;
-      this.animate();
+    super().loadImage("./img/6_salsa_bottle/1_salsa_bottle_on_ground.png");
+    this.loadImages(this.IMAGES_GROUND_BOTTLES);
+    this.playAnimation(this.IMAGES_GROUND_BOTTLES);
+    this.x = 300 + Math.random() * 1700;
+    this.animate();
   }
 
   /**
@@ -75,9 +51,9 @@ class GroundBottles extends MovableObject {
    * Uses `setInterval` to update the animation every 500 milliseconds.
    */
   animate() {
-      let GroundBottlesInterval = setInterval(() => {
-          intervalIDs.push(GroundBottlesInterval);
-          this.playAnimation(this.IMAGES_GROUND_BOTTLES);
-      }, 500);
+    let GroundBottlesInterval = setInterval(() => {
+      intervalIDs.push(GroundBottlesInterval);
+      this.playAnimation(this.IMAGES_GROUND_BOTTLES);
+    }, 500);
   }
 }

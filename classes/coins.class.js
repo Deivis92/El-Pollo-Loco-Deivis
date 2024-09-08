@@ -1,37 +1,13 @@
 /**
  * Represents a coin object in the game that can be animated.
- * 
+ *
  * @extends MovableObject
  */
 class Coins extends MovableObject {
-  /**
-   * The y-coordinate position of the coin.
-   * @type {number}
-   */
   y = 50;
-
-  /**
-   * The height of the coin.
-   * @type {number}
-   */
   height = 120;
-
-  /**
-   * The width of the coin.
-   * @type {number}
-   */
   width = 120;
-
-  /**
-   * The index of the current image being used for animation.
-   * @type {number}
-   */
   currentImageIndex = 0;
-
-  /**
-   * The image element for the coin.
-   * @type {HTMLImageElement}
-   */
   img;
 
   /**
@@ -43,10 +19,10 @@ class Coins extends MovableObject {
    * @property {number} right - The right offset.
    */
   offset = {
-      top: 0,
-      bottom: 150,
-      left: 0,
-      right: 0,
+    top: 0,
+    bottom: 150,
+    left: 55,
+    right: 55,
   };
 
   /**
@@ -59,19 +35,19 @@ class Coins extends MovableObject {
    * Creates an instance of the Coins.
    */
   constructor() {
-      super().loadImage("./img/8_coin/coin_1.png");
-      this.loadImages(this.IMAGES_COINS);
-      this.playAnimation(this.IMAGES_COINS);
-      this.coinsPosition();
-      this.animate();
+    super().loadImage("./img/8_coin/coin_1.png");
+    this.loadImages(this.IMAGES_COINS);
+    this.playAnimation(this.IMAGES_COINS);
+    this.coinsPosition();
+    this.animate();
   }
 
   /**
    * Sets a random position for the coin within a specified range.
    */
   coinsPosition() {
-      this.x = 300 + Math.random() * 1500;
-      this.y = 60 + Math.random() * 100;
+    this.x = 300 + Math.random() * 1500;
+    this.y = 60 + Math.random() * 100;
   }
 
   /**
@@ -79,9 +55,9 @@ class Coins extends MovableObject {
    * Uses `setInterval` to update the animation every 500 milliseconds.
    */
   animate() {
-      let coinInterval = setInterval(() => {
-          intervalIDs.push(coinInterval);
-          this.playAnimation(this.IMAGES_COINS);
-      }, 500);
+    let coinInterval = setInterval(() => {
+      intervalIDs.push(coinInterval);
+      this.playAnimation(this.IMAGES_COINS);
+    }, 500);
   }
 }
