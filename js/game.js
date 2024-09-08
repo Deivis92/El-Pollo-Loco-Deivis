@@ -29,11 +29,9 @@ function toggleSound() {
   isMuted = !isMuted;
   sounds.forEach((sound) => {
     sound.muted = isMuted;
-    console.log(`Sound ${sound.src} is now ${isMuted ? 'muted' : 'unmuted'}`);
   });
   updateSoundIcon();
 }
-
 
 /**
  * Updates the sound icon based on the mute state.
@@ -49,12 +47,24 @@ function updateSoundIcon() {
  */
 window.addEventListener("keydown", (e) => {
   switch (e.keyCode) {
-    case 39: keyboard.RIGHT = true; break;
-    case 37: keyboard.LEFT = true; break;
-    case 38: keyboard.UP = true; break;
-    case 40: keyboard.DOWN = true; break;
-    case 32: keyboard.SPACE = true; break;
-    case 68: keyboard.D = true; break;
+    case 39:
+      keyboard.RIGHT = true;
+      break;
+    case 37:
+      keyboard.LEFT = true;
+      break;
+    case 38:
+      keyboard.UP = true;
+      break;
+    case 40:
+      keyboard.DOWN = true;
+      break;
+    case 32:
+      keyboard.SPACE = true;
+      break;
+    case 68:
+      keyboard.D = true;
+      break;
   }
 });
 
@@ -64,12 +74,24 @@ window.addEventListener("keydown", (e) => {
  */
 window.addEventListener("keyup", (e) => {
   switch (e.keyCode) {
-    case 39: keyboard.RIGHT = false; break;
-    case 37: keyboard.LEFT = false; break;
-    case 38: keyboard.UP = false; break;
-    case 40: keyboard.DOWN = false; break;
-    case 32: keyboard.SPACE = false; break;
-    case 68: keyboard.D = false; break;
+    case 39:
+      keyboard.RIGHT = false;
+      break;
+    case 37:
+      keyboard.LEFT = false;
+      break;
+    case 38:
+      keyboard.UP = false;
+      break;
+    case 40:
+      keyboard.DOWN = false;
+      break;
+    case 32:
+      keyboard.SPACE = false;
+      break;
+    case 68:
+      keyboard.D = false;
+      break;
   }
 });
 
@@ -77,10 +99,18 @@ window.addEventListener("keyup", (e) => {
  * Sets up mobile controls by adding event listeners to buttons.
  */
 function setupMobileControls() {
-  const leftButtons = document.querySelectorAll('.icon-mobile[src="./icons/left_icon.png"]');
-  const rightButtons = document.querySelectorAll('.icon-mobile[src="./icons/right_icon.png"]');
-  const jumpButtons = document.querySelectorAll('.icon-mobile[src="./icons/jump_icon.png"]');
-  const throwButtons = document.querySelectorAll('.icon-mobile[src="./icons/throw_icon.png"]');
+  const leftButtons = document.querySelectorAll(
+    '.icon-mobile[src="./icons/left_icon.png"]'
+  );
+  const rightButtons = document.querySelectorAll(
+    '.icon-mobile[src="./icons/right_icon.png"]'
+  );
+  const jumpButtons = document.querySelectorAll(
+    '.icon-mobile[src="./icons/jump_icon.png"]'
+  );
+  const throwButtons = document.querySelectorAll(
+    '.icon-mobile[src="./icons/throw_icon.png"]'
+  );
 
   /**
    * Updates the keyboard state based on button press.
@@ -111,10 +141,22 @@ function setupMobileControls() {
    */
   function setupButtonEvents(buttons, key) {
     buttons.forEach((button) => {
-      button.addEventListener("touchstart", (e) => handleTouchEvent(e, key, true), { passive: false });
-      button.addEventListener("touchend", (e) => handleTouchEvent(e, key, false), { passive: false });
-      button.addEventListener("mousedown", (e) => handleTouchEvent(e, key, true));
-      button.addEventListener("mouseup", (e) => handleTouchEvent(e, key, false));
+      button.addEventListener(
+        "touchstart",
+        (e) => handleTouchEvent(e, key, true),
+        { passive: false }
+      );
+      button.addEventListener(
+        "touchend",
+        (e) => handleTouchEvent(e, key, false),
+        { passive: false }
+      );
+      button.addEventListener("mousedown", (e) =>
+        handleTouchEvent(e, key, true)
+      );
+      button.addEventListener("mouseup", (e) =>
+        handleTouchEvent(e, key, false)
+      );
     });
   }
 
@@ -182,7 +224,12 @@ function fullscreen() {
  * Exits fullscreen mode if currently in fullscreen.
  */
 function closeFullscreen() {
-  if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement) {
+  if (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement ||
+    document.mozFullScreenElement
+  ) {
     exitFullscreen();
   }
 }
