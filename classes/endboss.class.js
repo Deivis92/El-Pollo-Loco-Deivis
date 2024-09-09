@@ -66,9 +66,7 @@ class Endboss extends MovableObject {
    */
   constructor() {
     super().loadImage("./img/4_enemie_boss_chicken/2_alert/G5.png");
-    this.loadAllImages();
-    this.speedRight = 8;
-    this.speed = 18;
+    this.loadAllImages(); this.speed = 12;
     this.x = 2500;
     this.animate();
     this.monitorCharacterPosition();
@@ -147,7 +145,6 @@ class Endboss extends MovableObject {
    */
   followPepeRight() {
     this.moveRight();
-    this.speedRight = 8;
     this.otherDirection = true;
     this.playAnimation(this.IMAGES_WALKING);
   }

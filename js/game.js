@@ -167,6 +167,7 @@ function restartGame() {
   stopAllSounds();
   showIconsCanvas();
   stopGame();
+  document.getElementById("sound-icon").src = "./icons/sound_on.svg";
   document.getElementById("game-over").classList.add("d-none");
   document.getElementById("canvas").classList.remove("d-none");
   init();
@@ -177,6 +178,7 @@ function restartGame() {
  */
 function playAgain() {
   stopAllSounds();
+  document.getElementById("sound-icon").src = "./icons/sound_on.svg";
   document.getElementById("game-win").classList.add("d-none");
   document.getElementById("canvas").classList.remove("d-none");
   showIconsCanvas();

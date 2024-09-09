@@ -23,6 +23,7 @@ class MovableObject extends DrawableObject {
     right: 0,
   };
   lastHit = 0;
+  theme_song;
 
   constructor() {
     super();
@@ -90,13 +91,13 @@ class MovableObject extends DrawableObject {
     if (this.isAboveGround()) {
       setTimeout(() => {
         if (this.character > 160) {
-          this.hurtSound.pause(); // Stop hurt sound if above ground
-          this.hurtSound.currentTime = 0; // Reset sound
+          this.hurtSound.pause(); 
+          this.hurtSound.currentTime = 0;
         }
       }, 50);
     } else {
-      this.hurtSound.play(); // Play hurt sound
-      this.energy = Math.max(this.energy - 5, 0);
+      this.hurtSound.play();
+      this.energy = Math.max(this.energy - 10, 0);
       this.lastHit = new Date().getTime();
     }
   }
@@ -117,8 +118,8 @@ class MovableObject extends DrawableObject {
    * Checks if the object is hurt.
    */
   isHurt() {
-    let timePassed = new Date().getTime() - this.lastHit; // 1000ms = 1s
-    timePassed = timePassed / 1000; // Seconds
+    let timePassed = new Date().getTime() - this.lastHit; // 
+    timePassed = timePassed / 500; 
     return timePassed < 1;
   }
 
@@ -127,6 +128,7 @@ class MovableObject extends DrawableObject {
    */
   isDead() {
     if (this.energy === 0) {
+      this.world.theme_song.pause();
       this.isCharackterDead();
       setTimeout(() => {
         document.getElementById("canvas").classList.add("d-none");

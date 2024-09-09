@@ -1,44 +1,31 @@
 /**
- * Add event listeners to display help and controls containers on hover.
+ * Adds hover event listeners to show and hide containers.
+ *
+ *
  */
-document.addEventListener('DOMContentLoaded', function() {
-    const controlsButton = document.getElementById('controls-button');
-    const controlsContainer = document.getElementById('controls-container');
+function addHoverEvent(button, container) {
+  button.addEventListener("mouseenter", () => {
+    container.classList.add("active");
+  });
 
-    // Check if both elements exist
-    if (controlsButton && controlsContainer) {
-        /**
-         * Show the controls container when the mouse enters the controls button.
-         */
-        controlsButton.addEventListener('mouseenter', () => {
-            controlsContainer.classList.add('active');
-        });
+  button.addEventListener("mouseleave", () => {
+    container.classList.remove("active");
+  });
+}
 
-        /**
-         * Hide the controls container when the mouse leaves the controls button.
-         */
-        controlsButton.addEventListener('mouseleave', () => {
-            controlsContainer.classList.remove('active');
-        });
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  const controlsButton = document.getElementById("controls-button");
+  const controlsContainer = document.getElementById("controls-container");
+  const helpButton = document.getElementById("help");
+  const helpContainer = document.getElementById("help-container");
 
-    const helpButton = document.getElementById('help');
-    const helpContainer = document.getElementById('help-container');
+  // Apply hover events to controls if elements exist
+  if (controlsButton && controlsContainer) {
+    addHoverEvent(controlsButton, controlsContainer);
+  }
 
-    // Check if both elements exist
-    if (helpButton && helpContainer) {
-        /**
-         * Show the help container when the mouse enters the help button.
-         */
-        helpButton.addEventListener('mouseenter', () => {
-            helpContainer.classList.add('active');
-        });
-
-        /**
-         * Hide the help container when the mouse leaves the help button.
-         */
-        helpButton.addEventListener('mouseleave', () => {
-            helpContainer.classList.remove('active');
-        });
-    }
+  // Apply hover events to help if elements exist
+  if (helpButton && helpContainer) {
+    addHoverEvent(helpButton, helpContainer);
+  }
 });
