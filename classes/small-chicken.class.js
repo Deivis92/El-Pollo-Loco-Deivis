@@ -11,7 +11,7 @@ class SmallChicken extends MovableObject {
   speedLeft;
   movingRight = false;
   offset = {
-    top: 5,
+    top: 0,
     bottom: 0,
     left: 25,
     right: 25,
