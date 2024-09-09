@@ -13,18 +13,18 @@ function addHoverEvent(button, container) {
   });
 }
 
+// Apply hover events to controls if elements exist
+// Apply hover events to help if elements exist
 document.addEventListener("DOMContentLoaded", function () {
   const controlsButton = document.getElementById("controls-button");
   const controlsContainer = document.getElementById("controls-container");
   const helpButton = document.getElementById("help");
   const helpContainer = document.getElementById("help-container");
 
-  // Apply hover events to controls if elements exist
   if (controlsButton && controlsContainer) {
     addHoverEvent(controlsButton, controlsContainer);
   }
 
-  // Apply hover events to help if elements exist
   if (helpButton && helpContainer) {
     addHoverEvent(helpButton, helpContainer);
   }
